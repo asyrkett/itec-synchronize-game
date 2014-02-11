@@ -8,15 +8,26 @@ import java.awt.image.BufferStrategy;
 public class Game extends Canvas implements Runnable
 {
 	private static final long serialVersionUID = 1L;
-
-	private boolean running = false;
-	private Thread thread;
+	//private static final Random GENERATOR = new Random();
 	
-	Handler handler;
+	private boolean running = false; // whether or not the game is running
+	private Thread thread; // the game thread
 	
+	public static int WIDTH, HEIGHT;
+	
+	Handler handler; // handler of the graphics objects
+	
+	/**
+	 * Initializes game objects
+	 */
 	private void init()
 	{
+		WIDTH = getWidth();
+		HEIGHT = getHeight();
+		
 		handler = new Handler();
+		
+		handler.createLevel();
 	}
 	
 	public synchronized void start()
@@ -66,11 +77,17 @@ public class Game extends Canvas implements Runnable
 		}
 	}
 
+	/**
+	 * Handles game updates
+	 */
 	private void tick()
 	{
 		handler.tick();
 	}
 	
+	/**
+	 * Handles game graphics rendering
+	 */
 	private void render()
 	{
 		BufferStrategy bufferStrategy = this.getBufferStrategy();
@@ -82,12 +99,14 @@ public class Game extends Canvas implements Runnable
 		
 		Graphics g = bufferStrategy.getDrawGraphics();
 		//////////////////////////////////////////////////
-		//DRAW HERe
+		//DRAW HERE
 		
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		handler.render(g);
+		
+		
 		//////////////////////////////////////////////////
 		g.dispose();
 		bufferStrategy.show();

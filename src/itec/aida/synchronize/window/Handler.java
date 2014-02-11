@@ -1,6 +1,8 @@
 package itec.aida.synchronize.window;
 
 import itec.aida.synchronize.framework.GameObject;
+import itec.aida.synchronize.framework.ObjectId;
+import itec.aida.synchronize.objects.Block;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
@@ -38,5 +40,16 @@ public class Handler
 	public void removeObject(GameObject object)
 	{
 		this.object.remove(object);
+	}
+	
+	public void createLevel()
+	{
+		for (int xx = 0; xx < Game.WIDTH; xx += Block.SIZE)
+		{
+			for (int yy = 0; yy < Game.HEIGHT; yy += Block.SIZE)
+			{
+				addObject(new Block(xx, yy, ObjectId.Block));
+			}
+		}
 	}
 }

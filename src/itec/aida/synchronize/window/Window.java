@@ -4,9 +4,20 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+/**
+ * The window in which the game runs
+ * @author Aida
+ *
+ */
 public class Window
 {
-	
+	/**
+	 * Constructs the window of the game
+	 * @param width the window width
+	 * @param height the window height
+	 * @param title the window title
+	 * @param game the game to run in the window
+	 */
 	public Window(int width, int height, String title, Game game)
 	{
 		game.setPreferredSize(new Dimension(width, height));
