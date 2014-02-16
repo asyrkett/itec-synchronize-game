@@ -1,7 +1,6 @@
 package itec.asyrkett.synchronize.window;
 
-import itec.asyrkett.synchronize.framework.ObjectId;
-import itec.asyrkett.synchronize.objects.Grid;
+import itec.asyrkett.synchronize.framework.KeyInput;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -31,6 +30,8 @@ public class Game extends Canvas implements Runnable
 		
 		handler = new Handler();
 		handler.createLevel();
+		
+		this.addKeyListener(new KeyInput(handler));
 	}
 	
 	public synchronized void start()
@@ -106,16 +107,6 @@ public class Game extends Canvas implements Runnable
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
-		//Create the grid
-		int xx = (WIDTH - Grid.getDefaultGridSize(9)) / 2;
-		int yy = DEFAULT_MARGIN * 2;
-		Grid grid = new Grid(xx, yy, 9, ObjectId.Grid);
-		grid.render(g);
-		
-		//Create horizontal and vertical grid tracks
-		
-		
 		
 		handler.render(g);
 		

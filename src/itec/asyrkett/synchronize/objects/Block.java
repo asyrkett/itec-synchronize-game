@@ -11,29 +11,38 @@ import java.util.LinkedList;
 public class Block extends GameObject
 {
 	
-	public static final int SIZE = 32;
+	//public static final int SIZE = 32;
+	protected int size;
 
-	public Block(float x, float y, ObjectId id)
+	public Block(float x, float y, int size, ObjectId id)
 	{
 		super(x, y, id);
-		// TODO Auto-generated constructor stub
+		this.size = size;
 	}
 
-	public void tick(LinkedList<GameObject> object)
+	public void tick(LinkedList<GameObject> objects)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
-	public void render(Graphics g) {
-		g.setColor(Color.RED);
-		g.drawRect((int)x, (int)y, SIZE, SIZE);
-		
+	public void render(Graphics g)
+	{
+		g.setColor(Color.GREEN);
+		g.drawRect((int)x, (int)y, size, size);
 	}
 
 	public Rectangle getBounds()
 	{
-		return new Rectangle((int)x, (int)y, SIZE, SIZE);
+		return new Rectangle((int)x, (int)y, size, size);
 	}
 
+	public int getSize()
+	{
+		return size;
+	}
+
+	public void setSize(int size)
+	{
+		this.size = size;
+	}
 }

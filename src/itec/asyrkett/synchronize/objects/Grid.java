@@ -1,35 +1,37 @@
 package itec.asyrkett.synchronize.objects;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.util.LinkedList;
-
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
 import itec.asyrkett.synchronize.window.Game;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.util.LinkedList;
+
 public class Grid extends GameObject 
 {
-
 	private int dimension;
 	private int size;
 	private int step;
+	private boolean tracksVisible;
 	
-	public Grid(float x, float y, int dimension, ObjectId id) {
+	public Grid(float x, float y, int dimension, ObjectId id)
+	{
 		super(x, y, id);
 		this.dimension = dimension;
 		this.size = getDefaultGridSize(dimension);
 		this.step = getDefaultGridStep(dimension);
+		this.tracksVisible = true;
 	}
 
 	@Override
-	public void tick(LinkedList<GameObject> object) {
-		// TODO Auto-generated method stub
+	public void tick(LinkedList<GameObject> objects)
+	{
 
 	}
-
-	@Override
+	
 	public void render(Graphics g)
 	{
 		g.setColor(Color.WHITE);
@@ -42,6 +44,21 @@ public class Grid extends GameObject
 			{
 				g.drawRect(xx, yy, step, step);
 			}
+		}
+		
+		if (tracksVisible)
+		{
+			Graphics2D g2d = (Graphics2D) g;
+			//g2d.setStroke(new BasicStroke(2F));
+			g2d.setColor(Color.BLUE);
+			
+			int horizontalTrackX = (int) x;
+			int horizontalTrackY = (int) y + (dimension / 2) * step;
+			g2d.drawRoundRect(horizontalTrackX, horizontalTrackY, size, step, 20, 20);
+			
+			int verticalTrackX = (int) x + (dimension / 2) * step;
+			int verticalTrackY = (int) y;
+			g2d.drawRoundRect(verticalTrackX, verticalTrackY, step, size, 20, 20);
 		}
 	}
 
@@ -80,15 +97,21 @@ public class Grid extends GameObject
 	{
 		this.step = step;
 	}
+	
+	public boolean getTracksVisible()
+	{
+		return tracksVisible;
+	}
+	
+	public void setTracksVisible(boolean tracksVisible)
+	{
+		this.tracksVisible = tracksVisible;
+	}
 
 	public static int getDefaultGridSize(int dimension)
 	{
 		int size = Game.HEIGHT - Game.DEFAULT_MARGIN * 4;
-		if (size % dimension != 0)
-		{
-			size -= (size % dimension);
-		}
-		return size;
+		return size - ((size % dimension != 0) ? (size % dimension) : 0);
 	}
 	
 	public static int getDefaultGridStep(int dimension)
