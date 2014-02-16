@@ -1,7 +1,7 @@
-package itec.aida.synchronize.objects;
+package itec.asyrkett.synchronize.objects;
 
-import itec.aida.synchronize.framework.GameObject;
-import itec.aida.synchronize.framework.ObjectId;
+import itec.asyrkett.synchronize.framework.GameObject;
+import itec.asyrkett.synchronize.framework.ObjectId;
 
 import java.awt.Color;
 import java.awt.Graphics;

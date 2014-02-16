@@ -1,4 +1,7 @@
-package itec.aida.synchronize.window;
+package itec.asyrkett.synchronize.window;
+
+import itec.asyrkett.synchronize.framework.ObjectId;
+import itec.asyrkett.synchronize.objects.Grid;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -14,6 +17,7 @@ public class Game extends Canvas implements Runnable
 	private Thread thread; // the game thread
 	
 	public static int WIDTH, HEIGHT;
+	public static final int DEFAULT_MARGIN = 32;
 	
 	Handler handler; // handler of the graphics objects
 	
@@ -26,7 +30,6 @@ public class Game extends Canvas implements Runnable
 		HEIGHT = getHeight();
 		
 		handler = new Handler();
-		
 		handler.createLevel();
 	}
 	
@@ -103,6 +106,16 @@ public class Game extends Canvas implements Runnable
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		//Create the grid
+		int xx = (WIDTH - Grid.getDefaultGridSize(9)) / 2;
+		int yy = DEFAULT_MARGIN * 2;
+		Grid grid = new Grid(xx, yy, 9, ObjectId.Grid);
+		grid.render(g);
+		
+		//Create horizontal and vertical grid tracks
+		
+		
 		
 		handler.render(g);
 		

@@ -1,8 +1,6 @@
-package itec.aida.synchronize.window;
+package itec.asyrkett.synchronize.window;
 
-import itec.aida.synchronize.framework.GameObject;
-import itec.aida.synchronize.framework.ObjectId;
-import itec.aida.synchronize.objects.Block;
+import itec.asyrkett.synchronize.framework.GameObject;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
@@ -44,12 +42,13 @@ public class Handler
 	
 	public void createLevel()
 	{
-		for (int xx = 0; xx < Game.WIDTH; xx += Block.SIZE)
+		
+		/*for (int xx = 0; xx < Game.WIDTH; xx += Block.SIZE)
 		{
 			for (int yy = 0; yy < Game.HEIGHT; yy += Block.SIZE)
 			{
 				addObject(new Block(xx, yy, ObjectId.Block));
 			}
-		}
+		}*/
 	}
 }

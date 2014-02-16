@@ -1,4 +1,4 @@
-package itec.aida.synchronize.window;
+package itec.asyrkett.synchronize.window;
 
 import java.awt.Dimension;
 

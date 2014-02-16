@@ -1,4 +1,4 @@
-package itec.aida.synchronize.framework;
+package itec.asyrkett.synchronize.framework;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
