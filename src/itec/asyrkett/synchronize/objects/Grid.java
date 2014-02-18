@@ -52,17 +52,24 @@ public class Grid extends GameObject
 			//g2d.setStroke(new BasicStroke(2F));
 			g2d.setColor(Color.BLUE);
 			
-			int horizontalTrackX = (int) x;
-			int horizontalTrackY = (int) y + (dimension / 2) * step;
-			g2d.drawRoundRect(horizontalTrackX, horizontalTrackY, size, step, 20, 20);
-			
-			int verticalTrackX = (int) x + (dimension / 2) * step;
-			int verticalTrackY = (int) y;
-			g2d.drawRoundRect(verticalTrackX, verticalTrackY, step, size, 20, 20);
+			//Horizontal track
+			g2d.drawRoundRect((int) x, (int) (y + dimension / 2 * step), size, step, 20, 20);
+
+			//Vertical track
+			g2d.drawRoundRect((int)(x + dimension / 2 * step), (int) y, step, size, 20, 20);
 		}
 	}
 
-	@Override
+	public Rectangle getHorizontalTrackBounds()
+	{
+		return new Rectangle((int)x, (int)(y + dimension / 2 * step), size, step);
+	}
+	
+	public Rectangle getVerticalTrackBounds()
+	{
+		return new Rectangle((int)(x + dimension / 2 * step), (int) y, step, size);
+	}
+	
 	public Rectangle getBounds()
 	{
 		return new Rectangle((int) x, (int) y, size, size);

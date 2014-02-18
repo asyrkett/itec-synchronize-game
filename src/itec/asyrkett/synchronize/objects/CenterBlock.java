@@ -4,7 +4,12 @@ import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 
 public class CenterBlock extends Block
@@ -15,14 +20,16 @@ public class CenterBlock extends Block
 	private boolean movingDown;
 	private float acceleration = 0.5f;
 	private final float MAX_VELOCITY = 5;
+	private Grid grid;
 
-	public CenterBlock(float x, float y, int size, ObjectId id)
+	public CenterBlock(float x, float y, int size, Grid grid, ObjectId id)
 	{
 		super(x, y, size, id);
 		movingRight = false;
 		movingLeft = false;
 		movingUp = false;
 		movingDown = false;
+		this.grid = grid;
 	}
 
 	public void tick(LinkedList<GameObject> objects)
@@ -93,6 +100,25 @@ public class CenterBlock extends Block
 	{
 		super.render(g);
 
+		Graphics2D g2d = (Graphics2D) g;
+		if (grid.getHorizontalTrackBounds().contains(getBounds()))
+		{
+			int topArrowX = (int) x + size / 2;
+			int topArrowY = (int) y;
+			int bottomArrowX = (int) x + size / 2;
+			int bottomArrowY = (int) y + size;
+			g2d.draw(createArrowShape(new Point(topArrowX, topArrowY), new Point(topArrowX, topArrowY - 20)));
+			g2d.draw(createArrowShape(new Point(bottomArrowX, bottomArrowY), new Point(bottomArrowX, bottomArrowY + 20)));
+		}
+		if (grid.getVerticalTrackBounds().contains(getBounds()))
+		{
+			int leftArrowX = (int) x;
+			int leftArrowY = (int) y + size / 2;
+			int rightArrowX = (int) x + size;
+			int rightArrowY = (int) y + size / 2;
+			g2d.draw(createArrowShape(new Point(leftArrowX, leftArrowY), new Point(leftArrowX - 20, leftArrowY)));
+			g2d.draw(createArrowShape(new Point(rightArrowX, rightArrowY), new Point(rightArrowX + 20, rightArrowY)));
+		}
 		/*Graphics2D g2d = (Graphics2D) g;
 		g2d.setStroke(new BasicStroke(1f));
 		g2d.setColor(Color.YELLOW);
@@ -185,5 +211,34 @@ public class CenterBlock extends Block
 	public boolean isMoving()
 	{
 		return (movingUp || movingDown || movingRight || movingLeft);
+	}
+	
+	public static Shape createArrowShape(Point startPoint, Point endPoint)
+	{
+	    Polygon arrowPolygon = new Polygon();
+	    arrowPolygon.addPoint(-6, 1);
+	    arrowPolygon.addPoint(3, 1);
+	    arrowPolygon.addPoint(3, 3);
+	    arrowPolygon.addPoint(6, 0);
+	    arrowPolygon.addPoint(3, -3);
+	    arrowPolygon.addPoint(3, -1);
+	    arrowPolygon.addPoint(-6, -1);
+
+	    Point midpoint = midpoint(startPoint, endPoint);
+	    double rotate = Math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x);
+
+	    AffineTransform transform = new AffineTransform();
+	    transform.translate(midpoint.x, midpoint.y);
+	    double ptDistance = startPoint.distance(endPoint);
+	    double scale = ptDistance / 12; // 12 because it's the length of the arrow polygon.
+	    transform.scale(scale, scale);
+	    transform.rotate(rotate);
+
+	    return transform.createTransformedShape(arrowPolygon);
+	}
+
+	private static Point midpoint(Point p1, Point p2)
+	{
+	    return new Point((int)((p1.x + p2.x)/2.0), (int)((p1.y + p2.y)/2.0));
 	}
 }

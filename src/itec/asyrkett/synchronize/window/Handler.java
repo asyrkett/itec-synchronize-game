@@ -65,7 +65,7 @@ public class Handler
 		
 		int step = grid.getStep();
 		int dimension = grid.getDimension();
-		CenterBlock centerBlock = new CenterBlock(xx + step * (dimension / 2), yy + step * (dimension / 2), step, ObjectId.CenterBlock);
+		CenterBlock centerBlock = new CenterBlock(xx + step * (dimension / 2), yy + step * (dimension / 2), step, grid, ObjectId.CenterBlock);
 		addObject(centerBlock);
 		
 		/*for (int xx = 0; xx < Game.WIDTH; xx += Block.SIZE)

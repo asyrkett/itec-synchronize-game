@@ -1,6 +1,7 @@
 package itec.asyrkett.synchronize.framework;
 
 import itec.asyrkett.synchronize.objects.CenterBlock;
+import itec.asyrkett.synchronize.objects.Grid;
 import itec.asyrkett.synchronize.window.Handler;
 
 import java.awt.event.KeyAdapter;
@@ -24,10 +25,35 @@ public class KeyInput extends KeyAdapter
 			System.exit(1);
 		}
 		
-		if (handler.getObject(ObjectId.CenterBlock) != null)
+		if (handler.getObject(ObjectId.CenterBlock) != null && handler.getObject(ObjectId.Grid)!= null )
 		{
 			CenterBlock centerBlock = (CenterBlock) handler.getObject(ObjectId.CenterBlock);
-			if (keyCode == KeyEvent.VK_UP && !centerBlock.isMovingUp())
+			Grid grid = (Grid) handler.getObject(ObjectId.Grid);
+			
+			if (grid.getHorizontalTrackBounds().contains(centerBlock.getBounds()))
+			{
+				if (keyCode == KeyEvent.VK_RIGHT && centerBlock.getX() != grid.getX() + grid.getSize() - centerBlock.getSize())
+				{
+					centerBlock.setX(centerBlock.getX() + grid.getStep());
+				}
+				if (keyCode == KeyEvent.VK_LEFT && centerBlock.getX() != grid.getX())
+				{
+					centerBlock.setX(centerBlock.getX() - grid.getStep());
+				}
+			}
+			if (grid.getVerticalTrackBounds().contains(centerBlock.getBounds()))
+			{
+				if (keyCode == KeyEvent.VK_UP && centerBlock.getY() != grid.getY())
+				{
+					centerBlock.setY(centerBlock.getY() - grid.getStep());
+				}
+				if (keyCode == KeyEvent.VK_DOWN && centerBlock.getY() != (grid.getY() + grid.getSize() - centerBlock.getSize()))
+				{
+					centerBlock.setY(centerBlock.getY() + grid.getStep());
+				}
+			}
+			
+			/*if (keyCode == KeyEvent.VK_UP && !centerBlock.isMovingUp())
 			{
 				centerBlock.setMovingUp(true);
 			}
@@ -42,7 +68,7 @@ public class KeyInput extends KeyAdapter
 			else if (keyCode == KeyEvent.VK_LEFT && !centerBlock.isMovingLeft())
 			{
 				centerBlock.setMovingLeft(true);
-			}
+			}*/
 		}
 	}
 	
