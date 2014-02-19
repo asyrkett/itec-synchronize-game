@@ -34,22 +34,46 @@ public class KeyInput extends KeyAdapter
 			{
 				if (keyCode == KeyEvent.VK_RIGHT && centerBlock.getX() != grid.getX() + grid.getSize() - centerBlock.getSize())
 				{
+					centerBlock.setUpKeyPressed(false);
+					centerBlock.setDownKeyPressed(false);
 					centerBlock.setX(centerBlock.getX() + grid.getStep());
 				}
-				if (keyCode == KeyEvent.VK_LEFT && centerBlock.getX() != grid.getX())
+				else if (keyCode == KeyEvent.VK_LEFT && centerBlock.getX() != grid.getX())
 				{
+					centerBlock.setUpKeyPressed(false);
+					centerBlock.setDownKeyPressed(false);
 					centerBlock.setX(centerBlock.getX() - grid.getStep());
+				}
+				else if (keyCode == KeyEvent.VK_UP)
+				{
+					centerBlock.setUpKeyPressed(true);
+				}
+				else if (keyCode == KeyEvent.VK_DOWN)
+				{
+					centerBlock.setDownKeyPressed(true);
 				}
 			}
 			if (grid.getVerticalTrackBounds().contains(centerBlock.getBounds()))
 			{
 				if (keyCode == KeyEvent.VK_UP && centerBlock.getY() != grid.getY())
 				{
+					centerBlock.setRightKeyPressed(false);
+					centerBlock.setLeftKeyPressed(false);
 					centerBlock.setY(centerBlock.getY() - grid.getStep());
 				}
-				if (keyCode == KeyEvent.VK_DOWN && centerBlock.getY() != (grid.getY() + grid.getSize() - centerBlock.getSize()))
+				else if (keyCode == KeyEvent.VK_DOWN && centerBlock.getY() != (grid.getY() + grid.getSize() - centerBlock.getSize()))
 				{
+					centerBlock.setLeftKeyPressed(false);
+					centerBlock.setRightKeyPressed(false);
 					centerBlock.setY(centerBlock.getY() + grid.getStep());
+				}
+				else if (keyCode == KeyEvent.VK_RIGHT)
+				{
+					centerBlock.setRightKeyPressed(true);
+				}
+				else if (keyCode == KeyEvent.VK_LEFT)
+				{
+					centerBlock.setLeftKeyPressed(true);
 				}
 			}
 			
