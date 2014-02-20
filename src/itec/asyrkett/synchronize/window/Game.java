@@ -31,6 +31,8 @@ public class Game extends Canvas implements Runnable
 		handler = new Handler();
 		handler.createLevel();
 		
+		//KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+	    //manager.addKeyEventDispatcher(new KeyInput(handler));
 		this.addKeyListener(new KeyInput(handler));
 	}
 	

@@ -13,14 +13,11 @@ public class Handler
 {
 	public LinkedList<GameObject> objects = new LinkedList<GameObject>();
 	
-	private GameObject tempObject;
-	
 	public void tick()
 	{
 		for (int i = 0; i < objects.size(); i++)
 		{
-			tempObject = objects.get(i);
-			tempObject.tick(objects);
+			objects.get(i).tick(objects);
 		}
 	}
 	
@@ -28,8 +25,7 @@ public class Handler
 	{
 		for (int i = 0; i < objects.size(); i++)
 		{
-			tempObject = objects.get(i);
-			tempObject.render(g);
+			objects.get(i).render(g);
 		}
 	}
 	
@@ -45,9 +41,8 @@ public class Handler
 	
 	public GameObject getObject(ObjectId id)
 	{
-		for (int i = 0; i < objects.size(); i++)
+		for (GameObject tempObject : objects)
 		{
-			tempObject = objects.get(i);
 			if (tempObject.getId() == id)
 			{
 				return tempObject;
@@ -75,5 +70,23 @@ public class Handler
 				addObject(new Block(xx, yy, ObjectId.Block));
 			}
 		}*/
+	}
+	
+	public void removeCenterBlock()
+	{
+		CenterBlock current = (CenterBlock) getObject(ObjectId.CenterBlock);
+		addObject(current.cloneBlock());
+		removeObject(current);
+	}
+	
+	public void addCenterBlock()
+	{
+		removeCenterBlock();
+		int xx = (Game.WIDTH - Grid.getDefaultGridSize(9)) / 2;
+		int yy = Game.DEFAULT_MARGIN * 2;
+		Grid grid = (Grid) getObject(ObjectId.Grid);
+		int step = grid.getStep();
+		int dimension = grid.getDimension();
+		addObject(new CenterBlock(xx + step * (dimension / 2), yy + step * (dimension / 2), step, grid, ObjectId.CenterBlock));
 	}
 }

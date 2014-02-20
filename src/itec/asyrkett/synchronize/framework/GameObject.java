@@ -107,4 +107,13 @@ public abstract class GameObject
 	{
 		return id;
 	}
+	
+	/**
+	 * Sets the id of the object
+	 * @param id the id to set
+	 */
+	public void setId(ObjectId id)
+	{
+		this.id = id;
+	}
 }

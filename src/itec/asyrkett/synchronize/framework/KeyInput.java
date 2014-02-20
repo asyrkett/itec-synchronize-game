@@ -52,6 +52,19 @@ public class KeyInput extends KeyAdapter
 				{
 					centerBlock.setDownKeyPressed(true);
 				}
+				else if (keyCode == KeyEvent.VK_SPACE)
+				{
+					if (centerBlock.isUpKeyPressed())
+					{
+						centerBlock.setMovingUp(true);
+						handler.addCenterBlock();
+					}
+					else if (centerBlock.isDownKeyPressed())
+					{
+						centerBlock.setMovingDown(true);
+						handler.addCenterBlock();
+					}
+				}
 			}
 			if (grid.getVerticalTrackBounds().contains(centerBlock.getBounds()))
 			{
@@ -75,50 +88,20 @@ public class KeyInput extends KeyAdapter
 				{
 					centerBlock.setLeftKeyPressed(true);
 				}
+				else if (keyCode == KeyEvent.VK_SPACE)
+				{
+					if (centerBlock.isRightKeyPressed())
+					{
+						centerBlock.setMovingRight(true);
+						handler.addCenterBlock();
+					}
+					else if (centerBlock.isLeftKeyPressed())
+					{
+						centerBlock.setMovingLeft(true);
+						handler.addCenterBlock();
+					}
+				}
 			}
-			
-			/*if (keyCode == KeyEvent.VK_UP && !centerBlock.isMovingUp())
-			{
-				centerBlock.setMovingUp(true);
-			}
-			else if (keyCode == KeyEvent.VK_DOWN && !centerBlock.isMovingDown())
-			{
-				centerBlock.setMovingDown(true);
-			}
-			else if (keyCode == KeyEvent.VK_RIGHT && !centerBlock.isMovingRight())
-			{
-				centerBlock.setMovingRight(true);
-			}
-			else if (keyCode == KeyEvent.VK_LEFT && !centerBlock.isMovingLeft())
-			{
-				centerBlock.setMovingLeft(true);
-			}*/
 		}
-	}
-	
-	public void keyReleased(KeyEvent e)
-	{
-		/*int keyCode = e.getKeyCode();
-		
-		if (handler.getObject(ObjectId.CenterBlock) != null)
-		{
-			CenterBlock centerBlock = (CenterBlock) handler.getObject(ObjectId.CenterBlock);
-			if (keyCode == KeyEvent.VK_UP)
-			{
-				centerBlock.setVelY(0);
-			}
-			else if (keyCode == KeyEvent.VK_DOWN)
-			{
-				centerBlock.setVelY(0);
-			}
-			else if (keyCode == KeyEvent.VK_RIGHT)
-			{
-				centerBlock.setVelX(0);
-			}
-			else if (keyCode == KeyEvent.VK_LEFT)
-			{
-				centerBlock.setVelX(0);
-			}
-		}*/
 	}
 }
