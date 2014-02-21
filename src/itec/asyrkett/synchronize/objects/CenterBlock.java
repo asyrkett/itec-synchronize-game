@@ -13,9 +13,10 @@ public class CenterBlock extends Block
 	private Shape upArrow, downArrow, rightArrow, leftArrow;
 	private boolean upKeyPressed = false, downKeyPressed = false, rightKeyPressed = false, leftKeyPressed = false;
 	
-	public CenterBlock(float x, float y, int size, Grid grid, ObjectId id)
+	public CenterBlock(float x, float y, int size, Grid grid)
 	{
-		super(x, y, size, grid, id);
+		super(x, y, size, grid);
+		setId(ObjectId.CenterBlock);
 		adjustArrows();
 	}
 
@@ -187,7 +188,7 @@ public class CenterBlock extends Block
 	    return new Point((int)((p1.x + p2.x)/2.0), (int)((p1.y + p2.y)/2.0));
 	}
 	
-	public Block cloneBlock()
+	public Block toBlock()
 	{
 		Block block = (Block) this;
 		block.setId(ObjectId.Block);

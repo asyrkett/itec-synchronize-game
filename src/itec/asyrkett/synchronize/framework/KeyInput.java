@@ -19,7 +19,6 @@ public class KeyInput extends KeyAdapter
 	public void keyPressed(KeyEvent e)
 	{
 		int keyCode = e.getKeyCode();
-		
 		if (keyCode == KeyEvent.VK_ESCAPE)
 		{
 			System.exit(1);
@@ -71,13 +70,13 @@ public class KeyInput extends KeyAdapter
 				if (keyCode == KeyEvent.VK_UP && centerBlock.getY() != grid.getY())
 				{
 					centerBlock.setRightKeyPressed(false);
-					centerBlock.setLeftKeyPressed(false);
+					//centerBlock.setLeftKeyPressed(false);
 					centerBlock.setY(centerBlock.getY() - grid.getStep());
 				}
 				else if (keyCode == KeyEvent.VK_DOWN && centerBlock.getY() != (grid.getY() + grid.getSize() - centerBlock.getSize()))
 				{
 					centerBlock.setLeftKeyPressed(false);
-					centerBlock.setRightKeyPressed(false);
+					//centerBlock.setRightKeyPressed(false);
 					centerBlock.setY(centerBlock.getY() + grid.getStep());
 				}
 				else if (keyCode == KeyEvent.VK_RIGHT)
@@ -92,8 +91,15 @@ public class KeyInput extends KeyAdapter
 				{
 					if (centerBlock.isRightKeyPressed())
 					{
-						centerBlock.setMovingRight(true);
-						handler.addCenterBlock();
+						//if ()
+						//{
+							
+						//}
+						//else
+						//{
+							centerBlock.setMovingRight(true);
+							handler.addCenterBlock();
+						//}
 					}
 					else if (centerBlock.isLeftKeyPressed())
 					{

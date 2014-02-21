@@ -55,27 +55,19 @@ public class Handler
 	{
 		int xx = (Game.WIDTH - Grid.getDefaultGridSize(9)) / 2;
 		int yy = Game.DEFAULT_MARGIN * 2;
-		Grid grid = new Grid(xx, yy, 9, ObjectId.Grid);
+		Grid grid = new Grid(xx, yy, 9);
 		addObject(grid);
 		
 		int step = grid.getStep();
 		int dimension = grid.getDimension();
-		CenterBlock centerBlock = new CenterBlock(xx + step * (dimension / 2), yy + step * (dimension / 2), step, grid, ObjectId.CenterBlock);
+		CenterBlock centerBlock = new CenterBlock(xx + step * (dimension / 2), yy + step * (dimension / 2), step, grid);
 		addObject(centerBlock);
-		
-		/*for (int xx = 0; xx < Game.WIDTH; xx += Block.SIZE)
-		{
-			for (int yy = 0; yy < Game.HEIGHT; yy += Block.SIZE)
-			{
-				addObject(new Block(xx, yy, ObjectId.Block));
-			}
-		}*/
 	}
 	
 	public void removeCenterBlock()
 	{
 		CenterBlock current = (CenterBlock) getObject(ObjectId.CenterBlock);
-		addObject(current.cloneBlock());
+		addObject(current.toBlock());
 		removeObject(current);
 	}
 	
@@ -87,6 +79,6 @@ public class Handler
 		Grid grid = (Grid) getObject(ObjectId.Grid);
 		int step = grid.getStep();
 		int dimension = grid.getDimension();
-		addObject(new CenterBlock(xx + step * (dimension / 2), yy + step * (dimension / 2), step, grid, ObjectId.CenterBlock));
+		addObject(new CenterBlock(xx + step * (dimension / 2), yy + step * (dimension / 2), step, grid));
 	}
 }

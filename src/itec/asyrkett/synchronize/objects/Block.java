@@ -18,9 +18,9 @@ public class Block extends GameObject
 	protected final float MAX_VELOCITY = 5;
 	protected Grid grid;
 
-	public Block(float x, float y, int size, Grid grid, ObjectId id)
+	public Block(float x, float y, int size, Grid grid)
 	{
-		super(x, y, id);
+		super(x, y, ObjectId.Block);
 		this.size = size;
 		this.grid = grid;
 	}
