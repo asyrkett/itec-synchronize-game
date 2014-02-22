@@ -41,8 +41,12 @@ public class Cell extends GameObject {
 	
 	public boolean addBlock(Block block)
 	{
-		if (block == null)
+		if (this.block == null)
 		{
+			/*block.setX(x);
+			block.setY(y);*/
+			block.setDestinationX(x);
+			block.setDestinationY(y);
 			this.block = block;
 			return true;
 		}

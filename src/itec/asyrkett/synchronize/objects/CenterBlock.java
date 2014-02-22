@@ -1,12 +1,15 @@
 package itec.asyrkett.synchronize.objects;
 
+import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
+import java.util.LinkedList;
 
 public class CenterBlock extends Block
 {
@@ -20,6 +23,10 @@ public class CenterBlock extends Block
 		adjustArrows();
 	}
 
+	public void tick(LinkedList<GameObject> objects)
+	{
+	}
+	
 	public void render(Graphics g)
 	{
 		super.render(g);
@@ -190,8 +197,11 @@ public class CenterBlock extends Block
 	
 	public Block toBlock()
 	{
-		Block block = (Block) this;
-		block.setId(ObjectId.Block);
+		Block block = new Block(x, y, size, grid);
+		//block.setMovingDown(isMovingDown());
+		//block.setMovingUp(isMovingUp());
+		//block.setMovingRight(isMovingRight());
+		//block.setMovingLeft(isMovingLeft());
 		return block;
 	}
 }

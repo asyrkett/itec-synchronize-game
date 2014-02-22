@@ -10,9 +10,8 @@ import java.util.LinkedList;
 
 public class Block extends GameObject
 {
-	
-	//public static final int SIZE = 32;
 	protected int size;
+	protected float destinationX, destinationY;
 	protected boolean movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
 	protected float acceleration = 0.5f;
 	protected final float MAX_VELOCITY = 5;
@@ -21,6 +20,8 @@ public class Block extends GameObject
 	public Block(float x, float y, int size, Grid grid)
 	{
 		super(x, y, ObjectId.Block);
+		destinationX = x;
+		destinationY = y;
 		this.size = size;
 		this.grid = grid;
 	}
@@ -29,26 +30,46 @@ public class Block extends GameObject
 	{
 		x += velX;
 		y += velY;
-		
+
 		if (movingRight)
 		{
 			velX += acceleration;
 			velX = ((velX > MAX_VELOCITY) ? MAX_VELOCITY : velX);
+			if (x > destinationX)
+			{
+				x = destinationX;
+				setMovingRight(false);
+			}
 		}
 		else if (movingLeft)
 		{
 			velX -= acceleration;
 			velX = ((velX < -MAX_VELOCITY) ? -MAX_VELOCITY : velX);
+			if (x < destinationX)
+			{
+				x = destinationX;
+				setMovingLeft(false);
+			}
 		}
 		else if (movingUp)
 		{
 			velY -= acceleration;
 			velY = ((velY < -MAX_VELOCITY) ? -MAX_VELOCITY : velY);
+			if (y < destinationY)
+			{
+				y = destinationY;
+				setMovingUp(false);
+			}
 		}
 		else if (movingDown)
 		{
 			velY += acceleration;
 			velY = ((velY > MAX_VELOCITY) ? MAX_VELOCITY : velY);
+			if (y > destinationY)
+			{
+				y = destinationY;
+				setMovingDown(false);
+			}
 		}
 
 		collision(objects);
@@ -61,8 +82,8 @@ public class Block extends GameObject
 	}
 	
 	private void collision(LinkedList<GameObject> objects)
-	{
-		for (int i = 0; i < objects.size(); i++)
+	{	
+		/*for (int i = 0; i < objects.size(); i++)
 		{
 			GameObject tempObject = objects.get(i);
 			if (tempObject == this)
@@ -119,7 +140,7 @@ public class Block extends GameObject
 					setMovingLeft(false);
 				}
 			}
-		}
+		}*/
 	}
 
 	public Rectangle getBounds()
@@ -220,5 +241,25 @@ public class Block extends GameObject
 	public boolean isMoving()
 	{
 		return (movingUp || movingDown || movingRight || movingLeft);
+	}
+
+	public float getDestinationX()
+	{
+		return destinationX;
+	}
+
+	public void setDestinationX(float destinationX)
+	{
+		this.destinationX = destinationX;
+	}
+
+	public float getDestinationY()
+	{
+		return destinationY;
+	}
+
+	public void setDestinationY(float destinationY)
+	{
+		this.destinationY = destinationY;
 	}
 }

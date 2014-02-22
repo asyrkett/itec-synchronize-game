@@ -30,14 +30,16 @@ public class Grid extends GameObject
 	private void initCells()
 	{
 		cells = new Cell[dimension][dimension];
-		for (int xx = 0; xx < dimension; xx++)
+		for (int row = 0; row < dimension; row++)
 		{
-			for (int yy = 0; yy < dimension; yy++)
+			for (int col = 0; col < dimension; col++)
 			{
-				cells[xx][yy] = new Cell(x + xx * step, y + yy * step, this);
+				cells[row][col] = new Cell(x + col * step, y + row * step, this);
+				//System.out.print(cells[row][col] + " ");
 			}
+			//System.out.println();
 		}
-		System.out.println(x + " " + y);
+		//System.out.println(x + " " + y);
 	}
 	
 	public void tick(LinkedList<GameObject> objects)
@@ -151,16 +153,6 @@ public class Grid extends GameObject
 		return cells;
 	}
 	
-	/*public void addBlock(Block block)
-	{
-		cells[getRow(block)][getColumn(block)] = false;
-	}
-	
-	public void removeBlock(Block block)
-	{
-		cells[getRow(block)][getColumn(block)] = false;
-	}
-	
 	public int getRow(Block block)
 	{
 		return (int)(block.getY() - y) / step;
@@ -170,31 +162,4 @@ public class Grid extends GameObject
 	{
 		return (int)(block.getX() - x) / step;
 	}
-	
-	public boolean cellOccupied(Block block)
-	{
-		return cellOccupied(getRow(block), getColumn(block));
-	}
-	
-	public boolean cellOccupied(int row, int column)
-	{
-		if (row <= dimension && column <= dimension)
-		{
-			return cells[row][column];
-		}
-		return false;
-	}
-	
-	public void printCells()
-	{
-		for (int xx = 0; xx < cells.length; xx++)
-		{
-			for (int yy = 0; yy < cells[xx].length; yy++)
-			{
-				System.out.print(cells[xx][yy] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-	}*/
 }

@@ -67,7 +67,7 @@ public class Handler
 	public void removeCenterBlock()
 	{
 		CenterBlock current = (CenterBlock) getObject(ObjectId.CenterBlock);
-		addObject(current.toBlock());
+		//addObject(current.toBlock());
 		removeObject(current);
 	}
 	

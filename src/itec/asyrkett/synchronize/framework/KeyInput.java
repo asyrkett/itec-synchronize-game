@@ -1,5 +1,7 @@
 package itec.asyrkett.synchronize.framework;
 
+import itec.asyrkett.synchronize.objects.Block;
+import itec.asyrkett.synchronize.objects.Cell;
 import itec.asyrkett.synchronize.objects.CenterBlock;
 import itec.asyrkett.synchronize.objects.Grid;
 import itec.asyrkett.synchronize.window.Handler;
@@ -28,6 +30,10 @@ public class KeyInput extends KeyAdapter
 		{
 			CenterBlock centerBlock = (CenterBlock) handler.getObject(ObjectId.CenterBlock);
 			Grid grid = (Grid) handler.getObject(ObjectId.Grid);
+			Cell[][] cells = grid.getCells();
+			int row = grid.getRow(centerBlock);
+			int column = grid.getColumn(centerBlock);
+			Cell destinationCell = null;
 			
 			if (grid.getHorizontalTrackBounds().contains(centerBlock.getBounds()))
 			{
@@ -52,16 +58,65 @@ public class KeyInput extends KeyAdapter
 					centerBlock.setDownKeyPressed(true);
 				}
 				else if (keyCode == KeyEvent.VK_SPACE)
-				{
+				{	
 					if (centerBlock.isUpKeyPressed())
 					{
-						centerBlock.setMovingUp(true);
-						handler.addCenterBlock();
+						for (int i = row - 1; i >= 0; i--)
+						{
+							if (cells[i][column].isOccupied())
+							{
+								if (i != row - 1)
+								{
+									destinationCell = cells[i + 1][column];
+								}
+								break;
+							}
+							else if (i == 0)
+							{
+								destinationCell = cells[i][column];
+								//System.out.println(destinationCell + ", row " + i + ", column" + column + ", " + centerBlock.getX() + ", " + centerBlock.getY());
+							}
+						}
+						//centerBlock.setMovingUp(true);
+						//handler.addCenterBlock();
+						if (destinationCell != null)
+						{
+							Block block = centerBlock.toBlock();
+							destinationCell.addBlock(block);
+							block.setMovingUp(true);
+							handler.addObject(block);
+							handler.addCenterBlock();
+						}
 					}
 					else if (centerBlock.isDownKeyPressed())
 					{
-						centerBlock.setMovingDown(true);
-						handler.addCenterBlock();
+						//System.out.println("GO DOWN!");
+						for (int i = row + 1; i < cells.length; i++)
+						{
+							//System.out.println("row " + i + ", column " + column);
+							if (cells[i][column].isOccupied())
+							{
+								if (i != row + 1)
+								{
+									destinationCell = cells[i - 1][column];
+								}
+								break;
+							}
+							else if (i == cells.length - 1)
+							{
+								destinationCell = cells[i][column];
+								//System.out.println(destinationCell + ", row " + i + ", column" + column + ", " + centerBlock.getX() + ", " + centerBlock.getY());
+							}
+						}
+						//System.out.println(destinationCell);
+						if (destinationCell != null)
+						{
+							Block block = centerBlock.toBlock();
+							destinationCell.addBlock(block);
+							block.setMovingDown(true);
+							handler.addObject(block);
+							handler.addCenterBlock();
+						}
 					}
 				}
 			}
@@ -91,20 +146,55 @@ public class KeyInput extends KeyAdapter
 				{
 					if (centerBlock.isRightKeyPressed())
 					{
-						//if ()
-						//{
-							
-						//}
-						//else
-						//{
-							centerBlock.setMovingRight(true);
+						for (int i = column + 1; i < cells.length; i++)
+						{
+							if (cells[row][i].isOccupied())
+							{
+								if (i != column + 1)
+								{
+									destinationCell = cells[row][i - 1];
+								}
+								break;
+							}
+							else if (i == cells.length - 1)
+							{
+								destinationCell = cells[row][i];
+							}
+						}
+						if (destinationCell != null)
+						{
+							Block block = centerBlock.toBlock();
+							destinationCell.addBlock(block);
+							block.setMovingRight(true);
+							handler.addObject(block);
 							handler.addCenterBlock();
-						//}
+						}
 					}
 					else if (centerBlock.isLeftKeyPressed())
 					{
-						centerBlock.setMovingLeft(true);
-						handler.addCenterBlock();
+						for (int i = column - 1; i >= 0; i--)
+						{
+							if (cells[row][i].isOccupied())
+							{
+								if (i != column - 1)
+								{
+									destinationCell = cells[row][i + 1];
+								}
+								break;
+							}
+							else if (i == 0)
+							{
+								destinationCell = cells[row][i];
+							}
+						}
+						if (destinationCell != null)
+						{
+							Block block = centerBlock.toBlock();
+							destinationCell.addBlock(block);
+							block.setMovingLeft(true);
+							handler.addObject(block);
+							handler.addCenterBlock();
+						}
 					}
 				}
 			}
