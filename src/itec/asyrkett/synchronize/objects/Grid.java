@@ -3,7 +3,6 @@ package itec.asyrkett.synchronize.objects;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
 import itec.asyrkett.synchronize.window.Game;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,7 +15,7 @@ public class Grid extends GameObject
 	private int size;
 	private int step;
 	private boolean tracksVisible;
-	//private boolean[][] cells;
+	private Cell[][] cells;
 	
 	public Grid(float x, float y, int dimension)
 	{
@@ -25,10 +24,22 @@ public class Grid extends GameObject
 		this.size = getDefaultGridSize(dimension);
 		this.step = getDefaultGridStep(dimension);
 		this.tracksVisible = true;
-		//this.cells = new boolean[dimension][dimension];
+		initCells();
 	}
 	
-	@Override
+	private void initCells()
+	{
+		cells = new Cell[dimension][dimension];
+		for (int xx = 0; xx < dimension; xx++)
+		{
+			for (int yy = 0; yy < dimension; yy++)
+			{
+				cells[xx][yy] = new Cell(x + xx * step, y + yy * step, this);
+			}
+		}
+		System.out.println(x + " " + y);
+	}
+	
 	public void tick(LinkedList<GameObject> objects)
 	{
 
@@ -36,17 +47,24 @@ public class Grid extends GameObject
 	
 	public void render(Graphics g)
 	{
-		g.setColor(Color.WHITE);
-		g.fillRect((int) x, (int) y, size, size);
+		/*g.setColor(Color.WHITE);
+		g.fillRect((int) x, (int) y, size, size);*/
 		
-		g.setColor(Color.RED);
+		for (int xx = 0; xx < cells.length; xx++)
+		{
+			for (int yy = 0; yy < cells[xx].length; yy++)
+			{
+				cells[xx][yy].render(g);
+			}
+		}
+		/*g.setColor(Color.RED);
 		for (int xx = (int) x; xx < (int) (x + size); xx += step)
 		{
 			for (int yy = (int) y; yy < (int) (y + size); yy += step)
 			{
 				g.drawRect(xx, yy, step, step);
 			}
-		}
+		}*/
 		
 		if (tracksVisible)
 		{
@@ -126,6 +144,11 @@ public class Grid extends GameObject
 	public static int getDefaultGridStep(int dimension)
 	{
 		return getDefaultGridSize(dimension) / dimension;
+	}
+	
+	public Cell[][] getCells()
+	{
+		return cells;
 	}
 	
 	/*public void addBlock(Block block)
