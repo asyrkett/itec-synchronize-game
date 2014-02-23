@@ -12,11 +12,17 @@ public class Cell extends GameObject {
 
 	private Block block;
 	private Grid grid;
+	private int row;
+	private int column;
+	private int size;
 	
-	public Cell(float x, float y, Grid grid) {
-		super(x, y, ObjectId.Cell);
+	public Cell(Grid grid, int row, int col) {
+		super(grid.getX() + col * grid.getStep(), grid.getY() + row * grid.getStep(), ObjectId.Cell);
 		this.block = null;
 		this.grid = grid;
+		this.row = row;
+		this.column = col;
+		this.size = grid.getStep();
 	}
 
 	public void tick(LinkedList<GameObject> objects)
@@ -26,12 +32,12 @@ public class Cell extends GameObject {
 	public void render(Graphics g)
 	{
 		g.setColor(Color.RED);
-		g.drawRect((int)x, (int)y, grid.getStep(), grid.getStep());
+		g.drawRect((int)x, (int)y, size, size);
 	}
 
 	public Rectangle getBounds()
 	{
-		return new Rectangle((int)x, (int)y, grid.getStep(), grid.getStep());
+		return new Rectangle((int)x, (int)y, size, size);
 	}
 	
 	public boolean isOccupied()
@@ -66,5 +72,30 @@ public class Cell extends GameObject {
 	public String toString()
 	{
 		return "Cell [x=" + x + ", y=" + y + "]";
+	}
+	
+	public int getRow()
+	{
+		return this.row;
+	}
+	
+	public int getColumn()
+	{
+		return this.column;
+	}
+	
+	public int getNumAdjacent()
+	{
+		Cell[][] cells = grid.getCells();
+		int count = 0;
+		if (row - 1 >= 0 && cells[row - 1][column].isOccupied())
+			count++;
+		if (row + 1 < cells.length && cells[row + 1][column].isOccupied())
+			count++;
+		if (column - 1 >= 0 && cells[row][column - 1].isOccupied())
+			count++;
+		if (column + 1 < cells.length && cells[row][column + 1].isOccupied())
+			count++;
+		return count;
 	}
 }

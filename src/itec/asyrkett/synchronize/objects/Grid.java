@@ -34,11 +34,21 @@ public class Grid extends GameObject
 		{
 			for (int col = 0; col < dimension; col++)
 			{
-				cells[row][col] = new Cell(x + col * step, y + row * step, this);
-				//System.out.print(cells[row][col] + " ");
+				cells[row][col] = new Cell(this, row, col);
+				//System.out.print(cells[row][col] + " " + cells[row][col].getRow() + ", " + cells[row][col].getColumn() + " ");
 			}
-			//System.out.println();
+			System.out.println();
 		}
+		
+		/*for (int row = 0; row < dimension; row++)
+		{
+			for (int col = 0; col < dimension; col++)
+			{
+				System.out.print(cells[row][col].getNumAdjacent() + " ");
+				//System.out.print(cells[row][col] + " " + cells[row][col].getRow() + ", " + cells[row][col].getColumn() + " ");
+			}
+			System.out.println();
+		}*/
 		//System.out.println(x + " " + y);
 	}
 	
