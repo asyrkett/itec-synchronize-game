@@ -1,5 +1,6 @@
 package itec.asyrkett.synchronize.objects;
 
+import itec.asyrkett.synchronize.framework.Direction;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
 
@@ -10,80 +11,89 @@ import java.util.LinkedList;
 
 public class Block extends GameObject
 {
+	protected final float MAX_VELOCITY = 5;
+	protected final float acceleration = 0.5f;
+	
 	protected int size;
 	protected float destinationX, destinationY;
-	protected boolean movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
-	protected float acceleration = 0.5f;
-	protected final float MAX_VELOCITY = 5;
+	protected Direction direction;
+	protected boolean moving;
 	protected Grid grid;
+	protected Color color;
 
-	public Block(float x, float y, int size, Grid grid)
+	public Block(float x, float y, int size, Grid grid, Color color)
 	{
 		super(x, y, ObjectId.Block);
 		destinationX = x;
 		destinationY = y;
 		this.size = size;
 		this.grid = grid;
+		this.color = color;
+		this.direction = Direction.CENTER;
+		this.moving = false;
 	}
 
 	public void tick(LinkedList<GameObject> objects)
 	{
-		x += velX;
-		y += velY;
+		if (moving)
+		{		
+			x += velX;
+			y += velY;
 
-		if (movingRight)
-		{
-			velX += acceleration;
-			velX = ((velX > MAX_VELOCITY) ? MAX_VELOCITY : velX);
-			if (x > destinationX)
+			if (direction == Direction.EAST)
 			{
-				x = destinationX;
-				setMovingRight(false);
+				velX += acceleration;
+				velX = ((velX > MAX_VELOCITY) ? MAX_VELOCITY : velX);
+				if (x > destinationX)
+				{
+					x = destinationX;
+					setMoving(false);
+				}
 			}
-		}
-		else if (movingLeft)
-		{
-			velX -= acceleration;
-			velX = ((velX < -MAX_VELOCITY) ? -MAX_VELOCITY : velX);
-			if (x < destinationX)
+			else if (direction == Direction.WEST)
 			{
-				x = destinationX;
-				setMovingLeft(false);
+				velX -= acceleration;
+				velX = ((velX < -MAX_VELOCITY) ? -MAX_VELOCITY : velX);
+				if (x < destinationX)
+				{
+					x = destinationX;
+					setMoving(false);
+				}
 			}
-		}
-		else if (movingUp)
-		{
-			velY -= acceleration;
-			velY = ((velY < -MAX_VELOCITY) ? -MAX_VELOCITY : velY);
-			if (y < destinationY)
+			else if (direction == Direction.NORTH)
 			{
-				y = destinationY;
-				setMovingUp(false);
+				velY -= acceleration;
+				velY = ((velY < -MAX_VELOCITY) ? -MAX_VELOCITY : velY);
+				if (y < destinationY)
+				{
+					y = destinationY;
+					setMoving(false);
+				}
 			}
-		}
-		else if (movingDown)
-		{
-			velY += acceleration;
-			velY = ((velY > MAX_VELOCITY) ? MAX_VELOCITY : velY);
-			if (y > destinationY)
+			else if (direction == Direction.SOUTH)
 			{
-				y = destinationY;
-				setMovingDown(false);
+				velY += acceleration;
+				velY = ((velY > MAX_VELOCITY) ? MAX_VELOCITY : velY);
+				if (y > destinationY)
+				{
+					y = destinationY;
+					setMoving(false);
+				}
 			}
 		}
 
-		collision(objects);
+		//collision(objects);
 	}
 
 	public void render(Graphics g)
 	{
-		g.setColor(Color.GREEN);
+		g.setColor(color);
 		g.fillRect((int)x, (int)y, size, size);
 	}
-	
-	private void collision(LinkedList<GameObject> objects)
+
+	/*private void collision(LinkedList<GameObject> objects)
 	{	
-		/*for (int i = 0; i < objects.size(); i++)
+		for (int i = 0; i < objects.size(); i++)
 		{
 			GameObject tempObject = objects.get(i);
 			if (tempObject == this)
@@ -110,9 +120,9 @@ public class Block extends GameObject
 				if (!gridBounds.contains(getBoundsLeft()))
 				{
 					x = grid.getX();
-					setMovingLeft(false);
+					setMovingWest(false);
 				}
-				
+
 			}
 			if (tempObject.getId() == ObjectId.Block)
 			{
@@ -137,11 +147,11 @@ public class Block extends GameObject
 				if (blockBounds.intersects(getBoundsLeft()))
 				{
 					x = block.getX() + block.getSize();
-					setMovingLeft(false);
+					setMovingWest(false);
 				}
 			}
-		}*/
-	}
+		}
+	}*/
 
 	public Rectangle getBounds()
 	{
@@ -157,90 +167,37 @@ public class Block extends GameObject
 	{
 		this.size = size;
 	}
-	
-	public Rectangle getBoundsBottom()
+
+	public Rectangle getBoundsSouth()
 	{
 		return new Rectangle((int)(x + size / 4), (int)(y + size / 2), size / 2, size / 2);
 	}
 
-	public Rectangle getBoundsTop()
+	public Rectangle getBoundsNorth()
 	{
 		return new Rectangle((int)(x + size / 4), (int)y, size / 2, size / 2);
 	}
 
-	public Rectangle getBoundsRight()
+	public Rectangle getBoundsEast()
 	{
 		return new Rectangle((int)(x + size / 2), (int)(y + 5), size / 2, size - 10);
 	}
 
-	public Rectangle getBoundsLeft()
+	public Rectangle getBoundsWest()
 	{
 		return new Rectangle((int)x, (int)(y + 5), size / 2, size - 10);
 	}
 
-	public boolean isMovingRight()
+	public void setMoving(boolean moving)
 	{
-		return movingRight;
-	}
-
-	public void setMovingRight(boolean movingRight)
-	{
-		this.movingRight = movingRight;
-		this.movingLeft = false;
-		this.movingUp = false;
-		this.movingDown = false;
+		this.moving = moving;
 		velY = 0;
 		velX = 0;
 	}
 
-	public boolean isMovingLeft()
-	{
-		return movingLeft;
-	}
-
-	public void setMovingLeft(boolean movingLeft)
-	{
-		this.movingLeft = movingLeft;
-		this.movingRight = false;
-		this.movingUp = false;
-		this.movingDown = false;
-		velY = 0;
-		velX = 0;
-	}
-
-	public boolean isMovingUp()
-	{
-		return movingUp;
-	}
-
-	public void setMovingUp(boolean movingUp)
-	{
-		this.movingUp = movingUp;
-		this.movingLeft = false;
-		this.movingRight = false;
-		this.movingDown = false;
-		velY = 0;
-		velX = 0;
-	}
-
-	public boolean isMovingDown()
-	{
-		return movingDown;
-	}
-
-	public void setMovingDown(boolean movingDown)
-	{
-		this.movingDown = movingDown;
-		this.movingLeft = false;
-		this.movingRight = false;
-		this.movingUp = false;
-		velY = 0;
-		velX = 0;
-	}
-	
 	public boolean isMoving()
 	{
-		return (movingUp || movingDown || movingRight || movingLeft);
+		return moving;
 	}
 
 	public float getDestinationX()
@@ -261,5 +218,25 @@ public class Block extends GameObject
 	public void setDestinationY(float destinationY)
 	{
 		this.destinationY = destinationY;
+	}
+
+	public Color getColor()
+	{
+		return color;
+	}
+
+	public void setColor(Color color)
+	{
+		this.color = color;
+	}
+
+	public Direction getDirection()
+	{
+		return direction;
+	}
+
+	public void setDirection(Direction direction)
+	{
+		this.direction = direction;
 	}
 }

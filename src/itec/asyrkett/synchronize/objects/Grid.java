@@ -3,11 +3,16 @@ package itec.asyrkett.synchronize.objects;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
 import itec.asyrkett.synchronize.window.Game;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class Grid extends GameObject 
 {
@@ -35,21 +40,8 @@ public class Grid extends GameObject
 			for (int col = 0; col < dimension; col++)
 			{
 				cells[row][col] = new Cell(this, row, col);
-				//System.out.print(cells[row][col] + " " + cells[row][col].getRow() + ", " + cells[row][col].getColumn() + " ");
 			}
-			System.out.println();
 		}
-		
-		/*for (int row = 0; row < dimension; row++)
-		{
-			for (int col = 0; col < dimension; col++)
-			{
-				System.out.print(cells[row][col].getNumAdjacent() + " ");
-				//System.out.print(cells[row][col] + " " + cells[row][col].getRow() + ", " + cells[row][col].getColumn() + " ");
-			}
-			System.out.println();
-		}*/
-		//System.out.println(x + " " + y);
 	}
 	
 	public void tick(LinkedList<GameObject> objects)
@@ -58,10 +50,7 @@ public class Grid extends GameObject
 	}
 	
 	public void render(Graphics g)
-	{
-		/*g.setColor(Color.WHITE);
-		g.fillRect((int) x, (int) y, size, size);*/
-		
+	{	
 		for (int xx = 0; xx < cells.length; xx++)
 		{
 			for (int yy = 0; yy < cells[xx].length; yy++)
@@ -69,19 +58,10 @@ public class Grid extends GameObject
 				cells[xx][yy].render(g);
 			}
 		}
-		/*g.setColor(Color.RED);
-		for (int xx = (int) x; xx < (int) (x + size); xx += step)
-		{
-			for (int yy = (int) y; yy < (int) (y + size); yy += step)
-			{
-				g.drawRect(xx, yy, step, step);
-			}
-		}*/
 		
 		if (tracksVisible)
 		{
 			Graphics2D g2d = (Graphics2D) g;
-			//g2d.setStroke(new BasicStroke(2F));
 			g2d.setColor(Color.BLUE);
 			
 			//Horizontal track
@@ -171,5 +151,55 @@ public class Grid extends GameObject
 	public int getColumn(Block block)
 	{
 		return (int)(block.getX() - x) / step;
+	}
+	
+	public boolean isEmpty()
+	{
+		boolean empty = true;
+		for (int row = 0; row < cells.length; row++)
+		{
+			for (int column = 0; column < cells[row].length; column++)
+			{
+				if (cells[row][column].getBlock() != null)
+					return false;
+			}
+		}
+		return empty;
+	}
+	
+	public Set<Cell> checkForMatch()
+	{
+		Set<Cell> cellsToRemove = new HashSet<Cell>();
+		for (int row = 0; row < cells.length; row++)
+		{
+			for (int column = 0; column < cells[row].length; column++)
+			{
+				Cell cell = cells[row][column];
+				if (cell.isOccupied())
+				{
+					List<Cell> verticalGroup = new ArrayList<Cell>();
+					Cell southCell = cell;
+					while (southCell != null && southCell.isOccupied() && southCell.getBlock().getColor() == cell.getBlock().getColor())
+					{
+						verticalGroup.add(southCell);
+						southCell = southCell.getSouthCell();
+					}
+					
+					List<Cell> horizontalGroup = new ArrayList<Cell>();
+					Cell eastCell = cell;
+					while (eastCell != null && eastCell.isOccupied() && eastCell.getBlock().getColor() == cell.getBlock().getColor())
+					{
+						horizontalGroup.add(eastCell);
+						eastCell = eastCell.getEastCell();
+					}
+					
+					if (horizontalGroup.size() >= 3)
+						cellsToRemove.addAll(horizontalGroup);
+					if (verticalGroup.size() >= 3)
+						cellsToRemove.addAll(verticalGroup);
+				}
+			}
+		}
+		return cellsToRemove;
 	}
 }

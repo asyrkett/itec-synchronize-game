@@ -1,12 +1,12 @@
 package itec.asyrkett.synchronize.objects;
 
+import itec.asyrkett.synchronize.framework.GameObject;
+import itec.asyrkett.synchronize.framework.ObjectId;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
-
-import itec.asyrkett.synchronize.framework.GameObject;
-import itec.asyrkett.synchronize.framework.ObjectId;
 
 public class Cell extends GameObject {
 
@@ -59,9 +59,11 @@ public class Cell extends GameObject {
 		return false;
 	}
 	
-	public void removeBlock()
+	public Block removeBlock()
 	{
+		Block block = this.block;
 		this.block = null;
+		return block;
 	}
 	
 	public Block getBlock()
@@ -108,6 +110,30 @@ public class Cell extends GameObject {
 		return grid.getCells()[row][column + 1];
 	}
 	
+	public Block getNorthBlock() {
+		if (row - 1 < 0)
+			return null;
+		return getNorthCell().block;
+	}
+	
+	public Block getSouthBlock() {
+		if (row + 1 >= grid.getCells().length)
+			return null;
+		return getSouthCell().block;
+	}
+	
+	public Block getEastBlock() {
+		if (column + 1 >= grid.getCells().length)
+			return null;
+		return getEastCell().block;
+	}
+	
+	public Block getWestBlock() {
+		if (column - 1 < 0)
+			return null;
+		return getWestCell().block;
+	}
+	
 	public int getNumAdjacent()
 	{
 		Cell[][] cells = grid.getCells();
@@ -122,4 +148,30 @@ public class Cell extends GameObject {
 			count++;
 		return count;
 	}
+	
+	/*public int countGroup(Set<Block> groupSet)
+	{
+		if (this.block == null)
+			return 0;
+		
+		Color color = this.block.getColor();
+		List<Block> list = new ArrayList<Block>();
+		if (getNorthBlock() != null && getNorthBlock().getColor() == color)
+			list.add(getNorthBlock());
+		if (getSouthBlock() != null && getSouthBlock().getColor() == color)
+			list.add(getSouthBlock());
+		if (getEastBlock() != null && getEastBlock().getColor() == color)
+			list.add(getEastBlock());
+		if (getWestBlock() != null && getWestBlock().getColor() == color)
+			list.add(getWestBlock());
+		
+		if (list.size() == 0 || groupSet.containsAll(list))
+		{
+			return groupSet.size();
+		}
+		
+		
+		
+		return 0;
+	}*/
 }

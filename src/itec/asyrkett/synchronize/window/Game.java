@@ -6,6 +6,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
 public class Game extends Canvas implements Runnable
 {
@@ -17,6 +18,8 @@ public class Game extends Canvas implements Runnable
 	
 	public static int WIDTH, HEIGHT;
 	public static final int DEFAULT_MARGIN = 32;
+	public static final int DEFAULT_GRID_DIMENSION = 9;
+	public static final Random GENERATOR = new Random();
 	
 	Handler handler; // handler of the graphics objects
 	
@@ -29,7 +32,7 @@ public class Game extends Canvas implements Runnable
 		HEIGHT = getHeight();
 		
 		handler = new Handler();
-		handler.createLevel();
+		handler.createLevel(1);
 		
 		//KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 	    //manager.addKeyEventDispatcher(new KeyInput(handler));
@@ -76,7 +79,7 @@ public class Game extends Canvas implements Runnable
 			if (System.currentTimeMillis() - timer > 1000)
 			{
 				timer += 1000;
-				//System.out.println("FPS: " + frames + " TICKS: " + updates);
+				System.out.println("FPS: " + frames + " TICKS: " + updates);
 				frames = 0;
 				updates = 0;
 			}
