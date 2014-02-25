@@ -84,6 +84,30 @@ public class Cell extends GameObject {
 		return this.column;
 	}
 	
+	public Cell getNorthCell() {
+		if (row - 1 < 0)
+			return null;
+		return grid.getCells()[row - 1][column];
+	}
+	
+	public Cell getSouthCell() {
+		if (row + 1 >= grid.getCells().length)
+			return null;
+		return grid.getCells()[row + 1][column];
+	}
+	
+	public Cell getWestCell() {
+		if (column - 1 < 0)
+			return null;
+		return grid.getCells()[row][column - 1];
+	}
+	
+	public Cell getEastCell() {
+		if (column + 1 >= grid.getCells().length)
+			return null;
+		return grid.getCells()[row][column + 1];
+	}
+	
 	public int getNumAdjacent()
 	{
 		Cell[][] cells = grid.getCells();
