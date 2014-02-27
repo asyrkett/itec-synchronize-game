@@ -16,11 +16,12 @@ import java.util.LinkedList;
 public class CenterBlock extends Block
 {
 	private Shape upArrow, downArrow, rightArrow, leftArrow;
-	//private boolean upKeyPressed = false, downKeyPressed = false, rightKeyPressed = false, leftKeyPressed = false;
 	
-	public CenterBlock(float x, float y, int size, Grid grid, Color color)
+	public CenterBlock(Grid grid, Color color)
 	{
-		super(x, y, size, grid, color);
+		super(grid.getX() + grid.getStep() * (grid.getDimension() / 2),
+				grid.getY() + grid.getStep() * (grid.getDimension() / 2),
+				grid.getStep(), grid, color);
 		setId(ObjectId.CenterBlock);
 		adjustArrows();
 	}

@@ -114,7 +114,7 @@ public class KeyInput extends KeyAdapter
 		handler.removeCenterBlock();
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(800);
 		} catch (InterruptedException ie) {
 			ie.printStackTrace();
 		}

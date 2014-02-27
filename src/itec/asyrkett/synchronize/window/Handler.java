@@ -64,12 +64,10 @@ public class Handler
 		Grid grid = new Grid(xx, yy, Game.DEFAULT_GRID_DIMENSION);
 		addObject(grid);
 		
-		colorList = Arrays.asList(Color.GREEN, Color.MAGENTA);
+		colorList = Arrays.asList(Color.GREEN, Color.MAGENTA, Color.CYAN);
 		Collections.shuffle(colorList);
 		
-		int step = grid.getStep();
-		int dimension = grid.getDimension();
-		CenterBlock centerBlock = new CenterBlock(xx + step * (dimension / 2), yy + step * (dimension / 2), step, grid, colorList.get(0));
+		CenterBlock centerBlock = new CenterBlock(grid, colorList.get(0));
 		addObject(centerBlock);
 	}
 	
@@ -81,13 +79,8 @@ public class Handler
 	
 	public void addCenterBlock()
 	{
-		int xx = (Game.WIDTH - Grid.getDefaultGridSize(Game.DEFAULT_GRID_DIMENSION)) / 2;
-		int yy = Game.DEFAULT_MARGIN * 2;
-		Grid grid = (Grid) getObject(ObjectId.Grid);
-		int step = grid.getStep();
-		int dimension = grid.getDimension();
-		
+		Grid grid = (Grid) getObject(ObjectId.Grid);	
 		Collections.shuffle(colorList);
-		addObject(new CenterBlock(xx + step * (dimension / 2), yy + step * (dimension / 2), step, grid, colorList.get(0)));
+		addObject(new CenterBlock(grid, colorList.get(0)));
 	}
 }

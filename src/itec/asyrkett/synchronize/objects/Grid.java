@@ -166,6 +166,17 @@ public class Grid extends GameObject
 		}
 		return empty;
 	}
+
+	public void clearCells()
+	{
+		for (int row = 0; row < cells.length; row++)
+		{
+			for (int column = 0; column < cells[row].length; column++)
+			{
+				cells[row][column].removeBlock();
+			}
+		}
+	}
 	
 	public Set<Cell> checkForMatch()
 	{
@@ -177,26 +188,62 @@ public class Grid extends GameObject
 				Cell cell = cells[row][column];
 				if (cell.isOccupied())
 				{
-					List<Cell> verticalGroup = new ArrayList<Cell>();
+					List<Cell> verticalSGroup = new ArrayList<Cell>();
 					Cell southCell = cell;
 					while (southCell != null && southCell.isOccupied() && southCell.getBlock().getColor() == cell.getBlock().getColor())
 					{
-						verticalGroup.add(southCell);
+						verticalSGroup.add(southCell);
 						southCell = southCell.getSouthCell();
 					}
 					
-					List<Cell> horizontalGroup = new ArrayList<Cell>();
+					List<Cell> horizontalEGroup = new ArrayList<Cell>();
 					Cell eastCell = cell;
 					while (eastCell != null && eastCell.isOccupied() && eastCell.getBlock().getColor() == cell.getBlock().getColor())
 					{
-						horizontalGroup.add(eastCell);
+						horizontalEGroup.add(eastCell);
 						eastCell = eastCell.getEastCell();
 					}
 					
-					if (horizontalGroup.size() >= 3)
-						cellsToRemove.addAll(horizontalGroup);
-					if (verticalGroup.size() >= 3)
-						cellsToRemove.addAll(verticalGroup);
+					List<Cell> verticalNGroup = new ArrayList<Cell>();
+					Cell northCell = cell;
+					while (northCell != null && northCell.isOccupied() && northCell.getBlock().getColor() == cell.getBlock().getColor())
+					{
+						verticalNGroup.add(northCell);
+						northCell = northCell.getNorthCell();
+					}
+					
+					List<Cell> horizontalWGroup = new ArrayList<Cell>();
+					Cell westCell = cell;
+					while (westCell != null && westCell.isOccupied() && westCell.getBlock().getColor() == cell.getBlock().getColor())
+					{
+						horizontalWGroup.add(westCell);
+						westCell = westCell.getWestCell();
+					}
+					
+					if (verticalNGroup.size() + horizontalWGroup.size() >= 4)
+					{
+						cellsToRemove.addAll(verticalNGroup);
+						cellsToRemove.addAll(horizontalWGroup);
+					}
+					if (verticalSGroup.size() + horizontalWGroup.size() >= 4)
+					{
+						cellsToRemove.addAll(verticalSGroup);
+						cellsToRemove.addAll(horizontalWGroup);
+					}
+					if (verticalSGroup.size() + horizontalEGroup.size() >= 4)
+					{
+						cellsToRemove.addAll(verticalSGroup);
+						cellsToRemove.addAll(horizontalEGroup);
+					}
+					if (verticalNGroup.size() + horizontalEGroup.size() >= 4)
+					{
+						cellsToRemove.addAll(verticalNGroup);
+						cellsToRemove.addAll(horizontalEGroup);
+					}
+					if (horizontalEGroup.size() >= 3)
+						cellsToRemove.addAll(horizontalEGroup);
+					if (verticalSGroup.size() >= 3)
+						cellsToRemove.addAll(verticalSGroup);
 				}
 			}
 		}
