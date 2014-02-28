@@ -49,8 +49,6 @@ public class Cell extends GameObject {
 	{
 		if (this.block == null)
 		{
-			/*block.setX(x);
-			block.setY(y);*/
 			block.setDestinationX(x);
 			block.setDestinationY(y);
 			this.block = block;
@@ -73,7 +71,8 @@ public class Cell extends GameObject {
 
 	public String toString()
 	{
-		return "Cell [x=" + x + ", y=" + y + "]";
+		return "" + isOccupied() + (isOccupied() ? "" + block.getColor() : "");
+		//return "Cell [x=" + x + ", y=" + y + ", isOccupied=" + isOccupied() + "]";
 	}
 	
 	public int getRow()

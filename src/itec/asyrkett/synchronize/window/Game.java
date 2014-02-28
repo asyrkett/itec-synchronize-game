@@ -1,11 +1,15 @@
 package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.KeyInput;
+import itec.asyrkett.synchronize.objects.Block;
+import itec.asyrkett.synchronize.objects.Cell;
+import itec.asyrkett.synchronize.objects.Grid;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable
@@ -15,6 +19,7 @@ public class Game extends Canvas implements Runnable
 	
 	private boolean running = false; // whether or not the game is running
 	private Thread thread; // the game thread
+	private BufferedImage level = null;
 	
 	public static int WIDTH, HEIGHT;
 	public static final int DEFAULT_MARGIN = 32;
@@ -31,8 +36,13 @@ public class Game extends Canvas implements Runnable
 		WIDTH = getWidth();
 		HEIGHT = getHeight();
 		
+		BufferedImageLoader loader = new BufferedImageLoader();
+		level = loader.loadImage("/level01.png"); // loading the level
+		
 		handler = new Handler();
-		handler.createLevel(1);
+		//handler.createLevel(1);
+		
+		loadImageLevel(level);
 		
 		//KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 	    //manager.addKeyEventDispatcher(new KeyInput(handler));
@@ -119,6 +129,66 @@ public class Game extends Canvas implements Runnable
 		bufferStrategy.show();
 		
 	}
+	
+	private void loadImageLevel(BufferedImage image)
+	{
+		int width = image.getWidth();
+		int dimension = 0;
+		for (int xx = 0; xx <= 0; xx++)
+		{
+			for (int yy = 0; yy < width; yy++)
+			{
+				int pixel = image.getRGB(xx, yy);
+				int red = (pixel >> 16) & 0xff;
+				int green = (pixel >> 8) & 0xff;
+				int blue = (pixel) & 0xff;
+				if (!(red == 0 && green == 0 && blue == 0)) { //not black
+					dimension++;
+				}
+				else
+					break;
+			}
+		}
+		
+		Grid grid = new Grid((Game.WIDTH - Grid.getDefaultGridSize(dimension)) / 2,
+				Game.DEFAULT_MARGIN * 2,
+				dimension);
+		handler.addObject(grid);
+		int step = grid.getStep();
+		float gridX = grid.getX();
+		float gridY = grid.getY();
+		
+		Cell[][] cells = grid.getCells();
+		for (int xx = 0; xx < dimension; xx++)
+		{
+			for (int yy = 0; yy < dimension; yy++)
+			{
+				int pixel = image.getRGB(xx, yy);
+				int red = (pixel >> 16) & 0xff;
+				int green = (pixel >> 8) & 0xff;
+				int blue = (pixel) & 0xff;
+				
+				if (!(red == 255 && green == 255 && blue == 255)) //not white
+				{
+					Color color = new Color(red, green, blue);
+					handler.addColor(color);
+					Block block = new Block(gridX + (xx * step), gridY + (yy * step), step, grid, color);
+					cells[yy][xx].addBlock(block);
+					handler.addObject(block);
+				}
+			}
+		}
+		handler.addCenterBlock();
+	}
+	
+	/*private Color getPixelColor(BufferedImage image, int x, int y)
+	{
+		int pixel = image.getRGB(x, y);
+		int red = (pixel >> 16) & 0xff;
+		int green = (pixel >> 8) & 0xff;
+		int blue = (pixel) & 0xff;
+		return new Color(red, green, blue);
+	}*/
 	
 	public static void main(String[] args)
 	{

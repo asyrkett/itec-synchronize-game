@@ -178,6 +178,18 @@ public class Grid extends GameObject
 		}
 	}
 	
+	public void printCells()
+	{
+		for (int row = 0; row < cells.length; row++)
+		{
+			for (int column = 0; column < cells[row].length; column++)
+			{
+				System.out.print(cells[row][column] + " ");
+			}
+			System.out.println();
+		}
+	}
+	
 	public Set<Cell> checkForMatch()
 	{
 		Set<Cell> cellsToRemove = new HashSet<Cell>();
@@ -190,7 +202,7 @@ public class Grid extends GameObject
 				{
 					List<Cell> verticalSGroup = new ArrayList<Cell>();
 					Cell southCell = cell;
-					while (southCell != null && southCell.isOccupied() && southCell.getBlock().getColor() == cell.getBlock().getColor())
+					while (southCell != null && southCell.isOccupied() && southCell.getBlock().getColor().equals(cell.getBlock().getColor()))
 					{
 						verticalSGroup.add(southCell);
 						southCell = southCell.getSouthCell();
@@ -198,15 +210,16 @@ public class Grid extends GameObject
 					
 					List<Cell> horizontalEGroup = new ArrayList<Cell>();
 					Cell eastCell = cell;
-					while (eastCell != null && eastCell.isOccupied() && eastCell.getBlock().getColor() == cell.getBlock().getColor())
+					while (eastCell != null && eastCell.isOccupied() && eastCell.getBlock().getColor().equals(cell.getBlock().getColor()))
 					{
 						horizontalEGroup.add(eastCell);
 						eastCell = eastCell.getEastCell();
+						//System.out.println(eastCell);
 					}
 					
 					List<Cell> verticalNGroup = new ArrayList<Cell>();
 					Cell northCell = cell;
-					while (northCell != null && northCell.isOccupied() && northCell.getBlock().getColor() == cell.getBlock().getColor())
+					while (northCell != null && northCell.isOccupied() && northCell.getBlock().getColor().equals(cell.getBlock().getColor()))
 					{
 						verticalNGroup.add(northCell);
 						northCell = northCell.getNorthCell();
@@ -214,7 +227,7 @@ public class Grid extends GameObject
 					
 					List<Cell> horizontalWGroup = new ArrayList<Cell>();
 					Cell westCell = cell;
-					while (westCell != null && westCell.isOccupied() && westCell.getBlock().getColor() == cell.getBlock().getColor())
+					while (westCell != null && westCell.isOccupied() && westCell.getBlock().getColor().equals(cell.getBlock().getColor()))
 					{
 						horizontalWGroup.add(westCell);
 						westCell = westCell.getWestCell();

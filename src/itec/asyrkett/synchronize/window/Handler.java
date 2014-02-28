@@ -8,7 +8,6 @@ import itec.asyrkett.synchronize.objects.Grid;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,7 +56,7 @@ public class Handler
 		return null;
 	}
 	
-	public void createLevel(int level)
+	/*public void createLevel(int level)
 	{
 		int xx = (Game.WIDTH - Grid.getDefaultGridSize(Game.DEFAULT_GRID_DIMENSION)) / 2;
 		int yy = Game.DEFAULT_MARGIN * 2;
@@ -69,7 +68,7 @@ public class Handler
 		
 		CenterBlock centerBlock = new CenterBlock(grid, colorList.get(0));
 		addObject(centerBlock);
-	}
+	}*/
 	
 	public void removeCenterBlock()
 	{
@@ -82,5 +81,16 @@ public class Handler
 		Grid grid = (Grid) getObject(ObjectId.Grid);	
 		Collections.shuffle(colorList);
 		addObject(new CenterBlock(grid, colorList.get(0)));
+	}
+	
+	public void addColor(Color color)
+	{
+		if (!colorList.contains(color))
+			colorList.add(color);
+	}
+	
+	public void removeColor(Color color)
+	{
+		colorList.remove(color);
 	}
 }

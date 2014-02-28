@@ -20,11 +20,13 @@ public class KeyInput extends KeyAdapter
 	{
 		this.handler = handler;
 		this.grid = (Grid) handler.getObject(ObjectId.Grid);
-		this.cells = grid.getCells();
+		if (grid != null)
+			this.cells = grid.getCells();
 	}
 	
 	public void keyPressed(KeyEvent e)
 	{
+		//grid.printCells();
 		int keyCode = e.getKeyCode();
 		if (keyCode == KeyEvent.VK_ESCAPE)
 		{
@@ -120,6 +122,7 @@ public class KeyInput extends KeyAdapter
 		}
 		
 		Set<Cell> cellsToRemove = grid.checkForMatch();
+		System.out.println(cellsToRemove);
 		for (Cell cell : cellsToRemove)
 		{
 			Block toRemove = cell.removeBlock();
