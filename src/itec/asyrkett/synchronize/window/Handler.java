@@ -18,6 +18,13 @@ public class Handler
 	public LinkedList<GameObject> objects = new LinkedList<GameObject>();
 	public List<Color> colorList = new ArrayList<Color>();
 	
+	private Game game;
+	
+	public Handler(Game game)
+	{
+		this.game = game;
+	}
+	
 	public void tick()
 	{
 		for (int i = 0; i < objects.size(); i++)
@@ -92,5 +99,10 @@ public class Handler
 	public void removeColor(Color color)
 	{
 		colorList.remove(color);
+	}
+	
+	public Game getGame()
+	{
+		return game;
 	}
 }

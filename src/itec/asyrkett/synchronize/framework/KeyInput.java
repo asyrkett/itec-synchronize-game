@@ -26,6 +26,8 @@ public class KeyInput extends KeyAdapter
 	
 	public void keyPressed(KeyEvent e)
 	{
+		if (handler.getGame().getState() != GameState.GAME)
+			return;
 		//grid.printCells();
 		int keyCode = e.getKeyCode();
 		if (keyCode == KeyEvent.VK_ESCAPE)
@@ -122,7 +124,7 @@ public class KeyInput extends KeyAdapter
 		}
 		
 		Set<Cell> cellsToRemove = grid.checkForMatch();
-		System.out.println(cellsToRemove);
+		//System.out.println(cellsToRemove);
 		for (Cell cell : cellsToRemove)
 		{
 			Block toRemove = cell.removeBlock();

@@ -1,6 +1,8 @@
 package itec.asyrkett.synchronize.window;
 
+import itec.asyrkett.synchronize.framework.GameState;
 import itec.asyrkett.synchronize.framework.KeyInput;
+import itec.asyrkett.synchronize.framework.MouseInput;
 import itec.asyrkett.synchronize.objects.Block;
 import itec.asyrkett.synchronize.objects.Cell;
 import itec.asyrkett.synchronize.objects.Grid;
@@ -20,13 +22,15 @@ public class Game extends Canvas implements Runnable
 	private boolean running = false; // whether or not the game is running
 	private Thread thread; // the game thread
 	private BufferedImage level = null;
+	private GameState state;
 	
 	public static int WIDTH, HEIGHT;
 	public static final int DEFAULT_MARGIN = 32;
 	public static final int DEFAULT_GRID_DIMENSION = 9;
 	public static final Random GENERATOR = new Random();
 	
-	Handler handler; // handler of the graphics objects
+	private Handler handler; // handler of the graphics objects
+	private Menu menu;
 	
 	/**
 	 * Initializes game objects
@@ -38,15 +42,19 @@ public class Game extends Canvas implements Runnable
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		level = loader.loadImage("/level01.png"); // loading the level
-		
-		handler = new Handler();
+	
+		menu = new Menu();
+		handler = new Handler(this);
 		//handler.createLevel(1);
+		
+		state = GameState.MENU;
 		
 		loadImageLevel(level);
 		
 		//KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 	    //manager.addKeyEventDispatcher(new KeyInput(handler));
 		this.addKeyListener(new KeyInput(handler));
+		this.addMouseListener(new MouseInput(this));
 	}
 	
 	public synchronized void start()
@@ -99,7 +107,8 @@ public class Game extends Canvas implements Runnable
 	 */
 	private void tick()
 	{
-		handler.tick();
+		if (state == GameState.GAME)
+			handler.tick();
 	}
 	
 	/**
@@ -118,11 +127,17 @@ public class Game extends Canvas implements Runnable
 		//////////////////////////////////////////////////
 		//DRAW HERE
 		
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		if (state == GameState.GAME)
+		{ 
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		handler.render(g);
-		
+			handler.render(g);
+		}
+		else if (state == GameState.MENU)
+		{
+			menu.render(g);
+		}
 		
 		//////////////////////////////////////////////////
 		g.dispose();
@@ -138,11 +153,8 @@ public class Game extends Canvas implements Runnable
 		{
 			for (int yy = 0; yy < width; yy++)
 			{
-				int pixel = image.getRGB(xx, yy);
-				int red = (pixel >> 16) & 0xff;
-				int green = (pixel >> 8) & 0xff;
-				int blue = (pixel) & 0xff;
-				if (!(red == 0 && green == 0 && blue == 0)) { //not black
+				Color color = getPixelColor(image, xx, yy);
+				if (!color.equals(Color.BLACK)) { //not black
 					dimension++;
 				}
 				else
@@ -163,14 +175,9 @@ public class Game extends Canvas implements Runnable
 		{
 			for (int yy = 0; yy < dimension; yy++)
 			{
-				int pixel = image.getRGB(xx, yy);
-				int red = (pixel >> 16) & 0xff;
-				int green = (pixel >> 8) & 0xff;
-				int blue = (pixel) & 0xff;
-				
-				if (!(red == 255 && green == 255 && blue == 255)) //not white
+				Color color = getPixelColor(image, xx, yy);
+				if (!color.equals(Color.WHITE)) //not white
 				{
-					Color color = new Color(red, green, blue);
 					handler.addColor(color);
 					Block block = new Block(gridX + (xx * step), gridY + (yy * step), step, grid, color);
 					cells[yy][xx].addBlock(block);
@@ -181,14 +188,29 @@ public class Game extends Canvas implements Runnable
 		handler.addCenterBlock();
 	}
 	
-	/*private Color getPixelColor(BufferedImage image, int x, int y)
+	private Color getPixelColor(BufferedImage image, int x, int y)
 	{
 		int pixel = image.getRGB(x, y);
 		int red = (pixel >> 16) & 0xff;
 		int green = (pixel >> 8) & 0xff;
 		int blue = (pixel) & 0xff;
 		return new Color(red, green, blue);
-	}*/
+	}
+	
+	public GameState getState()
+	{
+		return state;
+	}
+	
+	public void setState(GameState state)
+	{
+		this.state = state;
+	}
+	
+	public Menu getMenu()
+	{
+		return menu;
+	}
 	
 	public static void main(String[] args)
 	{
