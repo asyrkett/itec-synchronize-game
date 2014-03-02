@@ -39,7 +39,7 @@ public class MouseInput implements MouseListener {
 		}
 		else if (menu.getHelpButtonBounds().contains(mouseX, mouseY))
 		{
-			
+			//System.out.println("HELP!");
 		}
 		else if (menu.getQuitButtonBounds().contains(mouseX, mouseY))
 		{

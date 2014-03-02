@@ -51,6 +51,9 @@ public class Grid extends GameObject
 	
 	public void render(Graphics g)
 	{	
+		g.setColor(Color.WHITE);
+		g.drawRect((int) x, (int) y, size, size);
+		
 		for (int xx = 0; xx < cells.length; xx++)
 		{
 			for (int yy = 0; yy < cells[xx].length; yy++)
@@ -62,7 +65,7 @@ public class Grid extends GameObject
 		if (tracksVisible)
 		{
 			Graphics2D g2d = (Graphics2D) g;
-			g2d.setColor(Color.BLUE);
+			g2d.setColor(Color.WHITE);
 			
 			//Horizontal track
 			g2d.drawRoundRect((int) x, (int) (y + dimension / 2 * step), size, step, 20, 20);

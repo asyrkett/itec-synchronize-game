@@ -1,23 +1,34 @@
 package itec.asyrkett.synchronize.window;
 
+import itec.asyrkett.synchronize.framework.BufferedImageLoader;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class Menu
 {
-	private Rectangle playButton = new Rectangle(Game.WIDTH / 2 - 50, 150, 100, 50);
-	private Rectangle helpButton = new Rectangle(Game.WIDTH / 2 - 50, 250, 100, 50);
-	private Rectangle quitButton = new Rectangle(Game.WIDTH / 2 - 50, 350, 100, 50);
+	private BufferedImage title, background;
+	private Rectangle playButton = new Rectangle(Game.WIDTH / 2 - 50, 440, 100, 50);
+	private Rectangle helpButton = new Rectangle(playButton.x - 215, playButton.y, 100, 50);
+	private Rectangle quitButton = new Rectangle(playButton.x + 215, playButton.y, 100, 50);
+	
+	public Menu()
+	{
+		BufferedImageLoader loader = new BufferedImageLoader();
+		title = loader.loadImage("/title.png");
+		background = loader.loadImage("/background.png");
+	}
 	
 	public void render(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D) g;
 		
-		Font font1 = new Font("arial", Font.BOLD, 50);
-		g.setFont(font1);
-		g.drawString("SYNCHRONIZE", Game.WIDTH / 2 - 180, 100);
+		g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
+		
+		g.drawImage(title, Game.WIDTH / 2 - title.getWidth() / 2, Game.HEIGHT / 2 - title.getHeight() / 2, title.getWidth(), title.getHeight(), null);
 		
 		Font font2 = new Font("arial", Font.BOLD, 30);
 		g.setFont(font2);

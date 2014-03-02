@@ -92,36 +92,9 @@ public class Block extends GameObject
 
 	public void render(Graphics g)
 	{
+		g.setColor(type.getBaseColor());
+		//g.fillOval((int) x + 1, (int) y + 1, size - 2, size - 2);
 		g.drawImage(tex.sprites[type.getType()], (int) x, (int) y, size, size, null);
-		/*if (type == Sphere.PURPLE)
-		{
-			g.drawImage(tex.sprites[0], (int) x, (int) y, size, size, null);
-		}
-		else if (color.equals(Color.RED))
-		{
-			g.drawImage(tex.sprites[1], (int) x, (int) y, size, size, null);
-		}
-		else if (color.equals(Color.CYAN))
-		{
-			g.drawImage(tex.sprites[2], (int) x, (int) y, size, size, null);
-		}
-		else if (color.equals(Color.GREEN))
-		{
-			g.drawImage(tex.sprites[3], (int) x, (int) y, size, size, null);
-		}
-		else if (color.equals(Color.ORANGE))
-		{
-			g.drawImage(tex.sprites[4], (int) x, (int) y, size, size, null);
-		}
-		else if (color.equals(Color.YELLOW))
-		{
-			g.drawImage(tex.sprites[5], (int) x, (int) y, size, size, null);
-		}
-		else
-		{
-			g.setColor(color);
-			g.fillRect((int)x, (int)y, size, size);
-		}*/
 	}
 
 	/*private void collision(LinkedList<GameObject> objects)
