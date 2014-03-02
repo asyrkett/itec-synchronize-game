@@ -202,7 +202,7 @@ public class Grid extends GameObject
 				{
 					List<Cell> verticalSGroup = new ArrayList<Cell>();
 					Cell southCell = cell;
-					while (southCell != null && southCell.isOccupied() && southCell.getBlock().getColor().equals(cell.getBlock().getColor()))
+					while (southCell != null && southCell.isOccupied() && southCell.getBlock().getType() == cell.getBlock().getType())
 					{
 						verticalSGroup.add(southCell);
 						southCell = southCell.getSouthCell();
@@ -210,7 +210,7 @@ public class Grid extends GameObject
 					
 					List<Cell> horizontalEGroup = new ArrayList<Cell>();
 					Cell eastCell = cell;
-					while (eastCell != null && eastCell.isOccupied() && eastCell.getBlock().getColor().equals(cell.getBlock().getColor()))
+					while (eastCell != null && eastCell.isOccupied() && eastCell.getBlock().getType() == cell.getBlock().getType())
 					{
 						horizontalEGroup.add(eastCell);
 						eastCell = eastCell.getEastCell();
@@ -219,7 +219,7 @@ public class Grid extends GameObject
 					
 					List<Cell> verticalNGroup = new ArrayList<Cell>();
 					Cell northCell = cell;
-					while (northCell != null && northCell.isOccupied() && northCell.getBlock().getColor().equals(cell.getBlock().getColor()))
+					while (northCell != null && northCell.isOccupied() && northCell.getBlock().getType() == cell.getBlock().getType())
 					{
 						verticalNGroup.add(northCell);
 						northCell = northCell.getNorthCell();
@@ -227,7 +227,7 @@ public class Grid extends GameObject
 					
 					List<Cell> horizontalWGroup = new ArrayList<Cell>();
 					Cell westCell = cell;
-					while (westCell != null && westCell.isOccupied() && westCell.getBlock().getColor().equals(cell.getBlock().getColor()))
+					while (westCell != null && westCell.isOccupied() && westCell.getBlock().getType() == cell.getBlock().getType())
 					{
 						horizontalWGroup.add(westCell);
 						westCell = westCell.getWestCell();

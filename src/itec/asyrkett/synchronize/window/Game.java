@@ -1,8 +1,11 @@
 package itec.asyrkett.synchronize.window;
 
+import itec.asyrkett.synchronize.framework.BufferedImageLoader;
 import itec.asyrkett.synchronize.framework.GameState;
 import itec.asyrkett.synchronize.framework.KeyInput;
 import itec.asyrkett.synchronize.framework.MouseInput;
+import itec.asyrkett.synchronize.framework.BlockTexture;
+import itec.asyrkett.synchronize.framework.Texture;
 import itec.asyrkett.synchronize.objects.Block;
 import itec.asyrkett.synchronize.objects.Cell;
 import itec.asyrkett.synchronize.objects.Grid;
@@ -27,10 +30,12 @@ public class Game extends Canvas implements Runnable
 	public static int WIDTH, HEIGHT;
 	public static final int DEFAULT_MARGIN = 32;
 	public static final int DEFAULT_GRID_DIMENSION = 9;
+	public static Texture TEXTURE;
 	public static final Random GENERATOR = new Random();
 	
 	private Handler handler; // handler of the graphics objects
 	private Menu menu;
+	//private SpriteSheet spriteSheet;
 	
 	/**
 	 * Initializes game objects
@@ -39,6 +44,8 @@ public class Game extends Canvas implements Runnable
 	{
 		WIDTH = getWidth();
 		HEIGHT = getHeight();
+		
+		TEXTURE = new Texture();
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		level = loader.loadImage("/level01.png"); // loading the level
@@ -171,15 +178,25 @@ public class Game extends Canvas implements Runnable
 		float gridY = grid.getY();
 		
 		Cell[][] cells = grid.getCells();
+		BlockTexture[] types = BlockTexture.values();
 		for (int xx = 0; xx < dimension; xx++)
 		{
 			for (int yy = 0; yy < dimension; yy++)
 			{
 				Color color = getPixelColor(image, xx, yy);
+				BlockTexture type = null;
 				if (!color.equals(Color.WHITE)) //not white
 				{
-					handler.addColor(color);
-					Block block = new Block(gridX + (xx * step), gridY + (yy * step), step, grid, color);
+					for (BlockTexture texture : types)
+					{
+						if (texture.getBaseColor().equals(color))
+						{
+							type = texture;
+							handler.addBlockTexture(texture);
+							break;
+						}
+					}
+					Block block = new Block(gridX + (xx * step), gridY + (yy * step), step, grid, type);
 					cells[yy][xx].addBlock(block);
 					handler.addObject(block);
 				}

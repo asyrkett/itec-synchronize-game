@@ -1,4 +1,4 @@
-package itec.asyrkett.synchronize.window;
+package itec.asyrkett.synchronize.framework;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

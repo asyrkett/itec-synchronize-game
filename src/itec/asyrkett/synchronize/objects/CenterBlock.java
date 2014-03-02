@@ -3,8 +3,8 @@ package itec.asyrkett.synchronize.objects;
 import itec.asyrkett.synchronize.framework.Direction;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
+import itec.asyrkett.synchronize.framework.BlockTexture;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -17,11 +17,11 @@ public class CenterBlock extends Block
 {
 	private Shape upArrow, downArrow, rightArrow, leftArrow;
 	
-	public CenterBlock(Grid grid, Color color)
+	public CenterBlock(Grid grid, BlockTexture type)
 	{
 		super(grid.getX() + grid.getStep() * (grid.getDimension() / 2),
 				grid.getY() + grid.getStep() * (grid.getDimension() / 2),
-				grid.getStep(), grid, color);
+				grid.getStep(), grid, type);
 		setId(ObjectId.CenterBlock);
 		adjustArrows();
 	}
@@ -33,7 +33,8 @@ public class CenterBlock extends Block
 	public void render(Graphics g)
 	{
 		super.render(g);
-
+		
+		g.setColor(type.getBaseColor());
 		Graphics2D g2d = (Graphics2D) g;
 		if (grid.getHorizontalTrackBounds().contains(getBounds()))
 		{
@@ -121,7 +122,7 @@ public class CenterBlock extends Block
 	
 	public Block toBlock()
 	{
-		Block block = new Block(x, y, size, grid, color);
+		Block block = new Block(x, y, size, grid, type);
 		block.setDirection(direction);
 		return block;
 	}

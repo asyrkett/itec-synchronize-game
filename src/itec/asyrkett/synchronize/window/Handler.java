@@ -2,10 +2,10 @@ package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
+import itec.asyrkett.synchronize.framework.BlockTexture;
 import itec.asyrkett.synchronize.objects.CenterBlock;
 import itec.asyrkett.synchronize.objects.Grid;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.List;
 public class Handler
 {
 	public LinkedList<GameObject> objects = new LinkedList<GameObject>();
-	public List<Color> colorList = new ArrayList<Color>();
+	public List<BlockTexture> blockTextureList = new ArrayList<BlockTexture>();
 	
 	private Game game;
 	
@@ -86,19 +86,19 @@ public class Handler
 	public void addCenterBlock()
 	{
 		Grid grid = (Grid) getObject(ObjectId.Grid);	
-		Collections.shuffle(colorList);
-		addObject(new CenterBlock(grid, colorList.get(0)));
+		Collections.shuffle(blockTextureList);
+		addObject(new CenterBlock(grid, blockTextureList.get(0)));
 	}
 	
-	public void addColor(Color color)
+	public void addBlockTexture(BlockTexture type)
 	{
-		if (!colorList.contains(color))
-			colorList.add(color);
+		if (!blockTextureList.contains(type))
+			blockTextureList.add(type);
 	}
 	
-	public void removeColor(Color color)
+	public void removeBlockTexture(BlockTexture type)
 	{
-		colorList.remove(color);
+		blockTextureList.remove(type);
 	}
 	
 	public Game getGame()

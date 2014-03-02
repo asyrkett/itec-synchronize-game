@@ -3,8 +3,10 @@ package itec.asyrkett.synchronize.objects;
 import itec.asyrkett.synchronize.framework.Direction;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
+import itec.asyrkett.synchronize.framework.BlockTexture;
+import itec.asyrkett.synchronize.framework.Texture;
+import itec.asyrkett.synchronize.window.Game;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
@@ -19,16 +21,19 @@ public class Block extends GameObject
 	protected Direction direction;
 	protected boolean moving;
 	protected Grid grid;
-	protected Color color;
+	protected BlockTexture type;
+	//protected Color color;
+	protected Texture tex = Game.TEXTURE;
 
-	public Block(float x, float y, int size, Grid grid, Color color)
+	public Block(float x, float y, int size, Grid grid, BlockTexture type)
 	{
 		super(x, y, ObjectId.Block);
 		destinationX = x;
 		destinationY = y;
 		this.size = size;
 		this.grid = grid;
-		this.color = color;
+		this.type = type;
+		//this.color = color;
 		this.direction = Direction.CENTER;
 		this.moving = false;
 	}
@@ -87,8 +92,36 @@ public class Block extends GameObject
 
 	public void render(Graphics g)
 	{
-		g.setColor(color);
-		g.fillRect((int)x, (int)y, size, size);
+		g.drawImage(tex.sprites[type.getType()], (int) x, (int) y, size, size, null);
+		/*if (type == Sphere.PURPLE)
+		{
+			g.drawImage(tex.sprites[0], (int) x, (int) y, size, size, null);
+		}
+		else if (color.equals(Color.RED))
+		{
+			g.drawImage(tex.sprites[1], (int) x, (int) y, size, size, null);
+		}
+		else if (color.equals(Color.CYAN))
+		{
+			g.drawImage(tex.sprites[2], (int) x, (int) y, size, size, null);
+		}
+		else if (color.equals(Color.GREEN))
+		{
+			g.drawImage(tex.sprites[3], (int) x, (int) y, size, size, null);
+		}
+		else if (color.equals(Color.ORANGE))
+		{
+			g.drawImage(tex.sprites[4], (int) x, (int) y, size, size, null);
+		}
+		else if (color.equals(Color.YELLOW))
+		{
+			g.drawImage(tex.sprites[5], (int) x, (int) y, size, size, null);
+		}
+		else
+		{
+			g.setColor(color);
+			g.fillRect((int)x, (int)y, size, size);
+		}*/
 	}
 
 	/*private void collision(LinkedList<GameObject> objects)
@@ -220,7 +253,7 @@ public class Block extends GameObject
 		this.destinationY = destinationY;
 	}
 
-	public Color getColor()
+	/*public Color getColor()
 	{
 		return color;
 	}
@@ -228,6 +261,16 @@ public class Block extends GameObject
 	public void setColor(Color color)
 	{
 		this.color = color;
+	}*/
+	
+	public BlockTexture getType()
+	{
+		return type;
+	}
+	
+	public void setType(BlockTexture type)
+	{
+		this.type = type;
 	}
 
 	public Direction getDirection()
