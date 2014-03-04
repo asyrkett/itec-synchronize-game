@@ -102,6 +102,11 @@ public class KeyInput extends KeyAdapter
 					}
 				}
 			}
+			if (grid.getVerticalTrackBounds().contains(centerBlock.getBounds()) 
+					&& grid.getHorizontalTrackBounds().contains(centerBlock.getBounds()))
+			{
+				centerBlock.setDirection(Direction.CENTER);
+			}
 		}
 	}
 	

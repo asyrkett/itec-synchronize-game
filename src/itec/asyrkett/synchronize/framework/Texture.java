@@ -6,7 +6,7 @@ public class Texture
 {
 	private SpriteSheet spriteSheet;
 	
-	public BufferedImage[] sprites = new BufferedImage[6];
+	public BufferedImage[] sprites = new BufferedImage[7];
 	
 	public Texture()
 	{
@@ -17,9 +17,9 @@ public class Texture
 	
 	private void getTextures()
 	{
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 7; i++)
 		{
-			sprites[i] = spriteSheet.grabImage(0, i, 32, 32);
+			sprites[i] = spriteSheet.grabImage(0, i, 64, 64);
 		}
 	}
 }

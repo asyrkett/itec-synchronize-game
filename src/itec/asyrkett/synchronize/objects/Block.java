@@ -93,8 +93,8 @@ public class Block extends GameObject
 	public void render(Graphics g)
 	{
 		g.setColor(type.getBaseColor());
-		//g.fillOval((int) x + 1, (int) y + 1, size - 2, size - 2);
-		g.drawImage(tex.sprites[type.getType()], (int) x, (int) y, size, size, null);
+		g.fillOval((int) x + 1, (int) y + 1, size - 2, size - 2);
+		//g.drawImage(tex.sprites[type.getType()], (int) x, (int) y, size, size, null);
 	}
 
 	/*private void collision(LinkedList<GameObject> objects)

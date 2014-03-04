@@ -4,12 +4,13 @@ import java.awt.Color;
 
 public enum BlockTexture
 {
-	PURPLE(0, new Color(154, 34, 169)),
-	RED(1, Color.RED),
-	CYAN(2, Color.CYAN),
-	GREEN(3, Color.GREEN),
-	ORANGE(4, Color.ORANGE),
-	YELLOW(5, Color.YELLOW);
+	RED(0, Color.RED), //new Color(154, 34, 169)
+	MAGENTA(1, Color.MAGENTA),
+	ORANGE(2, Color.ORANGE),
+	YELLOW(3, Color.YELLOW),
+	GREEN(4, Color.GREEN),
+	CYAN(5, Color.CYAN),
+	BLUE(6, Color.BLUE);
 	
 	private int type;
 	private Color baseColor;
