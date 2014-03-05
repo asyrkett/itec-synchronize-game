@@ -1,4 +1,13 @@
-itec-synchronize-game
+SYNCHRONIZE
 =====================
 
-Game for itec3870
+Match-3 puzzle game
+
+TODO
+Point system
+Level selection
+Textures/graphics
+Obstacle objects
+More levels
+Animations
+Music
