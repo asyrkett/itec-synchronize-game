@@ -2,6 +2,7 @@ package itec.asyrkett.synchronize.framework;
 
 import itec.asyrkett.synchronize.window.Game;
 import itec.asyrkett.synchronize.window.GameBackground;
+import itec.asyrkett.synchronize.window.LevelSelection;
 import itec.asyrkett.synchronize.window.Menu;
 
 import java.awt.event.MouseEvent;
@@ -55,6 +56,18 @@ public class MouseInput implements MouseListener {
 			if (gameBackground.getResetButtonBounds().contains(mouseX, mouseY))
 			{
 				game.resetLevel();
+			}
+			else if (gameBackground.getMenuButtonBounds().contains(mouseX, mouseY))
+			{
+				game.setState(GameState.MENU);
+			}
+		}
+		else if (game.getState() == GameState.LEVEL)
+		{
+			LevelSelection levelSelection = game.getLevelSelection();
+			if (levelSelection.getMenuButtonBounds().contains(mouseX, mouseY))
+			{
+				game.setState(GameState.MENU);
 			}
 		}
 	}

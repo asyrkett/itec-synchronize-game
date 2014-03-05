@@ -19,26 +19,26 @@ import java.util.Random;
 
 public class Game extends Canvas implements Runnable
 {
-	private static final long serialVersionUID = 1L;
-	//private static final Random GENERATOR = new Random();
+	private static final long serialVersionUID = -2703393471231825194L;
 	
 	private boolean running = false; // whether or not the game is running
 	private Thread thread; // the game thread
 	private BufferedImage levelImage = null;
-	private GameState state;
+	private GameState state = GameState.MENU;
+	private int level = 1;
 	
 	public static int WIDTH, HEIGHT;
 	public static final int DEFAULT_MARGIN = 32;
 	public static final int DEFAULT_GRID_DIMENSION = 9;
 	public static Texture TEXTURE;
 	public static final Random GENERATOR = new Random();
-	public static final int TOTAL_LEVELS = 2;
+	public static final int TOTAL_LEVELS = 3;
 	
 	private BufferedImageLoader loader = new BufferedImageLoader();
 	private Handler handler; // handler of the graphics objects
 	private Menu menu;
+	private LevelSelection levelSelection;
 	private GameBackground gameBackground;
-	private int level = 1;
 	//private SpriteSheet spriteSheet;
 	
 	/**
@@ -55,10 +55,9 @@ public class Game extends Canvas implements Runnable
 	
 		menu = new Menu();
 		gameBackground = new GameBackground();
+		levelSelection = new LevelSelection(TOTAL_LEVELS);
 		handler = new Handler(this);
 		//handler.createLevel(1);
-		
-		state = GameState.MENU;
 		
 		loadImageLevel(levelImage);
 		
@@ -106,7 +105,7 @@ public class Game extends Canvas implements Runnable
 			if (System.currentTimeMillis() - timer > 1000)
 			{
 				timer += 1000;
-				System.out.println("FPS: " + frames + " TICKS: " + updates);
+				//System.out.println("FPS: " + frames + " TICKS: " + updates);
 				frames = 0;
 				updates = 0;
 			}
@@ -148,6 +147,10 @@ public class Game extends Canvas implements Runnable
 		else if (state == GameState.MENU)
 		{
 			menu.render(g);
+		}
+		else if (state == GameState.LEVEL)
+		{
+			levelSelection.render(g);
 		}
 		
 		//////////////////////////////////////////////////
@@ -236,6 +239,11 @@ public class Game extends Canvas implements Runnable
 	public GameBackground getGameBackground()
 	{
 		return gameBackground;
+	}
+	
+	public LevelSelection getLevelSelection()
+	{
+		return levelSelection;
 	}
 	
 	public Handler getHandler()

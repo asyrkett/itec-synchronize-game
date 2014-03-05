@@ -9,16 +9,18 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class GameBackground
+public class LevelSelection
 {
 	private BufferedImage background;
 	private Rectangle resetButton = new Rectangle(660, 440, 100, 50);
 	private Rectangle menuButton = new Rectangle(40, 440, 100, 50);
+	private int numLevels;
 	
-	public GameBackground()
+	public LevelSelection(int numLevels)
 	{
 		BufferedImageLoader loader = new BufferedImageLoader();
 		background = loader.loadImage("/background.png");
+		this.numLevels = numLevels;
 	}
 	
 	public void render(Graphics g)
@@ -31,16 +33,8 @@ public class GameBackground
 		g.setColor(Color.BLACK);
 		g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 		
-		g2d.draw(resetButton);
-		g.drawString("RESET", resetButton.x, resetButton.y + 40);
-		
 		g2d.draw(menuButton);
 		g.drawString("MENU", menuButton.x + 10, menuButton.y + 40);
-	}
-	
-	public Rectangle getResetButtonBounds()
-	{
-		return resetButton;
 	}
 	
 	public Rectangle getMenuButtonBounds()

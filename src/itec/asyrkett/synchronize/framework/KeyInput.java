@@ -157,12 +157,11 @@ public class KeyInput extends KeyAdapter
 	
 	private void nextLevel()
 	{
-		int n = 0;
 		if (game.getLevel() == Game.TOTAL_LEVELS)
 		{
 			Object[] options = {"MENU",
 					"LEVEL SELECTION"};
-			n = JOptionPane.showOptionDialog(game,
+			int n = JOptionPane.showOptionDialog(game,
 					"PERFECT! GAME COMPLETE",
 					"LEVEL COMPLETED",
 					JOptionPane.YES_NO_OPTION,
@@ -170,13 +169,25 @@ public class KeyInput extends KeyAdapter
 					null,
 					options,
 					options[0]);
+			if (n == JOptionPane.CANCEL_OPTION)
+			{
+				game.nextLevel();
+			}
+			else if (n == JOptionPane.YES_OPTION)
+			{
+				game.setState(GameState.MENU);
+			}
+			else if (n == JOptionPane.NO_OPTION)
+			{
+				game.setState(GameState.LEVEL);
+			}
 		}
 		else
 		{
 			Object[] options = {"MENU",
 				"LEVEL SELECTION",
 				"NEXT LEVEL"};
-			n = JOptionPane.showOptionDialog(game,
+			int n = JOptionPane.showOptionDialog(game,
 				"PERFECT!",
 				"LEVEL COMPLETED",
 				JOptionPane.YES_NO_CANCEL_OPTION,
@@ -184,18 +195,19 @@ public class KeyInput extends KeyAdapter
 				null,
 				options,
 				options[2]);
-		}
-		if (n == JOptionPane.CANCEL_OPTION)
-		{
-			game.nextLevel();
-		}
-		else if (n == JOptionPane.YES_OPTION)
-		{
-			game.setState(GameState.MENU);
-		}
-		else if (n == JOptionPane.NO_OPTION)
-		{
-			game.setState(GameState.LEVEL);
+			
+			if (n == JOptionPane.CANCEL_OPTION)
+			{
+				game.nextLevel();
+			}
+			else if (n == JOptionPane.YES_OPTION)
+			{
+				game.setState(GameState.MENU);
+			}
+			else if (n == JOptionPane.NO_OPTION)
+			{
+				game.setState(GameState.LEVEL);
+			}
 		}
 	}
 
