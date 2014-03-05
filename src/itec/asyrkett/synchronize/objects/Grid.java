@@ -51,8 +51,10 @@ public class Grid extends GameObject
 	
 	public void render(Graphics g)
 	{	
-		g.setColor(Color.WHITE);
-		g.drawRect((int) x, (int) y, size, size);
+		g.setColor(Color.BLACK);
+		g.fillRect((int) x, (int) y, size, size);
+		//g.setColor(Color.WHITE);
+		//g.drawRect((int) x, (int) y, size, size);
 		
 		for (int xx = 0; xx < cells.length; xx++)
 		{
@@ -158,7 +160,7 @@ public class Grid extends GameObject
 	
 	public boolean isEmpty()
 	{
-		boolean empty = true;
+		//boolean empty = true;
 		for (int row = 0; row < cells.length; row++)
 		{
 			for (int column = 0; column < cells[row].length; column++)
@@ -167,10 +169,10 @@ public class Grid extends GameObject
 					return false;
 			}
 		}
-		return empty;
+		return true;
 	}
 
-	public void clearCells()
+	/*public void clearCells()
 	{
 		for (int row = 0; row < cells.length; row++)
 		{
@@ -179,9 +181,9 @@ public class Grid extends GameObject
 				cells[row][column].removeBlock();
 			}
 		}
-	}
+	}*/
 	
-	public void printCells()
+	/*public void printCells()
 	{
 		for (int row = 0; row < cells.length; row++)
 		{
@@ -191,7 +193,7 @@ public class Grid extends GameObject
 			}
 			System.out.println();
 		}
-	}
+	}*/
 	
 	public Set<Cell> checkForMatch()
 	{

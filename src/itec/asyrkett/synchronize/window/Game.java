@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable
 	
 	private boolean running = false; // whether or not the game is running
 	private Thread thread; // the game thread
-	private BufferedImage level = null;
+	private BufferedImage levelImage = null;
 	private GameState state;
 	
 	public static int WIDTH, HEIGHT;
@@ -32,9 +32,13 @@ public class Game extends Canvas implements Runnable
 	public static final int DEFAULT_GRID_DIMENSION = 9;
 	public static Texture TEXTURE;
 	public static final Random GENERATOR = new Random();
+	public static final int TOTAL_LEVELS = 2;
 	
+	private BufferedImageLoader loader = new BufferedImageLoader();
 	private Handler handler; // handler of the graphics objects
 	private Menu menu;
+	private GameBackground gameBackground;
+	private int level = 1;
 	//private SpriteSheet spriteSheet;
 	
 	/**
@@ -47,20 +51,20 @@ public class Game extends Canvas implements Runnable
 		
 		TEXTURE = new Texture();
 		
-		BufferedImageLoader loader = new BufferedImageLoader();
-		level = loader.loadImage("/level01.png"); // loading the level
+		levelImage = loader.loadImage("/levels/level" + level + ".png"); // loading the level
 	
 		menu = new Menu();
+		gameBackground = new GameBackground();
 		handler = new Handler(this);
 		//handler.createLevel(1);
 		
 		state = GameState.MENU;
 		
-		loadImageLevel(level);
+		loadImageLevel(levelImage);
 		
 		//KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 	    //manager.addKeyEventDispatcher(new KeyInput(handler));
-		this.addKeyListener(new KeyInput(handler));
+		this.addKeyListener(new KeyInput(this));
 		this.addMouseListener(new MouseInput(this));
 	}
 	
@@ -136,9 +140,9 @@ public class Game extends Canvas implements Runnable
 		
 		if (state == GameState.GAME)
 		{ 
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, WIDTH, HEIGHT);
-		
+			//g.setColor(Color.BLACK);
+			//g.fillRect(0, 0, WIDTH, HEIGHT);
+			gameBackground.render(g);
 			handler.render(g);
 		}
 		else if (state == GameState.MENU)
@@ -192,7 +196,7 @@ public class Game extends Canvas implements Runnable
 						if (texture.getBaseColor().equals(color))
 						{
 							type = texture;
-							handler.addBlockTexture(texture);
+							handler.addTexture(texture);
 							break;
 						}
 					}
@@ -227,6 +231,37 @@ public class Game extends Canvas implements Runnable
 	public Menu getMenu()
 	{
 		return menu;
+	}
+	
+	public GameBackground getGameBackground()
+	{
+		return gameBackground;
+	}
+	
+	public Handler getHandler()
+	{
+		return handler;
+	}
+	
+	public int getLevel()
+	{
+		return level;
+	}
+	
+	public void resetLevel()
+	{
+		handler.clearHandler();
+		loadImageLevel(levelImage);
+	}
+	
+	public int nextLevel()
+	{
+		level++;
+		handler.clearHandler();
+		handler.clearTextures();
+		levelImage = loader.loadImage("/levels/level" + level + ".png");
+		loadImageLevel(levelImage);
+		return level;
 	}
 	
 	public static void main(String[] args)

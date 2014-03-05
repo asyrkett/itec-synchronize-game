@@ -16,7 +16,7 @@ import java.util.List;
 public class Handler
 {
 	public LinkedList<GameObject> objects = new LinkedList<GameObject>();
-	public List<BlockTexture> blockTextureList = new ArrayList<BlockTexture>();
+	public List<BlockTexture> textureList = new ArrayList<BlockTexture>();
 	
 	private Game game;
 	
@@ -86,19 +86,37 @@ public class Handler
 	public void addCenterBlock()
 	{
 		Grid grid = (Grid) getObject(ObjectId.Grid);	
-		Collections.shuffle(blockTextureList);
-		addObject(new CenterBlock(grid, blockTextureList.get(0)));
+		Collections.shuffle(textureList);
+		addObject(new CenterBlock(grid, textureList.get(0)));
 	}
 	
-	public void addBlockTexture(BlockTexture type)
+	public void addTexture(BlockTexture type)
 	{
-		if (!blockTextureList.contains(type))
-			blockTextureList.add(type);
+		if (!textureList.contains(type))
+			textureList.add(type);
 	}
 	
-	public void removeBlockTexture(BlockTexture type)
+	public void removeTexture(BlockTexture type)
 	{
-		blockTextureList.remove(type);
+		textureList.remove(type);
+	}
+	
+	public void clearHandler()
+	{
+		for (int i = 0; i < objects.size(); i++)
+		{
+			objects.remove(i);
+			i--;
+		}
+	}
+	
+	public void clearTextures()
+	{
+		for (int i = 0; i < textureList.size(); i++)
+		{
+			textureList.remove(i);
+			i--;
+		}
 	}
 	
 	public Game getGame()

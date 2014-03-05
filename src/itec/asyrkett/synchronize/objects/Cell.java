@@ -3,6 +3,7 @@ package itec.asyrkett.synchronize.objects;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
@@ -30,8 +31,8 @@ public class Cell extends GameObject {
 
 	public void render(Graphics g)
 	{
-		/*g.setColor(Color.RED);
-		g.drawRect((int)x, (int)y, size, size);*/
+		g.setColor(Color.RED);
+		g.drawRect((int)x, (int)y, size, size);
 	}
 
 	public Rectangle getBounds()

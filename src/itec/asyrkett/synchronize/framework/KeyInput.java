@@ -4,60 +4,72 @@ import itec.asyrkett.synchronize.objects.Block;
 import itec.asyrkett.synchronize.objects.Cell;
 import itec.asyrkett.synchronize.objects.CenterBlock;
 import itec.asyrkett.synchronize.objects.Grid;
+import itec.asyrkett.synchronize.window.Game;
 import itec.asyrkett.synchronize.window.Handler;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 public class KeyInput extends KeyAdapter
 {
+	private Game game;
 	private Handler handler;
 	private Grid grid;
 	private Cell[][] cells;
-	
-	public KeyInput(Handler handler)
+
+	public KeyInput(Game game)
 	{
-		this.handler = handler;
-		this.grid = (Grid) handler.getObject(ObjectId.Grid);
-		if (grid != null)
-			this.cells = grid.getCells();
+		this.game = game;
+		this.handler = game.getHandler();
 	}
-	
+
+	public void getGrid()
+	{ 
+		grid = (Grid) handler.getObject(ObjectId.Grid);
+		if (grid != null)
+			cells = grid.getCells();
+	}
+
 	public void keyPressed(KeyEvent e)
 	{
 		if (handler.getGame().getState() != GameState.GAME)
 			return;
+
+		getGrid();
+
 		//grid.printCells();
 		int keyCode = e.getKeyCode();
 		if (keyCode == KeyEvent.VK_ESCAPE)
 		{
 			System.exit(1);
 		}
-		
+
 		if (handler.getObject(ObjectId.CenterBlock) != null)
 		{
 			CenterBlock centerBlock = (CenterBlock) handler.getObject(ObjectId.CenterBlock);
 			int row = grid.getRow(centerBlock);
 			int column = grid.getColumn(centerBlock);
 			Cell destinationCell = null;
-			
+
 			if (grid.getHorizontalTrackBounds().contains(centerBlock.getBounds()))
 			{
 				if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_LEFT)
 					centerBlock.setDirection(Direction.CENTER);
-					//centerBlock.setUpKeyPressed(false);
-				
+				//centerBlock.setUpKeyPressed(false);
+
 				if (keyCode == KeyEvent.VK_RIGHT && centerBlock.getX() != grid.getX() + grid.getSize() - centerBlock.getSize())
 					centerBlock.setX(centerBlock.getX() + grid.getStep());
 				else if (keyCode == KeyEvent.VK_LEFT && centerBlock.getX() != grid.getX())
 					centerBlock.setX(centerBlock.getX() - grid.getStep());
 				else if (keyCode == KeyEvent.VK_UP)
 					centerBlock.setDirection(Direction.NORTH);
-					//centerBlock.setUpKeyPressed(true);
+				//centerBlock.setUpKeyPressed(true);
 				else if (keyCode == KeyEvent.VK_DOWN)
 					centerBlock.setDirection(Direction.SOUTH);
-					//centerBlock.setDownKeyPressed(true);
+				//centerBlock.setDownKeyPressed(true);
 				else if (keyCode == KeyEvent.VK_SPACE)
 				{	
 					if (centerBlock.getDirection() == Direction.NORTH)
@@ -76,18 +88,18 @@ public class KeyInput extends KeyAdapter
 			{
 				if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN)
 					centerBlock.setDirection(Direction.CENTER);
-					//centerBlock.setRightKeyPressed(false);
-				
+				//centerBlock.setRightKeyPressed(false);
+
 				if (keyCode == KeyEvent.VK_UP && centerBlock.getY() != grid.getY())
 					centerBlock.setY(centerBlock.getY() - grid.getStep());
 				else if (keyCode == KeyEvent.VK_DOWN && centerBlock.getY() != (grid.getY() + grid.getSize() - centerBlock.getSize()))
 					centerBlock.setY(centerBlock.getY() + grid.getStep());
 				else if (keyCode == KeyEvent.VK_RIGHT)
 					centerBlock.setDirection(Direction.EAST);
-					//centerBlock.setRightKeyPressed(true);
+				//centerBlock.setRightKeyPressed(true);
 				else if (keyCode == KeyEvent.VK_LEFT)
 					centerBlock.setDirection(Direction.WEST);
-					//centerBlock.setLeftKeyPressed(true);
+				//centerBlock.setLeftKeyPressed(true);
 				else if (keyCode == KeyEvent.VK_SPACE)
 				{
 					if (centerBlock.getDirection() == Direction.EAST)
@@ -109,25 +121,25 @@ public class KeyInput extends KeyAdapter
 			}
 		}
 	}
-	
+
 	private void moveBlock(CenterBlock centerBlock, Cell destinationCell)
 	{
 		if (destinationCell == null)
 			return;
-		
+
 		Block block = centerBlock.toBlock();
 		destinationCell.addBlock(block);
 		block.setMoving(true);
-		
+
 		handler.addObject(block);
 		handler.removeCenterBlock();
-		
+
 		try {
 			Thread.sleep(800);
 		} catch (InterruptedException ie) {
 			ie.printStackTrace();
 		}
-		
+
 		Set<Cell> cellsToRemove = grid.checkForMatch();
 		//System.out.println(cellsToRemove);
 		for (Cell cell : cellsToRemove)
@@ -136,8 +148,57 @@ public class KeyInput extends KeyAdapter
 			handler.removeObject(toRemove);
 		}
 		handler.addCenterBlock();
+
+		if (grid.isEmpty())
+		{
+			nextLevel();
+		}
 	}
 	
+	private void nextLevel()
+	{
+		int n = 0;
+		if (game.getLevel() == Game.TOTAL_LEVELS)
+		{
+			Object[] options = {"MENU",
+					"LEVEL SELECTION"};
+			n = JOptionPane.showOptionDialog(game,
+					"PERFECT! GAME COMPLETE",
+					"LEVEL COMPLETED",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					options,
+					options[0]);
+		}
+		else
+		{
+			Object[] options = {"MENU",
+				"LEVEL SELECTION",
+				"NEXT LEVEL"};
+			n = JOptionPane.showOptionDialog(game,
+				"PERFECT!",
+				"LEVEL COMPLETED",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				options,
+				options[2]);
+		}
+		if (n == JOptionPane.CANCEL_OPTION)
+		{
+			game.nextLevel();
+		}
+		else if (n == JOptionPane.YES_OPTION)
+		{
+			game.setState(GameState.MENU);
+		}
+		else if (n == JOptionPane.NO_OPTION)
+		{
+			game.setState(GameState.LEVEL);
+		}
+	}
+
 	private Cell getDestinationCell(int row, int column, Direction direction)
 	{
 		Cell destinationCell = null;
