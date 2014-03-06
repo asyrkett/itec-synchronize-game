@@ -10,7 +10,7 @@ public class Texture
 	
 	public Texture()
 	{
-		spriteSheet = new SpriteSheet(new BufferedImageLoader().loadImage("/sprite_sheet.png"));
+		spriteSheet = new SpriteSheet(BufferedImageLoader.loadImage("/sprite_sheet.png"));
 		
 		getTextures();
 	}

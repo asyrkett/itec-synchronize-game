@@ -31,8 +31,8 @@ public class Cell extends GameObject {
 
 	public void render(Graphics g)
 	{
-		g.setColor(Color.RED);
-		g.drawRect((int)x, (int)y, size, size);
+		/*g.setColor(Color.RED);
+		g.drawRect((int)x, (int)y, size, size);*/
 	}
 
 	public Rectangle getBounds()

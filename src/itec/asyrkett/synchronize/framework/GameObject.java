@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
+/**
+ * This abstract class is a game object that will be rendered to the game
+ */
 public abstract class GameObject
 {
 	protected float x, y; // the x and y coordinates of the game object
@@ -23,8 +26,22 @@ public abstract class GameObject
 		this.id = id;
 	}
 	
+	/**
+	 * Updates the current state of the object
+	 * @param objects other objects this object may interact with
+	 */
 	public abstract void tick(LinkedList<GameObject> objects);
+	
+	/**
+	 * The appearance of the object
+	 * @param g the graphics to render to
+	 */
 	public abstract void render(Graphics g);
+	
+	/**
+	 * The area that the object contains
+	 * @return the rectangle that encloses the object
+	 */
 	public abstract Rectangle getBounds();
 
 	/**
