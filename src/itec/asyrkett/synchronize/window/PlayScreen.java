@@ -1,6 +1,7 @@
 package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.BufferedImageLoader;
+import itec.asyrkett.synchronize.framework.GameState;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,16 +10,16 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class GameBackground
+public class PlayScreen extends Screen
 {
 	private BufferedImage background;
 	private Rectangle resetButton = new Rectangle(660, 440, 100, 50);
 	private Rectangle menuButton = new Rectangle(40, 440, 100, 50);
 	
-	public GameBackground()
+	public PlayScreen()
 	{
-		BufferedImageLoader loader = new BufferedImageLoader();
-		background = loader.loadImage("/background.png");
+		super(GameState.PLAY);
+		background = BufferedImageLoader.loadImage("/background.png");
 	}
 	
 	public void render(Graphics g)

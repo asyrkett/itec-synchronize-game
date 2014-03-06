@@ -1,9 +1,9 @@
 package itec.asyrkett.synchronize.framework;
 
 import itec.asyrkett.synchronize.window.Game;
-import itec.asyrkett.synchronize.window.GameBackground;
-import itec.asyrkett.synchronize.window.LevelSelection;
-import itec.asyrkett.synchronize.window.Menu;
+import itec.asyrkett.synchronize.window.PlayScreen;
+import itec.asyrkett.synchronize.window.LevelSelectionScreen;
+import itec.asyrkett.synchronize.window.MenuScreen;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -36,10 +36,10 @@ public class MouseInput implements MouseListener {
 
 		if (game.getState() == GameState.MENU)
 		{
-			Menu menu = game.getMenu();
+			MenuScreen menu = (MenuScreen) game.getScreen(GameState.MENU);
 			if (menu.getPlayButtonBounds().contains(mouseX, mouseY))
 			{
-				game.setState(GameState.GAME);
+				game.setState(GameState.PLAY);
 			}
 			else if (menu.getHelpButtonBounds().contains(mouseX, mouseY))
 			{
@@ -50,21 +50,21 @@ public class MouseInput implements MouseListener {
 				System.exit(1);
 			}
 		}
-		else if (game.getState() == GameState.GAME)
+		else if (game.getState() == GameState.PLAY)
 		{
-			GameBackground gameBackground = game.getGameBackground();
-			if (gameBackground.getResetButtonBounds().contains(mouseX, mouseY))
+			PlayScreen playScreen = (PlayScreen) game.getScreen(GameState.PLAY);
+			if (playScreen.getResetButtonBounds().contains(mouseX, mouseY))
 			{
 				game.resetLevel();
 			}
-			else if (gameBackground.getMenuButtonBounds().contains(mouseX, mouseY))
+			else if (playScreen.getMenuButtonBounds().contains(mouseX, mouseY))
 			{
 				game.setState(GameState.MENU);
 			}
 		}
-		else if (game.getState() == GameState.LEVEL)
+		else if (game.getState() == GameState.LEVEL_SELECTION)
 		{
-			LevelSelection levelSelection = game.getLevelSelection();
+			LevelSelectionScreen levelSelection = (LevelSelectionScreen) game.getScreen(GameState.LEVEL_SELECTION);
 			if (levelSelection.getMenuButtonBounds().contains(mouseX, mouseY))
 			{
 				game.setState(GameState.MENU);

@@ -1,6 +1,7 @@
 package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.BufferedImageLoader;
+import itec.asyrkett.synchronize.framework.GameState;
 
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,18 +9,18 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Menu
+public class MenuScreen extends Screen
 {
-	private BufferedImage title, background;
-	private Rectangle playButton = new Rectangle(Game.WIDTH / 2 - 50, 440, 100, 50);
-	private Rectangle helpButton = new Rectangle(playButton.x - 215, playButton.y, 100, 50);
-	private Rectangle quitButton = new Rectangle(playButton.x + 215, playButton.y, 100, 50);
+	private BufferedImage title;
+	private Rectangle playButton, helpButton, quitButton;
 	
-	public Menu()
+	public MenuScreen()
 	{
-		BufferedImageLoader loader = new BufferedImageLoader();
-		title = loader.loadImage("/title.png");
-		background = loader.loadImage("/background.png");
+		super(GameState.MENU);
+		title = BufferedImageLoader.loadImage("/title.png");
+		playButton = new Rectangle(Game.WIDTH / 2 - 50, 440, 100, 50);
+		helpButton = new Rectangle(playButton.x - 215, playButton.y, 100, 50);
+		quitButton = new Rectangle(playButton.x + 215, playButton.y, 100, 50);
 	}
 	
 	public void render(Graphics g)

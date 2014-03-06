@@ -1,25 +1,21 @@
 package itec.asyrkett.synchronize.window;
 
-import itec.asyrkett.synchronize.framework.BufferedImageLoader;
+import itec.asyrkett.synchronize.framework.GameState;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
-public class LevelSelection
+public class LevelSelectionScreen extends Screen
 {
-	private BufferedImage background;
-	private Rectangle resetButton = new Rectangle(660, 440, 100, 50);
 	private Rectangle menuButton = new Rectangle(40, 440, 100, 50);
 	private int numLevels;
 	
-	public LevelSelection(int numLevels)
+	public LevelSelectionScreen(int numLevels)
 	{
-		BufferedImageLoader loader = new BufferedImageLoader();
-		background = loader.loadImage("/background.png");
+		super(GameState.LEVEL_SELECTION);
 		this.numLevels = numLevels;
 	}
 	
@@ -40,5 +36,10 @@ public class LevelSelection
 	public Rectangle getMenuButtonBounds()
 	{
 		return menuButton;
+	}
+	
+	public int getNumLevels()
+	{
+		return numLevels;
 	}
 }
