@@ -34,12 +34,12 @@ public class MouseInput implements MouseListener {
 		int mouseX = e.getX();
 		int mouseY = e.getY();
 
-		if (game.getState() == GameState.MENU)
+		if (game.getGameMode() == GameMode.MENU)
 		{
-			MenuScreen menu = (MenuScreen) game.getScreen(GameState.MENU);
+			MenuScreen menu = (MenuScreen) game.getScreen(GameMode.MENU);
 			if (menu.getPlayButtonBounds().contains(mouseX, mouseY))
 			{
-				game.setState(GameState.PLAY);
+				game.setGameMode(GameMode.PLAY);
 			}
 			else if (menu.getHelpButtonBounds().contains(mouseX, mouseY))
 			{
@@ -50,24 +50,24 @@ public class MouseInput implements MouseListener {
 				System.exit(1);
 			}
 		}
-		else if (game.getState() == GameState.PLAY)
+		else if (game.getGameMode() == GameMode.PLAY)
 		{
-			PlayScreen playScreen = (PlayScreen) game.getScreen(GameState.PLAY);
+			PlayScreen playScreen = (PlayScreen) game.getScreen(GameMode.PLAY);
 			if (playScreen.getResetButtonBounds().contains(mouseX, mouseY))
 			{
 				game.resetLevel();
 			}
 			else if (playScreen.getMenuButtonBounds().contains(mouseX, mouseY))
 			{
-				game.setState(GameState.MENU);
+				game.setGameMode(GameMode.MENU);
 			}
 		}
-		else if (game.getState() == GameState.LEVEL_SELECTION)
+		else if (game.getGameMode() == GameMode.LEVEL_SELECTION)
 		{
-			LevelSelectionScreen levelSelection = (LevelSelectionScreen) game.getScreen(GameState.LEVEL_SELECTION);
+			LevelSelectionScreen levelSelection = (LevelSelectionScreen) game.getScreen(GameMode.LEVEL_SELECTION);
 			if (levelSelection.getMenuButtonBounds().contains(mouseX, mouseY))
 			{
-				game.setState(GameState.MENU);
+				game.setGameMode(GameMode.MENU);
 			}
 		}
 	}

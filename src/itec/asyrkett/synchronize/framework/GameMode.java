@@ -1,10 +1,10 @@
 package itec.asyrkett.synchronize.framework;
 
 /**
- * Describes the state of the game in order to render the correct screen
+ * Describes the mode of the game in order to render the correct screen
  * for game navigation
  */
-public enum GameState
+public enum GameMode
 {
 	PLAY,
 	MENU,

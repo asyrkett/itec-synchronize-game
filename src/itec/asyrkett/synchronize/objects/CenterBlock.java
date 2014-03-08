@@ -34,7 +34,7 @@ public class CenterBlock extends Block
 	{
 		super.render(g);
 		
-		g.setColor(type.getBaseColor());
+		g.setColor(texture.getBaseColor());
 		Graphics2D g2d = (Graphics2D) g;
 		if (grid.getHorizontalTrackBounds().contains(getBounds()))
 		{
@@ -122,7 +122,7 @@ public class CenterBlock extends Block
 	
 	public Block toBlock()
 	{
-		Block block = new Block(x, y, size, grid, type);
+		Block block = new Block(x, y, size, grid, texture);
 		block.setDirection(direction);
 		return block;
 	}

@@ -12,19 +12,28 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-
+/**
+ * This class handles all of the game objects
+ */
 public class Handler
 {
-	public LinkedList<GameObject> objects = new LinkedList<GameObject>();
-	public List<BlockTexture> textureList = new ArrayList<BlockTexture>();
+	public LinkedList<GameObject> objects = new LinkedList<GameObject>(); //the objects the handler holds in the level
+	public List<BlockTexture> textureList = new ArrayList<BlockTexture>(); //the textures of the current level
 	
 	private Game game;
 	
+	/**
+	 * Constructs a handler for the given game
+	 * @param game the game in which to place the objects
+	 */
 	public Handler(Game game)
 	{
 		this.game = game;
 	}
 	
+	/**
+	 * Ticks the updates for all the objects in the handler
+	 */
 	public void tick()
 	{
 		for (int i = 0; i < objects.size(); i++)
@@ -33,6 +42,10 @@ public class Handler
 		}
 	}
 	
+	/**
+	 * Renders all the objects in the handler
+	 * @param g the graphics to on which to draw the objects
+	 */
 	public void render(Graphics g)
 	{
 		for (int i = 0; i < objects.size(); i++)
@@ -41,16 +54,29 @@ public class Handler
 		}
 	}
 	
+	/**
+	 * Adds the specified object to the handler
+	 * @param object the object to add
+	 */
 	public void addObject(GameObject object)
 	{
 		this.objects.add(object);
 	}
 	
+	/**
+	 * Removes the specified object from the handler
+	 * @param object the object to remove
+	 */
 	public void removeObject(GameObject object)
 	{
 		this.objects.remove(object);
 	}
 	
+	/**
+	 * Gets the first object in the handler with the specified id
+	 * @param id the id of the object to find
+	 * @return the first object with the given id, otherwise null
+	 */
 	public GameObject getObject(ObjectId id)
 	{
 		for (GameObject tempObject : objects)
@@ -63,26 +89,19 @@ public class Handler
 		return null;
 	}
 	
-	/*public void createLevel(int level)
-	{
-		int xx = (Game.WIDTH - Grid.getDefaultGridSize(Game.DEFAULT_GRID_DIMENSION)) / 2;
-		int yy = Game.DEFAULT_MARGIN * 2;
-		Grid grid = new Grid(xx, yy, Game.DEFAULT_GRID_DIMENSION);
-		addObject(grid);
-		
-		colorList = Arrays.asList(Color.GREEN, Color.MAGENTA, Color.CYAN);
-		Collections.shuffle(colorList);
-		
-		CenterBlock centerBlock = new CenterBlock(grid, colorList.get(0));
-		addObject(centerBlock);
-	}*/
-	
+	/**
+	 * Removes the current center block from the handler
+	 */
 	public void removeCenterBlock()
 	{
 		CenterBlock current = (CenterBlock) getObject(ObjectId.CenterBlock);
-		removeObject(current);
+		if (current != null)
+			removeObject(current);
 	}
 	
+	/**
+	 * Adds a new center block to the handler
+	 */
 	public void addCenterBlock()
 	{
 		Grid grid = (Grid) getObject(ObjectId.Grid);	
@@ -90,17 +109,28 @@ public class Handler
 		addObject(new CenterBlock(grid, textureList.get(0)));
 	}
 	
-	public void addTexture(BlockTexture type)
+	/**
+	 * Adds a texture to the current texture list for the game's level
+	 * @param texture the texture to add
+	 */
+	public void addTexture(BlockTexture texture)
 	{
-		if (!textureList.contains(type))
-			textureList.add(type);
+		if (!textureList.contains(texture))
+			textureList.add(texture);
 	}
 	
-	public void removeTexture(BlockTexture type)
+	/**
+	 * Removes the specified texture from the handler
+	 * @param texture the texture to remove
+	 */
+	public void removeTexture(BlockTexture texture)
 	{
-		textureList.remove(type);
+		textureList.remove(texture);
 	}
 	
+	/**
+	 * Removes all objects from the handler
+	 */
 	public void clearHandler()
 	{
 		for (int i = 0; i < objects.size(); i++)
@@ -110,6 +140,9 @@ public class Handler
 		}
 	}
 	
+	/**
+	 * Removes all textures from the handler
+	 */
 	public void clearTextures()
 	{
 		for (int i = 0; i < textureList.size(); i++)
@@ -119,6 +152,10 @@ public class Handler
 		}
 	}
 	
+	/**
+	 * Gets the game the handler renders to
+	 * @return the game
+	 */
 	public Game getGame()
 	{
 		return game;

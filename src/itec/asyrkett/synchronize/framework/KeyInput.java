@@ -35,7 +35,7 @@ public class KeyInput extends KeyAdapter
 
 	public void keyPressed(KeyEvent e)
 	{
-		if (handler.getGame().getState() != GameState.PLAY)
+		if (handler.getGame().getGameMode() != GameMode.PLAY)
 			return;
 
 		getGrid();
@@ -175,11 +175,11 @@ public class KeyInput extends KeyAdapter
 			}
 			else if (n == JOptionPane.YES_OPTION)
 			{
-				game.setState(GameState.MENU);
+				game.setGameMode(GameMode.MENU);
 			}
 			else if (n == JOptionPane.NO_OPTION)
 			{
-				game.setState(GameState.LEVEL_SELECTION);
+				game.setGameMode(GameMode.LEVEL_SELECTION);
 			}
 		}
 		else
@@ -202,11 +202,11 @@ public class KeyInput extends KeyAdapter
 			}
 			else if (n == JOptionPane.YES_OPTION)
 			{
-				game.setState(GameState.MENU);
+				game.setGameMode(GameMode.MENU);
 			}
 			else if (n == JOptionPane.NO_OPTION)
 			{
-				game.setState(GameState.LEVEL_SELECTION);
+				game.setGameMode(GameMode.LEVEL_SELECTION);
 			}
 		}
 	}

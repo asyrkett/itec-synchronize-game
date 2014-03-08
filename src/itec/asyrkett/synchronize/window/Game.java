@@ -2,7 +2,7 @@ package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.BlockTexture;
 import itec.asyrkett.synchronize.framework.BufferedImageLoader;
-import itec.asyrkett.synchronize.framework.GameState;
+import itec.asyrkett.synchronize.framework.GameMode;
 import itec.asyrkett.synchronize.framework.KeyInput;
 import itec.asyrkett.synchronize.framework.MouseInput;
 import itec.asyrkett.synchronize.framework.Texture;
@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable
 	private boolean running = false; // whether or not the game is running
 	private Thread thread; // the game thread
 	private BufferedImage levelImage;
-	private GameState gameState = GameState.MENU; //the game starts on the menu screen
+	private GameMode gameMode = GameMode.MENU; //the game starts on the menu screen
 	private int level = 1; //the default starting level of the game
 	
 	public static int WIDTH, HEIGHT; //the game's width and height
@@ -56,7 +56,7 @@ public class Game extends Canvas implements Runnable
 		screens.add(new MenuScreen());
 		screens.add(new PlayScreen());
 		screens.add(new LevelSelectionScreen(TOTAL_LEVELS));
-		currentScreen = getScreen(GameState.MENU);
+		currentScreen = getScreen(GameMode.MENU);
 		
 		handler = new Handler(this);
 		
@@ -124,7 +124,7 @@ public class Game extends Canvas implements Runnable
 	 */
 	private void tick()
 	{
-		if (gameState == GameState.PLAY)
+		if (gameMode == GameMode.PLAY)
 			handler.tick();
 	}
 	
@@ -145,7 +145,7 @@ public class Game extends Canvas implements Runnable
 		//DRAW HERE
 		
 		currentScreen.render(g);
-		if (gameState == GameState.PLAY)
+		if (gameMode == GameMode.PLAY)
 			handler.render(g);
 		
 		//////////////////////////////////////////////////
@@ -154,15 +154,15 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	/**
-	 * Searches and returns the screen that has the given game state
-	 * @param gameState the game state of the screen to search for
-	 * @return the first screen in the game's screens with the given state, otherwise null
+	 * Searches and returns the screen that has the given game mode
+	 * @param gameMode the game mode of the screen to search for
+	 * @return the first screen in the game's screens with the given mode, otherwise null
 	 */
-	public Screen getScreen(GameState gameState)
+	public Screen getScreen(GameMode gameMode)
 	{
 		for (Screen screen : screens)
 		{
-			if (screen.getGameState() == gameState)
+			if (screen.getGameMode() == gameMode)
 				return screen;
 		}
 		return null;
@@ -247,22 +247,22 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	/**
-	 * Returns the current state of the game
-	 * @return the current game state
+	 * Returns the current mode of the game
+	 * @return the current game mode
 	 */
-	public GameState getState()
+	public GameMode getGameMode()
 	{
-		return gameState;
+		return gameMode;
 	}
 	
 	/**
-	 * Sets the state of the game and sets the corresponding screen
-	 * @param state the game state to set
+	 * Sets the mode of the game and sets the corresponding screen
+	 * @param gameMode the game mode to set
 	 */
-	public void setState(GameState state)
+	public void setGameMode(GameMode gameMode)
 	{
-		this.gameState = state;
-		currentScreen = getScreen(state);
+		this.gameMode = gameMode;
+		currentScreen = getScreen(gameMode);
 	}
 	
 	/**

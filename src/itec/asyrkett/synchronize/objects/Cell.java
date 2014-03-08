@@ -71,7 +71,7 @@ public class Cell extends GameObject {
 
 	public String toString()
 	{
-		return "" + isOccupied() + (isOccupied() ? "" + block.getType() : "");
+		return "" + isOccupied() + (isOccupied() ? "" + block.getTexture() : "");
 		//return "Cell [x=" + x + ", y=" + y + ", isOccupied=" + isOccupied() + "]";
 	}
 	
