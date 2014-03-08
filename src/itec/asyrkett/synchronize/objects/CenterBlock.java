@@ -13,15 +13,25 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 
+/**
+ * This class represents a block game object that the player can
+ * move north, south, east, or west (up, down, left, right).
+ */
 public class CenterBlock extends Block
 {
+	//the arrows indicating in which direction the player can move
 	private Shape upArrow, downArrow, rightArrow, leftArrow;
 	
-	public CenterBlock(Grid grid, BlockTexture type)
+	/**
+	 * Constructs a block to the center position of the given grid
+	 * @param grid the grid to which the block belongs
+	 * @param texture the texture of the block
+	 */
+	public CenterBlock(Grid grid, BlockTexture texture)
 	{
 		super(grid.getX() + grid.getStep() * (grid.getDimension() / 2),
 				grid.getY() + grid.getStep() * (grid.getDimension() / 2),
-				grid.getStep(), grid, type);
+				grid.getStep(), grid, texture);
 		setId(ObjectId.CenterBlock);
 		adjustArrows();
 	}
@@ -30,12 +40,17 @@ public class CenterBlock extends Block
 	{
 	}
 	
+	/**
+	 * Renders a block and the arrows indicating the direction
+	 * the block can move. If a direction is chosen, the arrow is filled in.
+	 */
 	public void render(Graphics g)
 	{
 		super.render(g);
 		
 		g.setColor(texture.getBaseColor());
 		Graphics2D g2d = (Graphics2D) g;
+		
 		if (grid.getHorizontalTrackBounds().contains(getBounds()))
 		{
 			if (direction == Direction.NORTH)
@@ -47,6 +62,7 @@ public class CenterBlock extends Block
 			else
 				g2d.draw(downArrow);
 		}
+		
 		if (grid.getVerticalTrackBounds().contains(getBounds()))
 		{	
 			if (direction == Direction.WEST)
@@ -58,40 +74,47 @@ public class CenterBlock extends Block
 			else
 				g2d.draw(rightArrow);
 		}
-		/*Graphics2D g2d = (Graphics2D) g;
-		g2d.setStroke(new BasicStroke(1f));
-		g2d.setColor(Color.YELLOW);
-		g2d.draw(getBoundsBottom());
-		g2d.draw(getBoundsTop());
-		g2d.draw(getBoundsLeft());
-		g2d.draw(getBoundsRight());*/
 	}
 	
-	private void adjustArrows()
-	{	
-		upArrow = createArrowShape(new Point((int) (x + size / 2), (int) y),
-				new Point((int) (x + size / 2), (int) y - 20));
-		downArrow = createArrowShape(new Point((int) (x + size / 2), (int) (y + size)),
-				new Point((int) (x + size / 2), (int) (y + size) + 20));
-		leftArrow = createArrowShape(new Point((int) x, (int) (y + size / 2)),
-				new Point((int) x - 20, (int) (y + size / 2)));
-		rightArrow = createArrowShape(new Point((int) (x + size), (int) (y + size / 2)),
-				new Point((int) (x + size) + 20, (int) (y + size / 2)));
+	/**
+	 * Creates a block object with the center block's settings
+	 * including location, size, grid, texture, and direction
+	 * @return the block object with the center block's attributes
+	 */
+	public Block toBlock()
+	{
+		Block block = new Block(x, y, size, grid, texture);
+		block.setDirection(direction);
+		return block;
 	}
 	
+	/**
+	 * Sets the x coordinate of the center block and adjusts the arrows' positions
+	 * @param x the x coordinate to set
+	 */
 	public void setX(float x)
 	{
 		super.setX(x);
 		adjustArrows();
 	}
 	
+	/**
+	 * Sets the y coordinate of the center block and adjusts the arrows' positions
+	 * @param y the y coordinate to set
+	 */
 	public void setY(float y)
 	{
 		super.setY(y);
 		adjustArrows();
 	}
 
-	public static Shape createArrowShape(Point startPoint, Point endPoint)
+	/**
+	 * Creates a shape in the form of an arrow extending from a start point to an end point
+	 * @param startPoint the start position of the arrow
+	 * @param endPoint the end position of the arrow
+	 * @return an arrow extending from the start point to the end point
+	 */
+	private Shape createArrowShape(Point startPoint, Point endPoint)
 	{
 	    Polygon arrowPolygon = new Polygon();
 	    arrowPolygon.addPoint(-6, 1);
@@ -115,15 +138,29 @@ public class CenterBlock extends Block
 	    return transform.createTransformedShape(arrowPolygon);
 	}
 
-	private static Point midpoint(Point p1, Point p2)
+	/**
+	 * Calculates the midpoint between two other points
+	 * @param p1 the first point
+	 * @param p2 the second point
+	 * @return the midpoint of the segment between two other points
+	 */
+	private Point midpoint(Point p1, Point p2)
 	{
 	    return new Point((int)((p1.x + p2.x)/2.0), (int)((p1.y + p2.y)/2.0));
 	}
 	
-	public Block toBlock()
-	{
-		Block block = new Block(x, y, size, grid, texture);
-		block.setDirection(direction);
-		return block;
+	/**
+	 * Adjusts the positions of the arrows relative to the block's position
+	 */
+	private void adjustArrows()
+	{	
+		upArrow = createArrowShape(new Point((int) (x + size / 2), (int) y),
+				new Point((int) (x + size / 2), (int) y - 20));
+		downArrow = createArrowShape(new Point((int) (x + size / 2), (int) (y + size)),
+				new Point((int) (x + size / 2), (int) (y + size) + 20));
+		leftArrow = createArrowShape(new Point((int) x, (int) (y + size / 2)),
+				new Point((int) x - 20, (int) (y + size / 2)));
+		rightArrow = createArrowShape(new Point((int) (x + size), (int) (y + size / 2)),
+				new Point((int) (x + size) + 20, (int) (y + size / 2)));
 	}
 }

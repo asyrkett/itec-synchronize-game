@@ -8,10 +8,17 @@ import itec.asyrkett.synchronize.window.MenuScreen;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MouseInput implements MouseListener {
-
+/**
+ * This class is a mouse listener for a Game object
+ */
+public class MouseInput implements MouseListener
+{
 	private Game game;
 
+	/**
+	 * Constructs a mouse listener for the specified game
+	 * @param game the game to add a mouse listener
+	 */
 	public MouseInput(Game game)
 	{
 		this.game = game;
@@ -74,6 +81,5 @@ public class MouseInput implements MouseListener {
 
 	public void mouseReleased(MouseEvent e)
 	{
-
 	}
 }
