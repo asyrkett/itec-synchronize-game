@@ -9,7 +9,7 @@ public class Texture
 {
 	private SpriteSheet spriteSheet;
 	
-	public BufferedImage[] sprites = new BufferedImage[7];
+	public BufferedImage[][] sprites = new BufferedImage[2][7];
 	
 	/**
 	 * Constructs a texture object from a sprite sheet
@@ -25,9 +25,12 @@ public class Texture
 	 */
 	private void getTextures()
 	{
-		for (int i = 0; i < 7; i++)
+		for (int row = 0; row < sprites.length; row++)
 		{
-			sprites[i] = spriteSheet.grabImage(0, i, 64, 64);
+			for (int col = 0; col < sprites[row].length; col++)
+			{
+				sprites[row][col] = spriteSheet.grabImage(row, col, 64, 64);
+			}
 		}
 	}
 }

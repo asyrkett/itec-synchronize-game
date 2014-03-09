@@ -108,7 +108,7 @@ public class Block extends GameObject
 	{
 		g.setColor(texture.getBaseColor());
 		//g.fillOval((int) x + 1, (int) y + 1, size - 2, size - 2);
-		g.drawImage(tex.sprites[texture.getType()], (int) x, (int) y, size, size, null);
+		g.drawImage(tex.sprites[1][texture.getType()], (int) x, (int) y, size, size, null);
 	}
 
 	public Rectangle getBounds()
