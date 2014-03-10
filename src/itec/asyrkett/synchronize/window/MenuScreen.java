@@ -39,7 +39,7 @@ public class MenuScreen extends Screen
 		
 		g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 		
-		g.drawImage(title, Game.WIDTH / 2 - title.getWidth() / 2, Game.HEIGHT / 2 - title.getHeight() / 2, title.getWidth(), title.getHeight(), null);
+		g.drawImage(title, (Game.WIDTH - title.getWidth()) / 2, (Game.HEIGHT - title.getHeight()) / 2, title.getWidth(), title.getHeight(), null);
 		
 		Font font2 = new Font("arial", Font.BOLD, 30);
 		g.setFont(font2);
