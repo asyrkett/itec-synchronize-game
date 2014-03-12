@@ -3,9 +3,7 @@ package itec.asyrkett.synchronize.window;
 import itec.asyrkett.synchronize.framework.GameMode;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 /**
@@ -14,7 +12,6 @@ import java.awt.Rectangle;
  */
 public class LevelSelectionScreen extends Screen
 {
-	private Rectangle menuButton; //the button to render to the screen
 	private int numLevels; //the number of levels to display
 	
 	/**
@@ -25,7 +22,6 @@ public class LevelSelectionScreen extends Screen
 	{
 		super(GameMode.LEVEL_SELECTION);
 		this.numLevels = numLevels;
-		menuButton = new Rectangle(40, 440, 100, 50);
 	}
 	
 	/**
@@ -33,16 +29,11 @@ public class LevelSelectionScreen extends Screen
 	 */
 	public void render(Graphics g)
 	{
-		Graphics2D g2d = (Graphics2D) g;
-		
-		Font font2 = new Font("arial", Font.BOLD, 30);
-		g.setFont(font2);
-		
 		g.setColor(Color.BLACK);
 		g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 		
-		g2d.draw(menuButton);
-		g.drawString("MENU", menuButton.x + 10, menuButton.y + 40);
+		drawImage(g, buttonBase, 40, 430);
+		drawImage(g, menuText, 40, 430);
 	}
 	
 	/**
@@ -51,7 +42,7 @@ public class LevelSelectionScreen extends Screen
 	 */
 	public Rectangle getMenuButtonBounds()
 	{
-		return menuButton;
+		return new Rectangle(40, 430, buttonBase.getWidth(), buttonBase.getHeight());
 	}
 	
 	/**

@@ -3,9 +3,7 @@ package itec.asyrkett.synchronize.window;
 import itec.asyrkett.synchronize.framework.BufferedImageLoader;
 import itec.asyrkett.synchronize.framework.GameMode;
 
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -16,7 +14,6 @@ import java.awt.image.BufferedImage;
 public class MenuScreen extends Screen
 {
 	private BufferedImage title; //the image of the game title
-	private Rectangle playButton, helpButton, quitButton; //the buttons rendered to the screen
 	
 	/**
 	 * Constructs a menu screen
@@ -25,33 +22,25 @@ public class MenuScreen extends Screen
 	{
 		super(GameMode.MENU);
 		title = BufferedImageLoader.loadImage("/title.png");
-		playButton = new Rectangle(Game.WIDTH / 2 - 50, 440, 100, 50);
-		helpButton = new Rectangle(playButton.x - 215, playButton.y, 100, 50);
-		quitButton = new Rectangle(playButton.x + 215, playButton.y, 100, 50);
 	}
 	
 	/**
 	 * Renders the menu with help, play, and quit buttons
 	 */
 	public void render(Graphics g)
-	{
-		Graphics2D g2d = (Graphics2D) g;
-		
+	{	
 		g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 		
 		g.drawImage(title, (Game.WIDTH - title.getWidth()) / 2, (Game.HEIGHT - title.getHeight()) / 2, title.getWidth(), title.getHeight(), null);
 		
-		Font font2 = new Font("arial", Font.BOLD, 30);
-		g.setFont(font2);
+		drawImage(g, buttonBase, Game.WIDTH / 2 - buttonBase.getHeight(), 430);
+		drawImage(g, playText, Game.WIDTH / 2 - playText.getHeight(), 430);
 		
-		g2d.draw(playButton);
-		g.drawString("PLAY", playButton.x + 10, playButton.y + 40);
+		drawImage(g, buttonBase, Game.WIDTH / 2 - buttonBase.getHeight() - 215, 430);
+		drawImage(g, helpText, Game.WIDTH / 2 - helpText.getHeight() - 215, 430);
 		
-		g2d.draw(helpButton);
-		g.drawString("HELP", helpButton.x + 10, helpButton.y + 40);
-		
-		g2d.draw(quitButton);
-		g.drawString("QUIT", quitButton.x + 10, quitButton.y + 40);
+		drawImage(g, buttonBase, Game.WIDTH / 2 - buttonBase.getHeight() + 215, 430);
+		drawImage(g, quitText, Game.WIDTH / 2 - quitText.getHeight() + 215, 430);
 	}
 	
 	/**
@@ -60,7 +49,7 @@ public class MenuScreen extends Screen
 	 */
 	public Rectangle getPlayButtonBounds()
 	{
-		return playButton;
+		return new Rectangle(Game.WIDTH / 2 - buttonBase.getHeight(), 430, buttonBase.getWidth(), buttonBase.getHeight());
 	}
 	
 	/**
@@ -69,7 +58,7 @@ public class MenuScreen extends Screen
 	 */
 	public Rectangle getHelpButtonBounds()
 	{
-		return helpButton;
+		return new Rectangle(Game.WIDTH / 2 - buttonBase.getHeight() - 215, 430, buttonBase.getWidth(), buttonBase.getHeight());
 	}
 	
 	/**
@@ -78,6 +67,6 @@ public class MenuScreen extends Screen
 	 */
 	public Rectangle getQuitButtonBounds()
 	{
-		return quitButton;
+		return new Rectangle(Game.WIDTH / 2 - buttonBase.getHeight() + 215, 430, buttonBase.getWidth(), buttonBase.getHeight());
 	}
 }

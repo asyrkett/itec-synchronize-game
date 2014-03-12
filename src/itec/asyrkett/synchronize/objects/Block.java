@@ -19,6 +19,7 @@ public class Block extends GameObject
 {
 	protected final float MAX_VELOCITY = 5;
 	protected final float acceleration = 0.5f;
+	protected static final Texture tex = Game.TEXTURE;
 	
 	protected int size; //the side length of the block in pixels
 	protected float destinationX, destinationY; //the destination coordinates of the block if moving
@@ -26,7 +27,6 @@ public class Block extends GameObject
 	protected boolean moving; //whether or not the block is static or in motion
 	protected Grid grid; //the grid to which the block is drawn
 	protected BlockTexture texture; //the rendered texture of the block
-	protected Texture tex = Game.TEXTURE;
 
 	/**
 	 * Creates a block game object at the specified location of the grid
@@ -108,7 +108,7 @@ public class Block extends GameObject
 	{
 		g.setColor(texture.getBaseColor());
 		//g.fillOval((int) x + 1, (int) y + 1, size - 2, size - 2);
-		g.drawImage(tex.sprites[1][texture.getType()], (int) x, (int) y, size, size, null);
+		g.drawImage(tex.blockTextures[1][texture.getType()], (int) x, (int) y, size, size, null);
 	}
 
 	public Rectangle getBounds()

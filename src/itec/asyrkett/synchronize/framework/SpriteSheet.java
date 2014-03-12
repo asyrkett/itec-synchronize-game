@@ -9,14 +9,20 @@ import java.awt.image.BufferedImage;
 public class SpriteSheet
 {
 	private BufferedImage image;
+	private int rowHeight;
+	private int colWidth;
 	
 	/**
 	 * Constructs a sprite sheet for the specified image
 	 * @param image the sprite sheet
+	 * @param rowHeight the number of pixels between each row of the sprite sheet
+	 * @param colWidth the number of pixels between each column of the sprite sheet
 	 */
-	public SpriteSheet(BufferedImage image)
+	public SpriteSheet(BufferedImage image, int rowHeight, int colWidth)
 	{
 		this.image = image;
+		this.rowHeight = rowHeight;
+		this.colWidth = colWidth;
 	}
 	
 	/**
@@ -29,6 +35,6 @@ public class SpriteSheet
 	 */
 	public BufferedImage grabImage(int row, int column, int width, int height)
 	{
-		return image.getSubimage(column * 64, row * 64, width, height);
+		return image.getSubimage(column * colWidth, row * rowHeight, width, height);
 	}
 }
