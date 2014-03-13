@@ -14,15 +14,8 @@ import java.awt.image.BufferedImage;
 public abstract class Screen
 {
 	protected static BufferedImage background; //the background of the screen
-	protected static final Texture tex = Game.TEXTURE;
-	protected static final BufferedImage buttonBase = tex.buttonTextures[Texture.BUTTON_BASE][Texture.BUTTON_BASE];
-	protected static final BufferedImage menuText = tex.buttonTextures[Texture.TEXT][Texture.TEXT_MENU];
-	protected static final BufferedImage helpText = tex.buttonTextures[Texture.TEXT][Texture.TEXT_HELP];
-	protected static final BufferedImage levelText = tex.buttonTextures[Texture.TEXT][Texture.TEXT_LEVEL];
-	protected static final BufferedImage quitText = tex.buttonTextures[Texture.TEXT][Texture.TEXT_QUIT];
-	protected static final BufferedImage playText = tex.buttonTextures[Texture.TEXT][Texture.TEXT_PLAY];
-	protected static final BufferedImage resetText = tex.buttonTextures[Texture.TEXT][Texture.TEXT_RESET];
-
+	protected static final BufferedImage buttonBase = Texture.getButtonBase();
+	
 	protected GameMode gameMode; //the game mode to render
 	
 	/**

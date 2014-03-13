@@ -1,6 +1,5 @@
 package itec.asyrkett.synchronize.window;
 
-import itec.asyrkett.synchronize.framework.BlockTexture;
 import itec.asyrkett.synchronize.framework.BufferedImageLoader;
 import itec.asyrkett.synchronize.framework.GameMode;
 import itec.asyrkett.synchronize.framework.KeyInput;
@@ -34,13 +33,13 @@ public class Game extends Canvas implements Runnable
 	public static int WIDTH, HEIGHT; //the game's width and height
 	public static final int DEFAULT_MARGIN = 32; //the default margin
 	public static final int DEFAULT_GRID_DIMENSION = 9; //the default dimension of the grid, 9x9 cells
-	public static Texture TEXTURE;
 	public static final Random GENERATOR = new Random(); //random number generator
 	public static final int TOTAL_LEVELS = 3; //the total number of levels in the game
 	
 	private LinkedList<Screen> screens; //a list of the game's screens
 	private Screen currentScreen; //the current screen the game is rendering
 	private Handler handler; // handler of the game objects
+	private int blockTextureType = Texture.BLOCK_SQUARE;
 	
 	/**
 	 * Initializes game objects
@@ -49,7 +48,6 @@ public class Game extends Canvas implements Runnable
 	{
 		WIDTH = getWidth();
 		HEIGHT = getHeight();
-		TEXTURE = new Texture();
 	
 		//creating the game screens
 		screens = new LinkedList<Screen>();
@@ -201,25 +199,16 @@ public class Game extends Canvas implements Runnable
 		
 		//populates the grid's cells with blocks and other game objects
 		Cell[][] cells = grid.getCells();
-		BlockTexture[] types = BlockTexture.values();
 		for (int xx = 0; xx < dimension; xx++)
 		{
 			for (int yy = 0; yy < dimension; yy++)
 			{
 				Color color = getPixelColor(image, xx, yy);
-				BlockTexture type = null;
 				if (!color.equals(Color.WHITE))
 				{
-					for (BlockTexture texture : types)
-					{
-						if (texture.getBaseColor().equals(color))
-						{
-							type = texture;
-							handler.addTexture(texture);
-							break;
-						}
-					}
-					Block block = new Block(gridX + (xx * step), gridY + (yy * step), step, grid, type);
+					int colorTexture = getColorTexture(color);
+					handler.addBlockColor(colorTexture);
+					Block block = new Block(gridX + (xx * step), gridY + (yy * step), step, grid, blockTextureType, colorTexture);
 					cells[yy][xx].addBlock(block);
 					handler.addObject(block);
 				}
@@ -228,6 +217,26 @@ public class Game extends Canvas implements Runnable
 		
 		//add player-controlled block
 		handler.addCenterBlock();
+	}
+	
+	private int getColorTexture(Color color)
+	{
+		if (color.equals(Color.RED))
+			return Texture.BLOCK_RED;
+		else if (color.equals(Color.MAGENTA))
+			return Texture.BLOCK_MAGENTA;
+		else if (color.equals(new Color(255, 120, 0)))
+			return Texture.BLOCK_ORANGE;
+		else if (color.equals(Color.YELLOW))
+			return Texture.BLOCK_YELLOW;
+		else if (color.equals(Color.GREEN))
+			return Texture.BLOCK_GREEN;
+		else if (color.equals(Color.CYAN))
+			return Texture.BLOCK_CYAN;
+		else if (color.equals(Color.BLUE))
+			return Texture.BLOCK_BLUE;
+		else
+			return 0; //red default
 	}
 	
 	/**
@@ -300,10 +309,16 @@ public class Game extends Canvas implements Runnable
 	{
 		level++;
 		handler.clearHandler();
-		handler.clearTextures();
+		handler.clearBlockColors();
+		//handler.clearTextures();
 		levelImage = BufferedImageLoader.loadImage("/levels/level" + level + ".png");
 		loadImageLevel(levelImage);
 		return level;
+	}
+	
+	public int getBlockTextureType()
+	{
+		return blockTextureType;
 	}
 	
 	/**

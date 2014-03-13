@@ -2,6 +2,7 @@ package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.BufferedImageLoader;
 import itec.asyrkett.synchronize.framework.GameMode;
+import itec.asyrkett.synchronize.framework.Texture;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -14,6 +15,7 @@ import java.awt.image.BufferedImage;
 public class MenuScreen extends Screen
 {
 	private BufferedImage title; //the image of the game title
+	private BufferedImage playText, helpText, quitText;
 	
 	/**
 	 * Constructs a menu screen
@@ -22,6 +24,9 @@ public class MenuScreen extends Screen
 	{
 		super(GameMode.MENU);
 		title = BufferedImageLoader.loadImage("/title.png");
+		playText = Texture.getButtonText(Texture.BUTTON_TEXT_PLAY);
+		helpText = Texture.getButtonText(Texture.BUTTON_TEXT_HELP);
+		quitText = Texture.getButtonText(Texture.BUTTON_TEXT_QUIT);
 	}
 	
 	/**

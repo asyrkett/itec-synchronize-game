@@ -1,10 +1,12 @@
 package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.GameMode;
+import itec.asyrkett.synchronize.framework.Texture;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 /**
  * This class represents the screen to render when
@@ -12,12 +14,16 @@ import java.awt.Rectangle;
  */
 public class PlayScreen extends Screen
 {
+	private BufferedImage menuText, resetText;
+	
 	/**
 	 * Constructs a play screen
 	 */
 	public PlayScreen()
 	{
 		super(GameMode.PLAY);
+		menuText = Texture.getButtonText(Texture.BUTTON_TEXT_MENU);
+		resetText = Texture.getButtonText(Texture.BUTTON_TEXT_RESET);
 	}
 	
 	/**

@@ -94,12 +94,6 @@ public class Cell extends GameObject {
 	{
 		return block;
 	}
-
-	public String toString()
-	{
-		return "" + isOccupied() + (isOccupied() ? "" + block.getTexture() : "");
-		//return "Cell [x=" + x + ", y=" + y + ", isOccupied=" + isOccupied() + "]";
-	}
 	
 	/**
 	 * Gets the row of the grid where the cell is located

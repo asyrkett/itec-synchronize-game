@@ -3,7 +3,6 @@ package itec.asyrkett.synchronize.objects;
 import itec.asyrkett.synchronize.framework.Direction;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
-import itec.asyrkett.synchronize.framework.BlockTexture;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,13 +24,14 @@ public class CenterBlock extends Block
 	/**
 	 * Constructs a block to the center position of the given grid
 	 * @param grid the grid to which the block belongs
-	 * @param texture the texture of the block
+	 * @param textureType the type of block from the Texture class (Texture.BLOCK_CIRCLE, Texture.BLOCK_SQUARE, etc.)
+	 * @param textureColor the color of the block from the Texture class (Texture.BLOCK_RED, Texture.BLOCK_MAGENTA, etc.)
 	 */
-	public CenterBlock(Grid grid, BlockTexture texture)
+	public CenterBlock(Grid grid, int textureType, int textureColor)
 	{
 		super(grid.getX() + grid.getStep() * (grid.getDimension() / 2),
 				grid.getY() + grid.getStep() * (grid.getDimension() / 2),
-				grid.getStep(), grid, texture);
+				grid.getStep(), grid, textureType, textureColor);
 		setId(ObjectId.CenterBlock);
 		adjustArrows();
 	}
@@ -48,7 +48,7 @@ public class CenterBlock extends Block
 	{
 		super.render(g);
 		
-		g.setColor(texture.getBaseColor());
+		//g.setColor(texture.getBaseColor());
 		Graphics2D g2d = (Graphics2D) g;
 		
 		if (grid.getHorizontalTrackBounds().contains(getBounds()))
@@ -83,7 +83,7 @@ public class CenterBlock extends Block
 	 */
 	public Block toBlock()
 	{
-		Block block = new Block(x, y, size, grid, texture);
+		Block block = new Block(x, y, size, grid, textureType, textureColor);
 		block.setDirection(direction);
 		return block;
 	}

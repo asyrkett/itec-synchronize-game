@@ -2,23 +2,20 @@ package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
-import itec.asyrkett.synchronize.framework.BlockTexture;
 import itec.asyrkett.synchronize.objects.CenterBlock;
 import itec.asyrkett.synchronize.objects.Grid;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * This class handles all of the game objects
  */
 public class Handler
 {
-	public LinkedList<GameObject> objects = new LinkedList<GameObject>(); //the objects the handler holds in the level
-	public List<BlockTexture> textureList = new ArrayList<BlockTexture>(); //the textures of the current level
+	public LinkedList<GameObject> objects = new LinkedList<GameObject>(); //the objects the handler holds in the current level
+	public LinkedList<Integer> blockColors = new LinkedList<Integer>(); //the block colors in the current level
 	
 	private Game game;
 	
@@ -105,27 +102,18 @@ public class Handler
 	public void addCenterBlock()
 	{
 		Grid grid = (Grid) getObject(ObjectId.Grid);	
-		Collections.shuffle(textureList);
-		addObject(new CenterBlock(grid, textureList.get(0)));
+		Collections.shuffle(blockColors);
+		addObject(new CenterBlock(grid, game.getBlockTextureType(), blockColors.get(0)));
 	}
-	
+
 	/**
-	 * Adds a texture to the current texture list for the game's level
-	 * @param texture the texture to add
+	 * Adds the specified block color to the handler
+	 * @param textureColor the color of a block from the Texture class (Texture.BLOCK_RED, Texture.BLOCK_MAGENTA, etc.)
 	 */
-	public void addTexture(BlockTexture texture)
+	public void addBlockColor(int textureColor)
 	{
-		if (!textureList.contains(texture))
-			textureList.add(texture);
-	}
-	
-	/**
-	 * Removes the specified texture from the handler
-	 * @param texture the texture to remove
-	 */
-	public void removeTexture(BlockTexture texture)
-	{
-		textureList.remove(texture);
+		if (!blockColors.contains(textureColor))
+			blockColors.add(textureColor);
 	}
 	
 	/**
@@ -141,13 +129,13 @@ public class Handler
 	}
 	
 	/**
-	 * Removes all textures from the handler
+	 * Removes all block colors form the handler
 	 */
-	public void clearTextures()
+	public void clearBlockColors()
 	{
-		for (int i = 0; i < textureList.size(); i++)
+		for (int i = 0; i < blockColors.size(); i++)
 		{
-			textureList.remove(i);
+			blockColors.remove(i);
 			i--;
 		}
 	}

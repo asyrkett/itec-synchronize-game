@@ -3,9 +3,7 @@ package itec.asyrkett.synchronize.objects;
 import itec.asyrkett.synchronize.framework.Direction;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
-import itec.asyrkett.synchronize.framework.BlockTexture;
 import itec.asyrkett.synchronize.framework.Texture;
-import itec.asyrkett.synchronize.window.Game;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -19,31 +17,33 @@ public class Block extends GameObject
 {
 	protected final float MAX_VELOCITY = 5;
 	protected final float acceleration = 0.5f;
-	protected static final Texture tex = Game.TEXTURE;
 	
 	protected int size; //the side length of the block in pixels
 	protected float destinationX, destinationY; //the destination coordinates of the block if moving
 	protected Direction direction; //the direction in which the block is moving
 	protected boolean moving; //whether or not the block is static or in motion
 	protected Grid grid; //the grid to which the block is drawn
-	protected BlockTexture texture; //the rendered texture of the block
-
+	protected int textureColor;
+	protected int textureType;
+	
 	/**
 	 * Creates a block game object at the specified location of the grid
 	 * @param x the x coordinate of the block's upper left corner
 	 * @param y the y coordinate of the block's upper left corner
 	 * @param size the side length of the block
 	 * @param grid the grid in which the block is placed
-	 * @param texture the texture of the block
+	 * @param textureType the type of block from the Texture class (Texture.BLOCK_CIRCLE, Texture.BLOCK_SQUARE, etc.)
+	 * @param textureColor the color of the block from the Texture class (Texture.BLOCK_RED, Texture.BLOCK_MAGENTA, etc.)
 	 */
-	public Block(float x, float y, int size, Grid grid, BlockTexture texture)
+	public Block(float x, float y, int size, Grid grid, int textureType, int textureColor)
 	{
 		super(x, y, ObjectId.Block);
 		destinationX = x;
 		destinationY = y;
 		this.size = size;
 		this.grid = grid;
-		this.texture = texture;
+		this.textureType = textureType;
+		this.textureColor = textureColor;
 		this.direction = Direction.CENTER;
 		this.moving = false;
 	}
@@ -106,9 +106,9 @@ public class Block extends GameObject
 	 */
 	public void render(Graphics g)
 	{
-		g.setColor(texture.getBaseColor());
+		//g.setColor(texture.getBaseColor());
 		//g.fillOval((int) x + 1, (int) y + 1, size - 2, size - 2);
-		g.drawImage(tex.blockTextures[1][texture.getType()], (int) x, (int) y, size, size, null);
+		g.drawImage(Texture.getBlock(textureType, textureColor), (int) x, (int) y, size, size, null);
 	}
 
 	public Rectangle getBounds()
@@ -189,24 +189,6 @@ public class Block extends GameObject
 	{
 		this.destinationY = destinationY;
 	}
-	
-	/**
-	 * Gets the block's rendered texture
-	 * @return the texture the block renders
-	 */
-	public BlockTexture getTexture()
-	{
-		return texture;
-	}
-	
-	/**
-	 * Sets the block's texture
-	 * @param texture the texture to set
-	 */
-	public void setTexture(BlockTexture texture)
-	{
-		this.texture = texture;
-	}
 
 	/**
 	 * Gets the direction the block is to move
@@ -224,5 +206,33 @@ public class Block extends GameObject
 	public void setDirection(Direction direction)
 	{
 		this.direction = direction;
+	}
+
+	/**
+	 * @return the textureColor
+	 */
+	public int getTextureColor() {
+		return textureColor;
+	}
+
+	/**
+	 * @param textureColor the textureColor to set
+	 */
+	public void setTextureColor(int textureColor) {
+		this.textureColor = textureColor;
+	}
+
+	/**
+	 * @return the textureType
+	 */
+	public int getTextureType() {
+		return textureType;
+	}
+
+	/**
+	 * @param textureType the textureType to set
+	 */
+	public void setTextureType(int textureType) {
+		this.textureType = textureType;
 	}
 }

@@ -234,7 +234,7 @@ public class Grid extends GameObject
 	/**
 	 * Checks for a group of cells in the grid that match.
 	 * A group matches if they are a group of at least 3 adjacent cells with blocks
-	 * of the same texture
+	 * of the same texture color
 	 * @return the cells that make a match
 	 */
 	public Set<Cell> checkForMatch()
@@ -250,7 +250,7 @@ public class Grid extends GameObject
 					List<Cell> verticalSGroup = new ArrayList<Cell>();
 					Cell southCell = cell;
 					while (southCell != null && southCell.isOccupied() &&
-							southCell.getBlock().getTexture() == cell.getBlock().getTexture())
+							southCell.getBlock().getTextureColor() == cell.getBlock().getTextureColor())
 					{
 						verticalSGroup.add(southCell);
 						southCell = southCell.getAdjacentCell(Direction.SOUTH);
@@ -259,7 +259,7 @@ public class Grid extends GameObject
 					List<Cell> horizontalEGroup = new ArrayList<Cell>();
 					Cell eastCell = cell;
 					while (eastCell != null && eastCell.isOccupied() &&
-							eastCell.getBlock().getTexture() == cell.getBlock().getTexture())
+							eastCell.getBlock().getTextureColor() == cell.getBlock().getTextureColor())
 					{
 						horizontalEGroup.add(eastCell);
 						eastCell = eastCell.getAdjacentCell(Direction.EAST);
@@ -268,7 +268,7 @@ public class Grid extends GameObject
 					List<Cell> verticalNGroup = new ArrayList<Cell>();
 					Cell northCell = cell;
 					while (northCell != null && northCell.isOccupied() &&
-							northCell.getBlock().getTexture() == cell.getBlock().getTexture())
+							northCell.getBlock().getTextureColor() == cell.getBlock().getTextureColor())
 					{
 						verticalNGroup.add(northCell);
 						northCell = northCell.getAdjacentCell(Direction.NORTH);
@@ -277,7 +277,7 @@ public class Grid extends GameObject
 					List<Cell> horizontalWGroup = new ArrayList<Cell>();
 					Cell westCell = cell;
 					while (westCell != null && westCell.isOccupied() &&
-							westCell.getBlock().getTexture() == cell.getBlock().getTexture())
+							westCell.getBlock().getTextureColor	() == cell.getBlock().getTextureColor())
 					{
 						horizontalWGroup.add(westCell);
 						westCell = westCell.getAdjacentCell(Direction.WEST);
