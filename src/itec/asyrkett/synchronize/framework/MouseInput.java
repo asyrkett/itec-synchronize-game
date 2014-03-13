@@ -30,6 +30,7 @@ public class MouseInput implements MouseListener
 
 	public void mouseEntered(MouseEvent e)
 	{
+		
 	}
 
 	public void mouseExited(MouseEvent e)
@@ -37,6 +38,29 @@ public class MouseInput implements MouseListener
 	}
 
 	public void mousePressed(MouseEvent e)
+	{
+		int mouseX = e.getX();
+		int mouseY = e.getY();
+
+		if (game.getGameMode() == GameMode.MENU)
+		{
+			MenuScreen menu = (MenuScreen) game.getScreen(GameMode.MENU);
+			if (menu.getPlayButtonBounds().contains(mouseX, mouseY))
+			{
+				//System.out.println("MENU");
+			}
+			else if (menu.getHelpButtonBounds().contains(mouseX, mouseY))
+			{
+				//System.out.println("HELP!");
+			}
+			else if (menu.getQuitButtonBounds().contains(mouseX, mouseY))
+			{
+				//System.out.println("EXIT!");
+			}
+		}
+	}
+
+	public void mouseReleased(MouseEvent e)
 	{
 		int mouseX = e.getX();
 		int mouseY = e.getY();
@@ -77,9 +101,5 @@ public class MouseInput implements MouseListener
 				game.setGameMode(GameMode.MENU);
 			}
 		}
-	}
-
-	public void mouseReleased(MouseEvent e)
-	{
 	}
 }
