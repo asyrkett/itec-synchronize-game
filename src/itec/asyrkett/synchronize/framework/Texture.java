@@ -33,16 +33,31 @@ public final class Texture
 	public static final int BUTTON_TEXT_QUIT = 4;
 	public static final int BUTTON_TEXT_RESET = 5;
 	
+	/**
+	 * Returns the image of the button base texture
+	 * @return the button base image
+	 */
 	public static BufferedImage getButtonBase()
 	{
 		return buttonSpriteSheet.grabImage(BUTTON_BASE, BUTTON_BASE, 128, 64);
 	}
 	
+	/**
+	 * Returns the image of the specified text for a button
+	 * @param text the text texture from the Texture class (Texture.BUTTON_TEXT_MENU, Texture.BUTTON_TEXT_RESET, etc.)
+	 * @return the button text image
+	 */
 	public static BufferedImage getButtonText(int text)
 	{
 		return buttonSpriteSheet.grabImage(BUTTON_TEXT, text, 128, 64);
 	}
 	
+	/**
+	 * Returns the image of the specified block
+	 * @param type the type of the block from the Texture class (Texture.BLOCK_CIRCLE, Texture.BLOCK_SQUARE, etc.)
+	 * @param color the color of the block from the Texture class (Texture.BLOCK_RED, Texture.BLOCK_MAGENTA, etc.)
+	 * @return the block texture image
+	 */
 	public static BufferedImage getBlock(int type, int color)
 	{
 		return blockSpriteSheet.grabImage(type, color, 64, 64);

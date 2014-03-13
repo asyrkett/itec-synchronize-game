@@ -209,30 +209,38 @@ public class Block extends GameObject
 	}
 
 	/**
-	 * @return the textureColor
+	 * Gets the color of the block as specified by the Texture class (Texture.BLOCK_RED, etc.)
+	 * @return the color of the block
 	 */
-	public int getTextureColor() {
+	public int getTextureColor()
+	{
 		return textureColor;
 	}
 
 	/**
-	 * @param textureColor the textureColor to set
+	 * Sets the color of the block
+	 * @param textureColor the color to set the block from the Texture class (Texture.BLOCK_RED, etc.)
 	 */
-	public void setTextureColor(int textureColor) {
+	public void setTextureColor(int textureColor)
+	{
 		this.textureColor = textureColor;
 	}
 
 	/**
-	 * @return the textureType
+	 * Gets the type of the block as specified by the Texture class (Texture.BLOCK_CIRCLE, Texture.BLOCK_SQUARE, etc.)
+	 * @return the type of the block
 	 */
-	public int getTextureType() {
+	public int getTextureType()
+	{
 		return textureType;
 	}
 
 	/**
-	 * @param textureType the textureType to set
+	 * Sets the type of the block
+	 * @param textureType the block type to set from the Texture class (Texture.BLOCK_CIRCLE, Texture.BLOCK_SQUARE, etc.)
 	 */
-	public void setTextureType(int textureType) {
+	public void setTextureType(int textureType)
+	{
 		this.textureType = textureType;
 	}
 }
