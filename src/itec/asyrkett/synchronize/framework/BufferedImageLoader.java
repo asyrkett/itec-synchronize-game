@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 /**
  * This class allows loading of images from the project's resources
  */
-public class BufferedImageLoader
+public final class BufferedImageLoader
 {	
 	/**
 	 * Loads and returns the image at the specified path in resources
