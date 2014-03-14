@@ -1,9 +1,10 @@
 package itec.asyrkett.synchronize.framework;
 
+import itec.asyrkett.synchronize.objects.Button;
 import itec.asyrkett.synchronize.window.Game;
-import itec.asyrkett.synchronize.window.PlayScreen;
 import itec.asyrkett.synchronize.window.LevelSelectionScreen;
 import itec.asyrkett.synchronize.window.MenuScreen;
+import itec.asyrkett.synchronize.window.PlayScreen;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -45,17 +46,46 @@ public class MouseInput implements MouseListener
 		if (game.getGameMode() == GameMode.MENU)
 		{
 			MenuScreen menu = (MenuScreen) game.getScreen(GameMode.MENU);
-			if (menu.getPlayButtonBounds().contains(mouseX, mouseY))
+			Button playButton = menu.getButton(Texture.BUTTON_TEXT_PLAY);
+			Button helpButton = menu.getButton(Texture.BUTTON_TEXT_HELP);
+			Button quitButton = menu.getButton(Texture.BUTTON_TEXT_QUIT);
+			
+			if (playButton.getBounds().contains(mouseX, mouseY))
 			{
-				//System.out.println("MENU");
+				playButton.setClicked(true);
 			}
-			else if (menu.getHelpButtonBounds().contains(mouseX, mouseY))
+			else if (helpButton.getBounds().contains(mouseX, mouseY))
 			{
-				//System.out.println("HELP!");
+				helpButton.setClicked(true);
 			}
-			else if (menu.getQuitButtonBounds().contains(mouseX, mouseY))
+			else if (quitButton.getBounds().contains(mouseX, mouseY))
 			{
-				//System.out.println("EXIT!");
+				quitButton.setClicked(true);
+			}
+		}
+		else if (game.getGameMode() == GameMode.PLAY)
+		{
+			PlayScreen playScreen = (PlayScreen) game.getScreen(GameMode.PLAY);
+			Button resetButton = playScreen.getButton(Texture.BUTTON_TEXT_RESET);
+			Button menuButton = playScreen.getButton(Texture.BUTTON_TEXT_MENU);
+			
+			if (resetButton.getBounds().contains(mouseX, mouseY))
+			{
+				resetButton.setClicked(true);
+			}
+			else if (menuButton.getBounds().contains(mouseX, mouseY))
+			{
+				menuButton.setClicked(true);
+			}
+		}
+		else if (game.getGameMode() == GameMode.LEVEL_SELECTION)
+		{
+			LevelSelectionScreen levelSelection = (LevelSelectionScreen) game.getScreen(GameMode.LEVEL_SELECTION);
+			Button menuButton = levelSelection.getButton(Texture.BUTTON_TEXT_MENU);
+			
+			if (menuButton.getBounds().contains(mouseX, mouseY))
+			{
+				menuButton.setClicked(true);
 			}
 		}
 	}
@@ -68,15 +98,22 @@ public class MouseInput implements MouseListener
 		if (game.getGameMode() == GameMode.MENU)
 		{
 			MenuScreen menu = (MenuScreen) game.getScreen(GameMode.MENU);
-			if (menu.getPlayButtonBounds().contains(mouseX, mouseY))
+			Button playButton = menu.getButton(Texture.BUTTON_TEXT_PLAY);
+			Button helpButton = menu.getButton(Texture.BUTTON_TEXT_HELP);
+			Button quitButton = menu.getButton(Texture.BUTTON_TEXT_QUIT);
+			
+			playButton.setClicked(false);
+			helpButton.setClicked(false);
+			quitButton.setClicked(false);
+			
+			if (playButton.getBounds().contains(mouseX, mouseY))
 			{
 				game.setGameMode(GameMode.PLAY);
 			}
-			else if (menu.getHelpButtonBounds().contains(mouseX, mouseY))
+			else if (helpButton.getBounds().contains(mouseX, mouseY))
 			{
-				//System.out.println("HELP!");
 			}
-			else if (menu.getQuitButtonBounds().contains(mouseX, mouseY))
+			else if (quitButton.getBounds().contains(mouseX, mouseY))
 			{
 				System.exit(1);
 			}
@@ -84,11 +121,17 @@ public class MouseInput implements MouseListener
 		else if (game.getGameMode() == GameMode.PLAY)
 		{
 			PlayScreen playScreen = (PlayScreen) game.getScreen(GameMode.PLAY);
-			if (playScreen.getResetButtonBounds().contains(mouseX, mouseY))
+			Button resetButton = playScreen.getButton(Texture.BUTTON_TEXT_RESET);
+			Button menuButton = playScreen.getButton(Texture.BUTTON_TEXT_MENU);
+			
+			resetButton.setClicked(false);
+			menuButton.setClicked(false);
+			
+			if (resetButton.getBounds().contains(mouseX, mouseY))
 			{
 				game.resetLevel();
 			}
-			else if (playScreen.getMenuButtonBounds().contains(mouseX, mouseY))
+			else if (menuButton.getBounds().contains(mouseX, mouseY))
 			{
 				game.setGameMode(GameMode.MENU);
 			}
@@ -96,7 +139,11 @@ public class MouseInput implements MouseListener
 		else if (game.getGameMode() == GameMode.LEVEL_SELECTION)
 		{
 			LevelSelectionScreen levelSelection = (LevelSelectionScreen) game.getScreen(GameMode.LEVEL_SELECTION);
-			if (levelSelection.getMenuButtonBounds().contains(mouseX, mouseY))
+			Button menuButton = levelSelection.getButton(Texture.BUTTON_TEXT_MENU);
+			
+			menuButton.setClicked(false);
+			
+			if (menuButton.getBounds().contains(mouseX, mouseY))
 			{
 				game.setGameMode(GameMode.MENU);
 			}

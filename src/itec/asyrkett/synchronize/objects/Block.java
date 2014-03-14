@@ -20,6 +20,7 @@ public class Block extends GameObject
 	
 	protected int size; //the side length of the block in pixels
 	protected float destinationX, destinationY; //the destination coordinates of the block if moving
+	protected float velX = 0, velY = 0; // the x and y velocity
 	protected Direction direction; //the direction in which the block is moving
 	protected boolean moving; //whether or not the block is static or in motion
 	protected Grid grid; //the grid to which the block is drawn
@@ -242,5 +243,41 @@ public class Block extends GameObject
 	public void setTextureType(int textureType)
 	{
 		this.textureType = textureType;
+	}
+	
+	/**
+	 * Gets the x velocity
+	 * @return the x velocity
+	 */
+	public float getVelX()
+	{
+		return velX;
+	}
+
+	/**
+	 * Sets the x velocity
+	 * @param velX the x velocity to set
+	 */
+	public void setVelX(float velX)
+	{
+		this.velX = velX;
+	}
+
+	/**
+	 * Gets the y velocity
+	 * @return the y velocity
+	 */
+	public float getVelY()
+	{
+		return velY;
+	}
+
+	/**
+	 * Sets the y velocity of the object
+	 * @param velY the y velocity to set
+	 */
+	public void setVelY(float velY)
+	{
+		this.velY = velY;
 	}
 }

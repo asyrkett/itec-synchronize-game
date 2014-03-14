@@ -2,11 +2,10 @@ package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.GameMode;
 import itec.asyrkett.synchronize.framework.Texture;
+import itec.asyrkett.synchronize.objects.Button;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 /**
  * This class represents the screen to render
@@ -15,7 +14,6 @@ import java.awt.image.BufferedImage;
 public class LevelSelectionScreen extends Screen
 {
 	private int numLevels; //the number of levels to display
-	private BufferedImage menuText;
 	
 	/**
 	 * Constructs a level selection screen with the given number of levels
@@ -25,7 +23,7 @@ public class LevelSelectionScreen extends Screen
 	{
 		super(GameMode.LEVEL_SELECTION);
 		this.numLevels = numLevels;
-		menuText = Texture.getButtonText(Texture.BUTTON_TEXT_MENU);
+		addButton(new Button(40, 430, Texture.BUTTON_TEXT_MENU));
 	}
 	
 	/**
@@ -36,17 +34,7 @@ public class LevelSelectionScreen extends Screen
 		g.setColor(Color.BLACK);
 		g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 		
-		drawImage(g, buttonBase, 40, 430);
-		drawImage(g, menuText, 40, 430);
-	}
-	
-	/**
-	 * Returns the bounds of the menu button
-	 * @return the menu button bounds
-	 */
-	public Rectangle getMenuButtonBounds()
-	{
-		return new Rectangle(40, 430, buttonBase.getWidth(), buttonBase.getHeight());
+		super.render(g);
 	}
 	
 	/**

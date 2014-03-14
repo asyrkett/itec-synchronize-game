@@ -9,5 +9,6 @@ public enum ObjectId
 	Cell(),
 	Block(),
 	CenterBlock(),
-	Grid();
+	Grid(),
+	Button();
 }

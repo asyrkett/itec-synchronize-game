@@ -2,10 +2,11 @@ package itec.asyrkett.synchronize.window;
 
 import itec.asyrkett.synchronize.framework.BufferedImageLoader;
 import itec.asyrkett.synchronize.framework.GameMode;
-import itec.asyrkett.synchronize.framework.Texture;
+import itec.asyrkett.synchronize.objects.Button;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 /**
  * This is an abstract class that renders a certain mode
@@ -13,9 +14,9 @@ import java.awt.image.BufferedImage;
  */
 public abstract class Screen
 {
-	protected static BufferedImage background; //the background of the screen
-	protected static final BufferedImage buttonBase = Texture.getButtonBase();
+	protected static BufferedImage background; //the default background of the screen
 	
+	protected LinkedList<Button> buttons; //a list of buttons on the screen
 	protected GameMode gameMode; //the game mode to render
 	
 	/**
@@ -26,13 +27,18 @@ public abstract class Screen
 	{
 		this.gameMode = gameMode;
 		background = BufferedImageLoader.loadImage("/background.png");
+		buttons = new LinkedList<Button>();
 	}
 	
 	/**
 	 * The graphics to render to the game
 	 * @param g the graphics on which to draw
 	 */
-	public abstract void render(Graphics g);
+	public void render(Graphics g)
+	{
+		for (int i = 0; i < buttons.size(); i++)
+			buttons.get(i).render(g);
+	}
 	
 	/**
 	 * Gets the game mode of the screen
@@ -44,14 +50,26 @@ public abstract class Screen
 	}
 	
 	/**
-	 * Draws the image to the graphics with the image's default width and height
-	 * @param g the graphics on which to draw
-	 * @param image the image to draw
-	 * @param x the x coordinate of the image's upper left corner
-	 * @param y the y coordinate of the image's upper left corner
+	 * Adds the specified button to the screen
+	 * @param button the button to add to the screen
 	 */
-	public static void drawImage(Graphics g, BufferedImage image, int x, int y)
+	public void addButton(Button button)
 	{
-		g.drawImage(image, x, y, image.getWidth(), image.getHeight(), null);
+		buttons.add(button);
+	}
+	
+	/**
+	 * Gets the button with the specified text from the Screen if it exists
+	 * @param textureText the button text from the Texture class (Texture.BUTTON_TEXT_MENU, etc.)
+	 * @return the button with the specified text from the Screen, null otherwise
+	 */
+	public Button getButton(int textureText)
+	{
+		for (int i = 0; i < buttons.size(); i++)
+		{
+			if (buttons.get(i).getTextureText() == textureText)
+				return buttons.get(i);
+		}
+		return null;
 	}
 }
