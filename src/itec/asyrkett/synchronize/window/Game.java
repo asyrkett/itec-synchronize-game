@@ -54,6 +54,7 @@ public class Game extends Canvas implements Runnable
 		screens.add(new MenuScreen());
 		screens.add(new PlayScreen());
 		screens.add(new LevelSelectionScreen(TOTAL_LEVELS));
+		screens.add(new HelpScreen());
 		currentScreen = getScreen(GameMode.MENU);
 		
 		handler = new Handler(this);

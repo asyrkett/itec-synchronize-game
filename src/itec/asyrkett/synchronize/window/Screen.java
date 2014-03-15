@@ -14,8 +14,7 @@ import java.util.LinkedList;
  */
 public abstract class Screen
 {
-	protected static BufferedImage background; //the default background of the screen
-	
+	protected BufferedImage background; //the background of the screen
 	protected LinkedList<Button> buttons; //a list of buttons on the screen
 	protected GameMode gameMode; //the game mode to render
 	
@@ -71,5 +70,16 @@ public abstract class Screen
 				return buttons.get(i);
 		}
 		return null;
+	}
+	
+	public void setButtonsUnclicked()
+	{
+		for (int i = 0; i < buttons.size(); i++)
+			buttons.get(i).setClicked(false);
+	}
+	
+	public LinkedList<Button> getButtons()
+	{
+		return buttons;
 	}
 }

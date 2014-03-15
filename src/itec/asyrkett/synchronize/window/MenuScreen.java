@@ -23,9 +23,11 @@ public class MenuScreen extends Screen
 	{
 		super(GameMode.MENU);
 		title = BufferedImageLoader.loadImage("/title.png");
-		addButton(new Button(Game.WIDTH / 2 - 64, 430, Texture.BUTTON_TEXT_PLAY));
-		addButton(new Button(Game.WIDTH / 2 - 64 - 215, 430, Texture.BUTTON_TEXT_HELP));
-		addButton(new Button(Game.WIDTH / 2 - 64 + 215, 430, Texture.BUTTON_TEXT_QUIT));
+		final int padding = (Game.WIDTH - 128 * 4) / 5;
+		addButton(new Button(padding, 430, Texture.BUTTON_TEXT_HELP));
+		addButton(new Button(128 + padding * 2, 430, Texture.BUTTON_TEXT_LEVEL));
+		addButton(new Button(128 * 2 + padding * 3, 430, Texture.BUTTON_TEXT_PLAY));
+		addButton(new Button(128 * 3 + padding * 4, 430, Texture.BUTTON_TEXT_QUIT));
 	}
 	
 	/**

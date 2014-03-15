@@ -2,12 +2,11 @@ package itec.asyrkett.synchronize.framework;
 
 import itec.asyrkett.synchronize.objects.Button;
 import itec.asyrkett.synchronize.window.Game;
-import itec.asyrkett.synchronize.window.LevelSelectionScreen;
-import itec.asyrkett.synchronize.window.MenuScreen;
-import itec.asyrkett.synchronize.window.PlayScreen;
+import itec.asyrkett.synchronize.window.Screen;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.LinkedList;
 
 /**
  * This class is a mouse listener for a Game object
@@ -31,7 +30,6 @@ public class MouseInput implements MouseListener
 
 	public void mouseEntered(MouseEvent e)
 	{
-		
 	}
 
 	public void mouseExited(MouseEvent e)
@@ -40,112 +38,53 @@ public class MouseInput implements MouseListener
 
 	public void mousePressed(MouseEvent e)
 	{
-		int mouseX = e.getX();
-		int mouseY = e.getY();
-
-		if (game.getGameMode() == GameMode.MENU)
+		Screen screen = game.getScreen(game.getGameMode());
+		LinkedList<Button> buttons = screen.getButtons();
+		
+		for (int i = 0; i < buttons.size(); i++)
 		{
-			MenuScreen menu = (MenuScreen) game.getScreen(GameMode.MENU);
-			Button playButton = menu.getButton(Texture.BUTTON_TEXT_PLAY);
-			Button helpButton = menu.getButton(Texture.BUTTON_TEXT_HELP);
-			Button quitButton = menu.getButton(Texture.BUTTON_TEXT_QUIT);
-			
-			if (playButton.getBounds().contains(mouseX, mouseY))
+			Button button = buttons.get(i);
+			if (button.getBounds().contains(e.getPoint()))
 			{
-				playButton.setClicked(true);
-			}
-			else if (helpButton.getBounds().contains(mouseX, mouseY))
-			{
-				helpButton.setClicked(true);
-			}
-			else if (quitButton.getBounds().contains(mouseX, mouseY))
-			{
-				quitButton.setClicked(true);
-			}
-		}
-		else if (game.getGameMode() == GameMode.PLAY)
-		{
-			PlayScreen playScreen = (PlayScreen) game.getScreen(GameMode.PLAY);
-			Button resetButton = playScreen.getButton(Texture.BUTTON_TEXT_RESET);
-			Button menuButton = playScreen.getButton(Texture.BUTTON_TEXT_MENU);
-			
-			if (resetButton.getBounds().contains(mouseX, mouseY))
-			{
-				resetButton.setClicked(true);
-			}
-			else if (menuButton.getBounds().contains(mouseX, mouseY))
-			{
-				menuButton.setClicked(true);
-			}
-		}
-		else if (game.getGameMode() == GameMode.LEVEL_SELECTION)
-		{
-			LevelSelectionScreen levelSelection = (LevelSelectionScreen) game.getScreen(GameMode.LEVEL_SELECTION);
-			Button menuButton = levelSelection.getButton(Texture.BUTTON_TEXT_MENU);
-			
-			if (menuButton.getBounds().contains(mouseX, mouseY))
-			{
-				menuButton.setClicked(true);
+				button.setClicked(true);
+				break;
 			}
 		}
 	}
 
 	public void mouseReleased(MouseEvent e)
 	{
-		int mouseX = e.getX();
-		int mouseY = e.getY();
-
-		if (game.getGameMode() == GameMode.MENU)
+		Screen screen = game.getScreen(game.getGameMode());
+		LinkedList<Button> buttons = screen.getButtons();
+		
+		screen.setButtonsUnclicked();
+		for(int i = 0; i < buttons.size(); i++)
 		{
-			MenuScreen menu = (MenuScreen) game.getScreen(GameMode.MENU);
-			Button playButton = menu.getButton(Texture.BUTTON_TEXT_PLAY);
-			Button helpButton = menu.getButton(Texture.BUTTON_TEXT_HELP);
-			Button quitButton = menu.getButton(Texture.BUTTON_TEXT_QUIT);
-			
-			playButton.setClicked(false);
-			helpButton.setClicked(false);
-			quitButton.setClicked(false);
-			
-			if (playButton.getBounds().contains(mouseX, mouseY))
+			Button button = buttons.get(i);
+			if (button.getBounds().contains(e.getPoint()))
 			{
-				game.setGameMode(GameMode.PLAY);
-			}
-			else if (helpButton.getBounds().contains(mouseX, mouseY))
-			{
-			}
-			else if (quitButton.getBounds().contains(mouseX, mouseY))
-			{
-				System.exit(1);
-			}
-		}
-		else if (game.getGameMode() == GameMode.PLAY)
-		{
-			PlayScreen playScreen = (PlayScreen) game.getScreen(GameMode.PLAY);
-			Button resetButton = playScreen.getButton(Texture.BUTTON_TEXT_RESET);
-			Button menuButton = playScreen.getButton(Texture.BUTTON_TEXT_MENU);
-			
-			resetButton.setClicked(false);
-			menuButton.setClicked(false);
-			
-			if (resetButton.getBounds().contains(mouseX, mouseY))
-			{
-				game.resetLevel();
-			}
-			else if (menuButton.getBounds().contains(mouseX, mouseY))
-			{
-				game.setGameMode(GameMode.MENU);
-			}
-		}
-		else if (game.getGameMode() == GameMode.LEVEL_SELECTION)
-		{
-			LevelSelectionScreen levelSelection = (LevelSelectionScreen) game.getScreen(GameMode.LEVEL_SELECTION);
-			Button menuButton = levelSelection.getButton(Texture.BUTTON_TEXT_MENU);
-			
-			menuButton.setClicked(false);
-			
-			if (menuButton.getBounds().contains(mouseX, mouseY))
-			{
-				game.setGameMode(GameMode.MENU);
+				switch(button.getTextureText())
+				{
+				case Texture.BUTTON_TEXT_PLAY:
+					game.setGameMode(GameMode.PLAY);
+					break;
+				case Texture.BUTTON_TEXT_HELP:
+					game.setGameMode(GameMode.HELP);
+					break;
+				case Texture.BUTTON_TEXT_MENU:
+					game.setGameMode(GameMode.MENU);
+					break;
+				case Texture.BUTTON_TEXT_LEVEL:
+					game.setGameMode(GameMode.LEVEL_SELECTION);
+					break;
+				case Texture.BUTTON_TEXT_QUIT:
+					System.exit(1);
+					break;
+				case Texture.BUTTON_TEXT_RESET:
+					game.resetLevel();
+					break;
+				}
+				break;
 			}
 		}
 	}
