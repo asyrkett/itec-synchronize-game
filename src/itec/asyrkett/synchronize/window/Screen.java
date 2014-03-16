@@ -78,6 +78,12 @@ public abstract class Screen
 			buttons.get(i).setClicked(false);
 	}
 	
+	public void setButtonsUnhovered()
+	{
+		for (int i = 0; i < buttons.size(); i++)
+			buttons.get(i).setHovered(false);
+	}
+	
 	public LinkedList<Button> getButtons()
 	{
 		return buttons;

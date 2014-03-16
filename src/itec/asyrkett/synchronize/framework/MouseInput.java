@@ -5,13 +5,14 @@ import itec.asyrkett.synchronize.window.Game;
 import itec.asyrkett.synchronize.window.Screen;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.LinkedList;
+
+import javax.swing.event.MouseInputListener;
 
 /**
  * This class is a mouse listener for a Game object
  */
-public class MouseInput implements MouseListener
+public class MouseInput implements MouseInputListener
 {
 	private Game game;
 
@@ -22,18 +23,6 @@ public class MouseInput implements MouseListener
 	public MouseInput(Game game)
 	{
 		this.game = game;
-	}
-
-	public void mouseClicked(MouseEvent e)
-	{
-	}
-
-	public void mouseEntered(MouseEvent e)
-	{
-	}
-
-	public void mouseExited(MouseEvent e)
-	{
 	}
 
 	public void mousePressed(MouseEvent e)
@@ -87,5 +76,38 @@ public class MouseInput implements MouseListener
 				break;
 			}
 		}
+	}
+
+	public void mouseMoved(MouseEvent e)
+	{
+		Screen screen = game.getScreen(game.getGameMode());
+		LinkedList<Button> buttons = screen.getButtons();
+		
+		screen.setButtonsUnhovered();
+		for (int i = 0; i < buttons.size(); i++)
+		{
+			Button button = buttons.get(i);
+			if (button.getBounds().contains(e.getPoint()))
+			{
+				button.setHovered(true);
+				break;
+			}
+		}
+	}
+	
+	public void mouseDragged(MouseEvent e)
+	{	
+	}
+	
+	public void mouseClicked(MouseEvent e)
+	{
+	}
+
+	public void mouseEntered(MouseEvent e)
+	{
+	}
+
+	public void mouseExited(MouseEvent e)
+	{
 	}
 }

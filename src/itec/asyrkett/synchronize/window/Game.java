@@ -65,7 +65,10 @@ public class Game extends Canvas implements Runnable
 		
 		//adding key and mouse listeners
 		this.addKeyListener(new KeyInput(this));
-		this.addMouseListener(new MouseInput(this));
+		
+		MouseInput mouseInput = new MouseInput(this);
+		this.addMouseListener(mouseInput);
+		this.addMouseMotionListener(mouseInput);
 	}
 	
 	/**

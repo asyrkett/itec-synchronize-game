@@ -14,6 +14,7 @@ public class Button extends GameObject
 {
 	private int textureText;
 	private boolean clicked;
+	private boolean hovered;
 
 	/**
 	 * Constructs a button object with the specified text
@@ -26,6 +27,7 @@ public class Button extends GameObject
 		super(x, y, ObjectId.Button);
 		this.textureText = textureText;
 		clicked = false;
+		hovered = false;
 	}
 	
 	public void tick(LinkedList<GameObject> objects)
@@ -35,7 +37,9 @@ public class Button extends GameObject
 	public void render(Graphics g)
 	{
 		BufferedImageLoader.drawImage(g, Texture.getButtonBase(), (int) x, (int) y);
-		BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, clicked), (int) x, (int) y);
+		if (clicked)
+			BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, false), (int) x, (int) y);
+		BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, hovered), (int) x, (int) y);
 	}
 
 	public Rectangle getBounds()
@@ -75,5 +79,18 @@ public class Button extends GameObject
 	{
 		this.clicked = clicked;
 	}
-	
+
+	/**
+	 * @return the hovered
+	 */
+	public boolean isHovered() {
+		return hovered;
+	}
+
+	/**
+	 * @param hovered the hovered to set
+	 */
+	public void setHovered(boolean hovered) {
+		this.hovered = hovered;
+	}
 }

@@ -25,8 +25,8 @@ public final class Texture
 	
 	//button sprite sheet
 	public static final int BUTTON_BASE = 0; //row
-	public static final int BUTTON_TEXT = 1; //row
-	public static final int BUTTON_TEXT_CLICKED = 2; //row
+	public static final int BUTTON_TEXT_HOVERED = 1; //row
+	public static final int BUTTON_TEXT_BASE = 2; //row
 	public static final int BUTTON_TEXT_HELP = 0; //column
 	public static final int BUTTON_TEXT_LEVEL = 1; //column
 	public static final int BUTTON_TEXT_MENU = 2; //column
@@ -46,14 +46,15 @@ public final class Texture
 	/**
 	 * Returns the image of the specified text for a button
 	 * @param text the text texture from the Texture class (Texture.BUTTON_TEXT_MENU, Texture.BUTTON_TEXT_RESET, etc.)
+	 * @param hovered the version of the text if hovered over by the mouse
 	 * @return the button text image
 	 */
-	public static BufferedImage getButtonText(int text, boolean clicked)
+	public static BufferedImage getButtonText(int text, boolean hovered)
 	{
-		if (clicked)
-			return buttonSpriteSheet.grabImage(BUTTON_TEXT_CLICKED, text, 128, 64);
+		if (hovered)
+			return buttonSpriteSheet.grabImage(BUTTON_TEXT_HOVERED, text, 128, 64);
 		else
-			return buttonSpriteSheet.grabImage(BUTTON_TEXT, text, 128, 64);
+			return buttonSpriteSheet.grabImage(BUTTON_TEXT_BASE, text, 128, 64);
 	}
 	
 	/**

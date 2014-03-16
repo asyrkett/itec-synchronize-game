@@ -70,6 +70,8 @@ public class Grid extends GameObject
 	{	
 		g.setColor(Color.BLACK);
 		g.fillRect((int) x, (int) y, size, size);
+		g.setColor(Color.WHITE);
+		g.drawRect((int) x, (int) y, size, size);
 
 		for (int xx = 0; xx < cells.length; xx++)
 		{
