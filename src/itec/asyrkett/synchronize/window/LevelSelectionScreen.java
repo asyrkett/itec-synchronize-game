@@ -5,8 +5,8 @@ import itec.asyrkett.synchronize.framework.Texture;
 import itec.asyrkett.synchronize.objects.Button;
 import itec.asyrkett.synchronize.objects.LevelSelect;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 /**
@@ -29,34 +29,12 @@ public class LevelSelectionScreen extends Screen
 	 * Constructs a level selection screen with the given number of levels
 	 * @param numLevels the number of levels to display
 	 */
-	public LevelSelectionScreen(int numLevels)
+	public LevelSelectionScreen(Game game, int numLevels)
 	{
-		super(GameMode.LEVEL_SELECTION);
+		super(game, GameMode.LEVEL_SELECTION);
 		this.numLevels = numLevels;
 		initLevelList();
 		addButton(new Button((Game.WIDTH - Button.DEFAULT_WIDTH) / 2, 520, Texture.BUTTON_TEXT_MENU));
-	}
-	
-	private void initLevelList()
-	{
-		this.levelList = new LinkedList<LevelSelect>();
-		final int totalRows = (int) Math.ceil(1.0 * numLevels / MAX_COLUMNS);
-		int levelNum = 1;
-		int xCoor = 50;
-		int yCoor = 50;
-		
-		for (int row = 1; row <= totalRows; row++)
-		{
-			for (int col = 1; col <= MAX_COLUMNS && levelNum <= numLevels; col++)
-			{
-				LevelSelect levelSelect = new LevelSelect(xCoor, yCoor, 128, 64, levelNum);
-				levelList.add(levelSelect);
-				levelNum++;
-				xCoor += (128 + PADDING_HORIZONTAL);
-			}
-			xCoor = 50;
-			yCoor += (64 + PADDING_VERTICAL);
-		}
 	}
 	
 	/**
@@ -64,12 +42,7 @@ public class LevelSelectionScreen extends Screen
 	 */
 	public void render(Graphics g)
 	{
-		g.setColor(Color.BLACK);
-		g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
-		
 		super.render(g);
-		
-		//levelList.get(0).render(g);
 		for (int i = 0; i < levelList.size(); i++)
 			levelList.get(i).render(g);
 	}
@@ -95,5 +68,67 @@ public class LevelSelectionScreen extends Screen
 	 */
 	public void setLevelList(LinkedList<LevelSelect> levelList) {
 		this.levelList = levelList;
+	}
+	
+	public void mouseMoved(MouseEvent e)
+	{
+		super.mouseMoved(e);
+		setLevelSelectUnhovered();
+		for (int i = 0; i < levelList.size(); i++)
+		{
+			LevelSelect levelSelect = levelList.get(i);
+			if (levelSelect.getBounds().contains(e.getPoint()))
+			{
+				levelSelect.setHovered(true);
+			}
+		}
+	}
+	
+	public void mouseReleased(MouseEvent e)
+	{
+		super.mouseReleased(e);
+		setLevelSelectUnhovered();
+		for (int i = 0; i < levelList.size(); i++)
+		{
+			LevelSelect levelSelect = levelList.get(i);
+			if (levelSelect.getBounds().contains(e.getPoint()))
+			{
+				game.setLevel(levelSelect.getLevel());
+				game.setGameMode(GameMode.PLAY);
+			}
+		}
+	}
+	
+	/**
+	 * Initializes the level list
+	 */
+	private void initLevelList()
+	{
+		this.levelList = new LinkedList<LevelSelect>();
+		int levelNum = 1;
+		int xCoor = 50;
+		int yCoor = 50;
+		
+		for (int row = 1; row <= MAX_ROWS; row++)
+		{
+			for (int col = 1; col <= MAX_COLUMNS && levelNum <= numLevels; col++)
+			{
+				LevelSelect levelSelect = new LevelSelect(xCoor, yCoor, 128, 64, levelNum);
+				levelList.add(levelSelect);
+				levelNum++;
+				xCoor += (128 + PADDING_HORIZONTAL);
+			}
+			xCoor = 50;
+			yCoor += (64 + PADDING_VERTICAL);
+		}
+	}
+	
+	/**
+	 * Sets all of the level selects to their unhovered state
+	 */
+	private void setLevelSelectUnhovered()
+	{
+		for (int i = 0; i < levelList.size(); i++)
+			levelList.get(i).setHovered(false);
 	}
 }

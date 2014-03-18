@@ -19,9 +19,9 @@ public class MenuScreen extends Screen
 	/**
 	 * Constructs a menu screen
 	 */
-	public MenuScreen()
+	public MenuScreen(Game game)
 	{
-		super(GameMode.MENU);
+		super(game, GameMode.MENU);
 		title = BufferedImageLoader.loadImage("/title.png");
 		final int padding = (Game.WIDTH - 128 * 4) / 5;
 		addButton(new Button(padding, 430, Texture.BUTTON_TEXT_HELP));
@@ -35,10 +35,7 @@ public class MenuScreen extends Screen
 	 */
 	public void render(Graphics g)
 	{	
-		g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
-		
-		g.drawImage(title, (Game.WIDTH - title.getWidth()) / 2, (Game.HEIGHT - title.getHeight()) / 2, title.getWidth(), title.getHeight(), null);
-		
 		super.render(g);
+		g.drawImage(title, (Game.WIDTH - title.getWidth()) / 2, (Game.HEIGHT - title.getHeight()) / 2, title.getWidth(), title.getHeight(), null);
 	}
 }

@@ -36,7 +36,7 @@ public class CenterBlock extends Block
 		adjustArrows();
 	}
 
-	public void tick(LinkedList<GameObject> objects)
+	public void update(LinkedList<GameObject> objects)
 	{
 	}
 	
@@ -107,7 +107,7 @@ public class CenterBlock extends Block
 		super.setY(y);
 		adjustArrows();
 	}
-
+	
 	/**
 	 * Creates a shape in the form of an arrow extending from a start point to an end point
 	 * @param startPoint the start position of the arrow

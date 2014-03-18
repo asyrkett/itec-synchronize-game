@@ -14,9 +14,8 @@ import java.util.LinkedList;
  */
 public class Handler
 {
-	public LinkedList<GameObject> objects = new LinkedList<GameObject>(); //the objects the handler holds in the current level
-	public LinkedList<Integer> blockColors = new LinkedList<Integer>(); //the block colors in the current level
-	
+	private LinkedList<GameObject> objects = new LinkedList<GameObject>(); //the objects the handler holds in the current level
+	private LinkedList<Integer> blockColors = new LinkedList<Integer>(); //the block colors in the current level
 	private Game game;
 	
 	/**
@@ -31,11 +30,11 @@ public class Handler
 	/**
 	 * Ticks the updates for all the objects in the handler
 	 */
-	public void tick()
+	public void update()
 	{
 		for (int i = 0; i < objects.size(); i++)
 		{
-			objects.get(i).tick(objects);
+			objects.get(i).update(objects);
 		}
 	}
 	

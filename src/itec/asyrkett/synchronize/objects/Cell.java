@@ -34,7 +34,7 @@ public class Cell extends GameObject {
 		this.size = grid.getStep();
 	}
 
-	public void tick(LinkedList<GameObject> objects)
+	public void update(LinkedList<GameObject> objects)
 	{
 	}
 

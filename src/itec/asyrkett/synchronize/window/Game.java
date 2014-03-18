@@ -59,10 +59,10 @@ public class Game extends Canvas implements Runnable
 	
 		//creating the game screens
 		screens = new LinkedList<Screen>();
-		screens.add(new MenuScreen());
-		screens.add(new PlayScreen());
-		screens.add(new LevelSelectionScreen(16));
-		screens.add(new HelpScreen());
+		screens.add(new MenuScreen(this));
+		screens.add(new PlayScreen(this));
+		screens.add(new LevelSelectionScreen(this, TOTAL_LEVELS));
+		screens.add(new HelpScreen(this));
 		currentScreen = getScreen(GameMode.MENU);
 		
 		handler = new Handler(this);
@@ -72,11 +72,102 @@ public class Game extends Canvas implements Runnable
 		loadImageLevel(levelImage);
 		
 		//adding key and mouse listeners
-		this.addKeyListener(new KeyInput(this));
-		
-		MouseInput mouseInput = new MouseInput(this);
+		final MouseInput mouseInput = new MouseInput(this);
 		this.addMouseListener(mouseInput);
 		this.addMouseMotionListener(mouseInput);
+		this.addKeyListener(new KeyInput(this));
+	}
+	
+	/**
+	 * Loads and renders the given image level to the game's play screen
+	 * @param image the level's image to load
+	 */
+	private void loadImageLevel(BufferedImage image)
+	{
+		final int width = image.getWidth();
+		
+		//get the dimension of the grid to create
+		int dimension = 0;
+		for (int xx = 0; xx <= 0; xx++)
+		{
+			for (int yy = 0; yy < width; yy++)
+			{
+				Color color = getPixelColor(image, xx, yy);
+				if (!color.equals(Color.BLACK))
+					dimension++;
+				else
+					break;
+			}
+		}
+		
+		//create the grid
+		Grid grid = new Grid(0, Game.DEFAULT_MARGIN * 2, dimension);
+		grid.setX((Game.WIDTH - grid.getSize()) / 2);
+		handler.addObject(grid);
+		int step = grid.getStep();
+		float gridX = grid.getX();
+		float gridY = grid.getY();
+		
+		//populates the grid's cells with blocks and other game objects
+		Cell[][] cells = grid.getCells();
+		for (int xx = 0; xx < dimension; xx++)
+		{
+			for (int yy = 0; yy < dimension; yy++)
+			{
+				Color color = getPixelColor(image, xx, yy);
+				if (!color.equals(Color.WHITE))
+				{
+					int colorTexture = getBlockTexture(color);
+					handler.addBlockColor(colorTexture);
+					Block block = new Block(gridX + (xx * step), gridY + (yy * step), 
+							step, grid, blockTextureType, colorTexture);
+					cells[yy][xx].addBlock(block);
+					handler.addObject(block);
+				}
+			}
+		}
+		
+		//add player-controlled block
+		handler.addCenterBlock();
+	}
+	
+	/**
+	 * Gets the block Texture corresponding to the given color, Texture.BLOCK_BLUE default
+	 * @param color the base color of the texture
+	 * @return the Texture type of the color (Texture.BLOCK_RED, Texture.BLOCK_ORANGE, etc.)
+	 */
+	private int getBlockTexture(Color color)
+	{
+		if (color.equals(Color.RED))
+			return Texture.BLOCK_RED;
+		else if (color.equals(Color.MAGENTA))
+			return Texture.BLOCK_MAGENTA;
+		else if (color.equals(new Color(255, 120, 0)))
+			return Texture.BLOCK_ORANGE;
+		else if (color.equals(Color.YELLOW))
+			return Texture.BLOCK_YELLOW;
+		else if (color.equals(Color.GREEN))
+			return Texture.BLOCK_GREEN;
+		else if (color.equals(Color.CYAN))
+			return Texture.BLOCK_CYAN;
+		else //if (color.equals(Color.BLUE)), default
+			return Texture.BLOCK_BLUE;
+	}
+	
+	/**
+	 * Returns a Color object of the image's color at the given location
+	 * @param image the image to check
+	 * @param x the x location of the pixel
+	 * @param y the y location of the pixel
+	 * @return a Color object of the pixel of the image at the location (x, y)
+	 */
+	private Color getPixelColor(BufferedImage image, int x, int y)
+	{
+		int pixel = image.getRGB(x, y);
+		int red = (pixel >> 16) & 0xff;
+		int green = (pixel >> 8) & 0xff;
+		int blue = (pixel) & 0xff;
+		return new Color(red, green, blue);
 	}
 	
 	/**
@@ -112,7 +203,7 @@ public class Game extends Canvas implements Runnable
 			lastTime = now;
 			while (delta >= 1)
 			{
-				tick();
+				update();
 				updates++;
 				delta--;
 			}
@@ -132,10 +223,10 @@ public class Game extends Canvas implements Runnable
 	/**
 	 * Handles game updates
 	 */
-	private void tick()
+	private void update()
 	{
 		if (gameMode == GameMode.PLAY)
-			handler.tick();
+			handler.update();
 	}
 	
 	/**
@@ -146,7 +237,7 @@ public class Game extends Canvas implements Runnable
 		BufferStrategy bufferStrategy = this.getBufferStrategy();
 		if (bufferStrategy == null)
 		{
-			this.createBufferStrategy(3); // create 3 buffers behind first one
+			this.createBufferStrategy(3); //create 3 buffers behind first one
 			return;
 		}
 		
@@ -176,98 +267,6 @@ public class Game extends Canvas implements Runnable
 				return screen;
 		}
 		return null;
-	}
-	
-	/**
-	 * Loads and renders the given image level to the game's play screen
-	 * @param image the level's image to load
-	 */
-	private void loadImageLevel(BufferedImage image)
-	{
-		final int width = image.getWidth();
-		
-		//get the dimension of the grid to create
-		int dimension = 0;
-		for (int xx = 0; xx <= 0; xx++)
-		{
-			for (int yy = 0; yy < width; yy++)
-			{
-				Color color = getPixelColor(image, xx, yy);
-				if (!color.equals(Color.BLACK))
-					dimension++;
-				else
-					break;
-			}
-		}
-		
-		//create the grid
-		Grid grid = new Grid((Game.WIDTH - Grid.getDefaultGridSize(dimension)) / 2,
-				Game.DEFAULT_MARGIN * 2,
-				dimension);
-		handler.addObject(grid);
-		int step = grid.getStep();
-		float gridX = grid.getX();
-		float gridY = grid.getY();
-		
-		//populates the grid's cells with blocks and other game objects
-		Cell[][] cells = grid.getCells();
-		for (int xx = 0; xx < dimension; xx++)
-		{
-			for (int yy = 0; yy < dimension; yy++)
-			{
-				Color color = getPixelColor(image, xx, yy);
-				if (!color.equals(Color.WHITE))
-				{
-					int colorTexture = getColorTexture(color);
-					handler.addBlockColor(colorTexture);
-					Block block = new Block(gridX + (xx * step), gridY + (yy * step), step, grid, blockTextureType, colorTexture);
-					cells[yy][xx].addBlock(block);
-					handler.addObject(block);
-				}
-			}
-		}
-		
-		//add player-controlled block
-		handler.addCenterBlock();
-	}
-	
-	/**
-	 * 
-	 * @param color
-	 * @return
-	 */
-	private int getColorTexture(Color color)
-	{
-		if (color.equals(Color.RED))
-			return Texture.BLOCK_RED;
-		else if (color.equals(Color.MAGENTA))
-			return Texture.BLOCK_MAGENTA;
-		else if (color.equals(new Color(255, 120, 0)))
-			return Texture.BLOCK_ORANGE;
-		else if (color.equals(Color.YELLOW))
-			return Texture.BLOCK_YELLOW;
-		else if (color.equals(Color.GREEN))
-			return Texture.BLOCK_GREEN;
-		else if (color.equals(Color.CYAN))
-			return Texture.BLOCK_CYAN;
-		else //if (color.equals(Color.BLUE)), default
-			return Texture.BLOCK_BLUE;
-	}
-	
-	/**
-	 * Returns a Color object of the image's color at the given location
-	 * @param image the image to check
-	 * @param x the x location of the pixel
-	 * @param y the y location of the pixel
-	 * @return a Color object of the pixel of the image at the location (x, y)
-	 */
-	private Color getPixelColor(BufferedImage image, int x, int y)
-	{
-		int pixel = image.getRGB(x, y);
-		int red = (pixel >> 16) & 0xff;
-		int green = (pixel >> 8) & 0xff;
-		int blue = (pixel) & 0xff;
-		return new Color(red, green, blue);
 	}
 	
 	/**

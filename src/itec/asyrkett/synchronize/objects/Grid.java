@@ -38,28 +38,14 @@ public class Grid extends GameObject
 	{
 		super(x, y, ObjectId.Grid);
 		this.dimension = dimension;
-		this.size = getDefaultGridSize(dimension);
-		this.step = getDefaultGridStep(dimension);
+		final int size = Game.HEIGHT - Game.DEFAULT_MARGIN * 4;
+		this.size = size - ((size % dimension != 0) ? (size % dimension) : 0);;
+		this.step = size / dimension;
 		this.tracksVisible = true;
 		initCells();
 	}
 
-	/**
-	 * Initializes the cells of the grid
-	 */
-	private void initCells()
-	{
-		cells = new Cell[dimension][dimension];
-		for (int row = 0; row < dimension; row++)
-		{
-			for (int col = 0; col < dimension; col++)
-			{
-				cells[row][col] = new Cell(this, row, col);
-			}
-		}
-	}
-
-	public void tick(LinkedList<GameObject> objects)
+	public void update(LinkedList<GameObject> objects)
 	{
 	}
 
@@ -164,27 +150,6 @@ public class Grid extends GameObject
 	public void setTracksVisible(boolean tracksVisible)
 	{
 		this.tracksVisible = tracksVisible;
-	}
-
-	/**
-	 * Calculates the default grid size for the given dimension for a Game object
-	 * @param dimension the number of rows of the grid
-	 * @return the side length of the grid
-	 */
-	public static int getDefaultGridSize(int dimension)
-	{
-		int size = Game.HEIGHT - Game.DEFAULT_MARGIN * 4;
-		return size - ((size % dimension != 0) ? (size % dimension) : 0);
-	}
-
-	/**
-	 * Calculates the default grid step for the given dimension for a Game object
-	 * @param dimension the number of rows of the grid
-	 * @return the length between each cell of the grid for a default game
-	 */
-	public static int getDefaultGridStep(int dimension)
-	{
-		return getDefaultGridSize(dimension) / dimension;
 	}
 
 	/**
@@ -313,5 +278,20 @@ public class Grid extends GameObject
 			}
 		}
 		return cellsToRemove;
+	}
+	
+	/**
+	 * Initializes the cells of the grid
+	 */
+	private void initCells()
+	{
+		cells = new Cell[dimension][dimension];
+		for (int row = 0; row < dimension; row++)
+		{
+			for (int col = 0; col < dimension; col++)
+			{
+				cells[row][col] = new Cell(this, row, col);
+			}
+		}
 	}
 }

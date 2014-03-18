@@ -54,7 +54,7 @@ public class Block extends GameObject
 	/**
 	 * Updates the block's location if it is in motion
 	 */
-	public void tick(LinkedList<GameObject> objects)
+	public void update(LinkedList<GameObject> objects)
 	{
 		if (!moving)
 			return;

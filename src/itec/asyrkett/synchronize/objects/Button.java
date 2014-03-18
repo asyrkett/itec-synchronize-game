@@ -16,43 +16,44 @@ public class Button extends GameObject
 	public static final int DEFAULT_HEIGHT = 64;
 	
 	private int textureText;
-	private boolean clicked;
+	private boolean pressed;
 	private boolean hovered;
 
 	/**
 	 * Constructs a button object with the specified text
 	 * @param x the x coordinate of the button's upper left corner
-	 * @param y the y coordinate of the button's uppwer left corner
+	 * @param y the y coordinate of the button's upper left corner
 	 * @param textureText the text of the button from the Texture class (Texture.BUTTON_TEXT_MENU, etc.)
 	 */
 	public Button(float x, float y, int textureText)
 	{
 		super(x, y, ObjectId.Button);
 		this.textureText = textureText;
-		clicked = false;
+		pressed = false;
 		hovered = false;
 	}
 	
-	public void tick(LinkedList<GameObject> objects)
+	public void update(LinkedList<GameObject> objects)
 	{
 	}
 
 	public void render(Graphics g)
 	{
 		BufferedImageLoader.drawImage(g, Texture.getButtonBase(), (int) x, (int) y);
-		if (clicked)
+		if (pressed)
 			BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, false), (int) x, (int) y);
 		BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, hovered), (int) x, (int) y);
 	}
 
 	public Rectangle getBounds()
 	{
-		BufferedImage text = Texture.getButtonText(textureText, clicked);
+		BufferedImage text = Texture.getButtonText(textureText, pressed);
 		return new Rectangle((int) x, (int)y, text.getWidth(), text.getHeight());
 	}
 
 	/**
-	 * @return the textureText
+	 * Gets the text the button displays from the Texture class (Texture.BUTTON_TEXT_MENU, etc.)
+	 * @return the text texture the button displays
 	 */
 	public int getTextureText()
 	{
@@ -60,7 +61,8 @@ public class Button extends GameObject
 	}
 
 	/**
-	 * @param textureText the textureText to set
+	 * Sets the text the button is to display from the Texture class
+	 * @param textureText the text texture to display (Texture.BUTTON_TEXT_MENU, etc.)
 	 */
 	public void setTextureText(int textureText)
 	{
@@ -68,30 +70,34 @@ public class Button extends GameObject
 	}
 
 	/**
-	 * @return the clicked
+	 * Returns if the button is pressed by a mouse
+	 * @return true if the button is pressed, false otherwise
 	 */
-	public boolean isClicked()
+	public boolean isPressed()
 	{
-		return clicked;
+		return pressed;
 	}
 
 	/**
-	 * @param clicked the clicked to set
+	 * Sets if the button is pressed by a mouse
+	 * @param pressed the pressed state to set
 	 */
-	public void setClicked(boolean clicked)
+	public void setPressed(boolean pressed)
 	{
-		this.clicked = clicked;
+		this.pressed = pressed;
 	}
 
 	/**
-	 * @return the hovered
+	 * Returns if the button is hovered over by a mouse
+	 * @return true if hovered over by a mouse, false otherwise
 	 */
 	public boolean isHovered() {
 		return hovered;
 	}
 
 	/**
-	 * @param hovered the hovered to set
+	 * Sets if the button is hovered over by a mouse
+	 * @param hovered the hoevered state to set
 	 */
 	public void setHovered(boolean hovered) {
 		this.hovered = hovered;

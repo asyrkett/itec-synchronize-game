@@ -29,7 +29,7 @@ public abstract class GameObject
 	 * Updates the current state of the object
 	 * @param objects other objects this object may interact with
 	 */
-	public abstract void tick(LinkedList<GameObject> objects);
+	public abstract void update(LinkedList<GameObject> objects);
 	
 	/**
 	 * The appearance of the object

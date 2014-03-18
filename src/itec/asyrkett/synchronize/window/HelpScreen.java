@@ -4,22 +4,15 @@ import itec.asyrkett.synchronize.framework.GameMode;
 import itec.asyrkett.synchronize.framework.Texture;
 import itec.asyrkett.synchronize.objects.Button;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
+/**
+ * This class is a screen that displays
+ * directions on how to play the game.
+ */
 public class HelpScreen extends Screen
 {
-	public HelpScreen()
+	public HelpScreen(Game game)
 	{
-		super(GameMode.HELP);
+		super(game, GameMode.HELP);
 		addButton(new Button(40, 430, Texture.BUTTON_TEXT_MENU));
-	}
-
-	public void render(Graphics g)
-	{
-		g.setColor(Color.BLACK);
-		g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
-		
-		super.render(g);
 	}
 }
