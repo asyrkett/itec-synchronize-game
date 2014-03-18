@@ -37,4 +37,46 @@ public class SpriteSheet
 	{
 		return image.getSubimage(column * colWidth, row * rowHeight, width, height);
 	}
+
+	/**
+	 * @return the image
+	 */
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+
+	/**
+	 * @return the rowHeight
+	 */
+	public int getRowHeight() {
+		return rowHeight;
+	}
+
+	/**
+	 * @param rowHeight the rowHeight to set
+	 */
+	public void setRowHeight(int rowHeight) {
+		this.rowHeight = rowHeight;
+	}
+
+	/**
+	 * @return the colWidth
+	 */
+	public int getColWidth() {
+		return colWidth;
+	}
+
+	/**
+	 * @param colWidth the colWidth to set
+	 */
+	public void setColWidth(int colWidth) {
+		this.colWidth = colWidth;
+	}
 }

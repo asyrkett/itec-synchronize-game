@@ -12,6 +12,9 @@ import java.util.LinkedList;
 
 public class Button extends GameObject
 {
+	public static final int DEFAULT_WIDTH = 128;
+	public static final int DEFAULT_HEIGHT = 64;
+	
 	private int textureText;
 	private boolean clicked;
 	private boolean hovered;

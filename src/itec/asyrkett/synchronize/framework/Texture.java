@@ -1,5 +1,8 @@
 package itec.asyrkett.synchronize.framework;
 
+import itec.asyrkett.synchronize.objects.Block;
+import itec.asyrkett.synchronize.objects.Button;
+
 import java.awt.image.BufferedImage;
 
 /**
@@ -8,9 +11,9 @@ import java.awt.image.BufferedImage;
 public final class Texture 
 {
 	public static final SpriteSheet blockSpriteSheet = 
-			new SpriteSheet(BufferedImageLoader.loadImage("/block_sprite_sheet.png"), 64, 64);
+			new SpriteSheet(BufferedImageLoader.loadImage("/block_sprite_sheet.png"), Block.DEFAULT_IMAGE_SIZE, Block.DEFAULT_IMAGE_SIZE);
 	public static final SpriteSheet buttonSpriteSheet = 
-			new SpriteSheet(BufferedImageLoader.loadImage("/button_sprite_sheet.png"), 64, 128);
+			new SpriteSheet(BufferedImageLoader.loadImage("/button_sprite_sheet.png"), Button.DEFAULT_HEIGHT, Button.DEFAULT_WIDTH);
 	
 	//block sprite sheet
 	public static final int BLOCK_SQUARE = 0; //row
@@ -40,7 +43,8 @@ public final class Texture
 	 */
 	public static BufferedImage getButtonBase()
 	{
-		return buttonSpriteSheet.grabImage(BUTTON_BASE, BUTTON_BASE, 128, 64);
+		return buttonSpriteSheet.grabImage(BUTTON_BASE, BUTTON_BASE, 
+				buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 	}
 	
 	/**
@@ -52,9 +56,11 @@ public final class Texture
 	public static BufferedImage getButtonText(int text, boolean hovered)
 	{
 		if (hovered)
-			return buttonSpriteSheet.grabImage(BUTTON_TEXT_HOVERED, text, 128, 64);
+			return buttonSpriteSheet.grabImage(BUTTON_TEXT_HOVERED, text, 
+					buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 		else
-			return buttonSpriteSheet.grabImage(BUTTON_TEXT_BASE, text, 128, 64);
+			return buttonSpriteSheet.grabImage(BUTTON_TEXT_BASE, text, 
+					buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 	}
 	
 	/**
@@ -65,6 +71,6 @@ public final class Texture
 	 */
 	public static BufferedImage getBlock(int type, int color)
 	{
-		return blockSpriteSheet.grabImage(type, color, 64, 64);
+		return blockSpriteSheet.grabImage(type, color, blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());
 	}
 }

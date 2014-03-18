@@ -1,7 +1,9 @@
 package itec.asyrkett.synchronize.framework;
 
 import itec.asyrkett.synchronize.objects.Button;
+import itec.asyrkett.synchronize.objects.LevelSelect;
 import itec.asyrkett.synchronize.window.Game;
+import itec.asyrkett.synchronize.window.LevelSelectionScreen;
 import itec.asyrkett.synchronize.window.Screen;
 
 import java.awt.event.MouseEvent;
@@ -37,6 +39,21 @@ public class MouseInput implements MouseInputListener
 			{
 				button.setClicked(true);
 				break;
+			}
+		}
+		
+		if (screen instanceof LevelSelectionScreen)
+		{
+			LevelSelectionScreen levelScreen = (LevelSelectionScreen) screen;
+			LinkedList<LevelSelect> levelList = levelScreen.getLevelList();
+			for (int i = 0; i < levelList.size(); i++)
+			{
+				LevelSelect levelSelect = levelList.get(i);
+				if (levelSelect.getBounds().contains(e.getPoint()))
+				{
+					game.setLevel(levelSelect.getLevel());
+					game.setGameMode(GameMode.PLAY);
+				}
 			}
 		}
 	}

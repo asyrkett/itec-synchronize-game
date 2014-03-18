@@ -15,6 +15,8 @@ import java.util.LinkedList;
  */
 public class Block extends GameObject
 {
+	public static final int DEFAULT_IMAGE_SIZE = 64;
+	
 	protected final float MAX_VELOCITY = 5;
 	protected final float acceleration = 0.5f;
 	

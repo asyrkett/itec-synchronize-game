@@ -11,11 +11,13 @@ import itec.asyrkett.synchronize.objects.Grid;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Random;
 
 /**
  * The main mechanism of the game
@@ -33,8 +35,8 @@ public class Game extends Canvas implements Runnable
 	public static int WIDTH, HEIGHT; //the game's width and height
 	public static final int DEFAULT_MARGIN = 32; //the default margin
 	public static final int DEFAULT_GRID_DIMENSION = 9; //the default dimension of the grid, 9x9 cells
-	public static final Random GENERATOR = new Random(); //random number generator
-	public static final int TOTAL_LEVELS = 3; //the total number of levels in the game
+	public static final int TOTAL_LEVELS = 5; //the total number of levels in the game
+	public static Font FONT;
 	
 	private LinkedList<Screen> screens; //a list of the game's screens
 	private Screen currentScreen; //the current screen the game is rendering
@@ -48,12 +50,18 @@ public class Game extends Canvas implements Runnable
 	{
 		WIDTH = getWidth();
 		HEIGHT = getHeight();
+		try {
+			FONT = Font.createFont(Font.PLAIN, this.getClass().getResourceAsStream("/font/NEUROPOL.ttf"));
+			FONT = FONT.deriveFont(Font.BOLD, 25);
+		} catch (FontFormatException | IOException e) {
+			e.printStackTrace();
+		}
 	
 		//creating the game screens
 		screens = new LinkedList<Screen>();
 		screens.add(new MenuScreen());
 		screens.add(new PlayScreen());
-		screens.add(new LevelSelectionScreen(TOTAL_LEVELS));
+		screens.add(new LevelSelectionScreen(16));
 		screens.add(new HelpScreen());
 		currentScreen = getScreen(GameMode.MENU);
 		
@@ -145,7 +153,7 @@ public class Game extends Canvas implements Runnable
 		Graphics g = bufferStrategy.getDrawGraphics();
 		//////////////////////////////////////////////////
 		//DRAW HERE
-		
+		g.setFont(FONT);
 		currentScreen.render(g);
 		if (gameMode == GameMode.PLAY)
 			handler.render(g);
@@ -176,7 +184,7 @@ public class Game extends Canvas implements Runnable
 	 */
 	private void loadImageLevel(BufferedImage image)
 	{
-		int width = image.getWidth();
+		final int width = image.getWidth();
 		
 		//get the dimension of the grid to create
 		int dimension = 0;
@@ -223,6 +231,11 @@ public class Game extends Canvas implements Runnable
 		handler.addCenterBlock();
 	}
 	
+	/**
+	 * 
+	 * @param color
+	 * @return
+	 */
 	private int getColorTexture(Color color)
 	{
 		if (color.equals(Color.RED))
@@ -237,10 +250,8 @@ public class Game extends Canvas implements Runnable
 			return Texture.BLOCK_GREEN;
 		else if (color.equals(Color.CYAN))
 			return Texture.BLOCK_CYAN;
-		else if (color.equals(Color.BLUE))
+		else //if (color.equals(Color.BLUE)), default
 			return Texture.BLOCK_BLUE;
-		else
-			return 0; //red default
 	}
 	
 	/**
@@ -306,20 +317,34 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	/**
-	 * Advances and loads the game one level
-	 * @return the next level number
+	 * Advances and loads the game by one level
 	 */
-	public int nextLevel()
+	public void nextLevel()
 	{
-		level++;
-		handler.clearHandler();
-		handler.clearBlockColors();
-		//handler.clearTextures();
-		levelImage = BufferedImageLoader.loadImage("/levels/level" + level + ".png");
-		loadImageLevel(levelImage);
-		return level;
+		setLevel(level + 1);
 	}
 	
+	/**
+	 * Sets the level for the game to load and display when in play mode
+	 * @param level the level to load
+	 */
+	public void setLevel(int level)
+	{
+		if (level > TOTAL_LEVELS)
+			this.level = TOTAL_LEVELS;
+		else
+			this.level = level;
+		handler.clearHandler();
+		handler.clearBlockColors();
+		levelImage = BufferedImageLoader.loadImage("/levels/level" + this.level + ".png");
+		loadImageLevel(levelImage);
+	}
+	
+	/**
+	 * Gets the texture type of the blocks to display from the Texture class
+	 * (Texture.BLOCK_SQUARE, Texture.BLOCK_CIRCLE, etc.)
+	 * @return the block texture type
+	 */
 	public int getBlockTextureType()
 	{
 		return blockTextureType;
