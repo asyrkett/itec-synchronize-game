@@ -132,4 +132,18 @@ public class Cell extends GameObject {
 			return this;
 		return null;
 	}
+	
+	public boolean isInGridTracks()
+	{
+		return (row == grid.getDimension() / 2 || column == grid.getDimension() / 2);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Cell [block=" + block + ", row=" + row
+				+ ", column=" + column + ", size=" + size + "]";
+	}
 }

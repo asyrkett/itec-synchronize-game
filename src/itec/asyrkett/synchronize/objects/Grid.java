@@ -197,6 +197,18 @@ public class Grid extends GameObject
 		}
 		return true;
 	}
+	
+	public void setX(float x)
+	{
+		super.setX(x);
+		initCells();
+	}
+	
+	public void setY(float y)
+	{
+		super.setY(y);
+		initCells();
+	}
 
 	/**
 	 * Checks for a group of cells in the grid that match.

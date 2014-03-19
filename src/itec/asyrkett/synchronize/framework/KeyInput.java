@@ -88,18 +88,8 @@ public class KeyInput extends KeyAdapter
 			//if space pressed
 			else if (keyCode == KeyEvent.VK_SPACE)
 			{	
-				//if up arrow is selected, move the center block up/north
-				if (centerBlock.getDirection() == Direction.NORTH)
-				{
-					destinationCell = getDestinationCell(row, column, Direction.NORTH);
-					moveBlock(centerBlock, destinationCell);
-				}
-				//if down arrow is selected, move the center block down/south 
-				else if (centerBlock.getDirection() == Direction.SOUTH)
-				{
-					destinationCell = getDestinationCell(row, column, Direction.SOUTH);
-					moveBlock(centerBlock, destinationCell);
-				}
+				destinationCell = getDestinationCell(row, column, centerBlock.getDirection());
+				moveBlock(centerBlock, destinationCell);
 			}
 		}
 		//if the center block is in the vertical tracks
@@ -125,18 +115,8 @@ public class KeyInput extends KeyAdapter
 			//if space bar is pressed
 			else if (keyCode == KeyEvent.VK_SPACE)
 			{
-				//if right arrow is selected, move right/east
-				if (centerBlock.getDirection() == Direction.EAST)
-				{
-					destinationCell = getDestinationCell(row, column, Direction.EAST);
-					moveBlock(centerBlock, destinationCell);
-				}
-				//if left arrow is selected, move left/west
-				else if (centerBlock.getDirection() == Direction.WEST)
-				{
-					destinationCell = getDestinationCell(row, column, Direction.WEST);
-					moveBlock(centerBlock, destinationCell);
-				}
+				destinationCell = getDestinationCell(row, column, centerBlock.getDirection());
+				moveBlock(centerBlock, destinationCell);
 			}
 		}
 		//if the center block is within the exact center, reset all arrows
@@ -172,10 +152,13 @@ public class KeyInput extends KeyAdapter
 		}
 
 		Set<Cell> cellsToRemove = grid.checkForMatch();
-		for (Cell cell : cellsToRemove)
+		if (cellsToRemove != null)
 		{
-			Block toRemove = cell.removeBlock();
-			handler.removeObject(toRemove);
+			for (Cell cell : cellsToRemove)
+			{
+				Block toRemove = cell.removeBlock();
+				handler.removeObject(toRemove);
+			}
 		}
 		handler.addCenterBlock();
 
@@ -192,11 +175,11 @@ public class KeyInput extends KeyAdapter
 	 */
 	private void nextLevel()
 	{
-		if (game.getLevel() == Game.TOTAL_LEVELS)
+		int n = 0;
+		if (game.getLevel() >= Game.TOTAL_LEVELS)
 		{
-			Object[] options = {"MENU",
-					"LEVEL SELECTION"};
-			int n = JOptionPane.showOptionDialog(game,
+			Object[] options = {"MENU", "LEVEL SELECTION"};
+			n = JOptionPane.showOptionDialog(game,
 					"PERFECT! GAME COMPLETE",
 					"LEVEL COMPLETED",
 					JOptionPane.YES_NO_OPTION,
@@ -204,25 +187,11 @@ public class KeyInput extends KeyAdapter
 					null,
 					options,
 					options[0]);
-			if (n == JOptionPane.CANCEL_OPTION)
-			{
-				game.nextLevel();
-			}
-			else if (n == JOptionPane.YES_OPTION)
-			{
-				game.setGameMode(GameMode.MENU);
-			}
-			else if (n == JOptionPane.NO_OPTION)
-			{
-				game.setGameMode(GameMode.LEVEL_SELECTION);
-			}
 		}
 		else
 		{
-			Object[] options = {"MENU",
-				"LEVEL SELECTION",
-				"NEXT LEVEL"};
-			int n = JOptionPane.showOptionDialog(game,
+			Object[] options = {"MENU", "LEVEL SELECTION", "NEXT LEVEL"};
+			n = JOptionPane.showOptionDialog(game,
 				"PERFECT!",
 				"LEVEL COMPLETED",
 				JOptionPane.YES_NO_CANCEL_OPTION,
@@ -230,34 +199,32 @@ public class KeyInput extends KeyAdapter
 				null,
 				options,
 				options[2]);
-			
-			if (n == JOptionPane.CANCEL_OPTION)
-			{
-				game.nextLevel();
-			}
-			else if (n == JOptionPane.YES_OPTION)
-			{
-				game.setGameMode(GameMode.MENU);
-			}
-			else if (n == JOptionPane.NO_OPTION)
-			{
-				game.setGameMode(GameMode.LEVEL_SELECTION);
-			}
 		}
+		
+		if (n == JOptionPane.CANCEL_OPTION)
+			game.nextLevel();
+		else if (n == JOptionPane.YES_OPTION)
+			game.setGameMode(GameMode.MENU);
+		else if (n == JOptionPane.NO_OPTION)
+			game.setGameMode(GameMode.LEVEL_SELECTION);
 	}
 
 	/**
-	 * 
-	 * @param row
-	 * @param column
-	 * @param direction
-	 * @return
+	 * Gets the destination cell of the grid in the direction the center block is shot in
+	 * @param row the current row of the center block
+	 * @param column the current column of the center block
+	 * @param direction the direction the center block is shot
+	 * @return the destination cell of where the center block should move
 	 */
 	private Cell getDestinationCell(int row, int column, Direction direction)
 	{
+		if (direction == Direction.CENTER)
+			return null;
 		Cell currentCell = cells[row][column];
 		while (currentCell.getAdjacentCell(direction) != null && !currentCell.getAdjacentCell(direction).isOccupied())
 			currentCell = currentCell.getAdjacentCell(direction);
+		if (currentCell.isInGridTracks())
+			return null;
 		return currentCell;
 	}
 }
