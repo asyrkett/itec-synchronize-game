@@ -91,7 +91,7 @@ public class LevelSelectionScreen extends Screen
 		for (int i = 0; i < levelList.size(); i++)
 		{
 			LevelSelect levelSelect = levelList.get(i);
-			if (levelSelect.getBounds().contains(e.getPoint()))
+			if (!levelSelect.isLocked() && levelSelect.getBounds().contains(e.getPoint()))
 			{
 				game.setLevel(levelSelect.getLevel());
 				game.setGameMode(GameMode.PLAY);

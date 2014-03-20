@@ -6,6 +6,7 @@ import itec.asyrkett.synchronize.objects.CenterBlock;
 import itec.asyrkett.synchronize.objects.Grid;
 import itec.asyrkett.synchronize.window.Game;
 import itec.asyrkett.synchronize.window.Handler;
+import itec.asyrkett.synchronize.window.LevelSelectionScreen;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -201,11 +202,15 @@ public class KeyInput extends KeyAdapter
 				options[2]);
 		}
 		
-		if (n == JOptionPane.CANCEL_OPTION)
-			game.nextLevel();
-		else if (n == JOptionPane.YES_OPTION)
+		if (n == JOptionPane.CANCEL_OPTION) //Selected "NEXT LEVEL" button
+		{
+			int nextLevel = game.nextLevel();
+			LevelSelectionScreen levelScreen = (LevelSelectionScreen) game.getScreen(GameMode.LEVEL_SELECTION);
+			levelScreen.getLevelList().get(nextLevel - 1).setLocked(false);
+		}
+		else if (n == JOptionPane.YES_OPTION) //Selected "MENU" button
 			game.setGameMode(GameMode.MENU);
-		else if (n == JOptionPane.NO_OPTION)
+		else if (n == JOptionPane.NO_OPTION) //Selected "LEVEL SELECTION" button
 			game.setGameMode(GameMode.LEVEL_SELECTION);
 	}
 

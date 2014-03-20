@@ -26,7 +26,10 @@ public class LevelSelect extends GameObject
 		this.width = width;
 		this.height = height;
 		hovered = false;
-		locked = true;
+		if (level == 1)
+			locked = false;
+		else
+			locked = true;
 	}
 	
 	public void update(LinkedList<GameObject> objects)
@@ -37,14 +40,33 @@ public class LevelSelect extends GameObject
 	{
 		g.setColor(Color.BLACK);
 		g.fillRect((int) x, (int) y, width, height);
-		if (hovered)
+		if (locked)
 		{
-			g.setColor(Color.CYAN);
-			g.drawRect((int) x, (int) y, width, height);
+			g.setColor(Color.RED);
+			if (hovered)
+			{
+				g.drawString("Level " + level, (int) x + 5, (int) y + 40);
+				g.drawRect((int) x, (int) y, width, height);
+			}
+			else
+			{
+				g.setColor(Color.WHITE);
+				g.drawString("Level " + level, (int) x + 5, (int) y + 40);
+			}
+			g.drawLine((int) x, (int) y, (int) x + width, (int) y + height);
+			g.drawLine((int) x + width, (int) y, (int) x, (int) y + height);
 		}
 		else
-			g.setColor(Color.WHITE);
-		g.drawString("Level " + level, (int) x + 5, (int) y + 40);
+		{
+			if (hovered)
+			{
+				g.setColor(Color.GREEN);
+				g.drawRect((int) x, (int) y, width, height);
+			}
+			else
+				g.setColor(Color.WHITE);
+			g.drawString("Level " + level, (int) x + 5, (int) y + 40);
+		}
 	}
 
 	public Rectangle getBounds()

@@ -190,16 +190,16 @@ public class Game extends Canvas implements Runnable
 	/**
 	 * Advances and loads the game by one level
 	 */
-	public void nextLevel()
+	public int nextLevel()
 	{
-		setLevel(level + 1);
+		return setLevel(level + 1);
 	}
 	
 	/**
 	 * Sets the level for the game to load and display when in play mode
 	 * @param level the level to load
 	 */
-	public void setLevel(int level)
+	public int setLevel(int level)
 	{
 		if (level > TOTAL_LEVELS)
 			this.level = TOTAL_LEVELS;
@@ -209,6 +209,7 @@ public class Game extends Canvas implements Runnable
 		handler.clearBlockColors();
 		levelImage = BufferedImageLoader.loadImage("/levels/level" + this.level + ".png");
 		loadImageLevel(levelImage);
+		return this.level;
 	}
 	
 	/**
