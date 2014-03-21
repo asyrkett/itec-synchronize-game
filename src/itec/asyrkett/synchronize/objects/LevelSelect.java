@@ -1,10 +1,13 @@
 package itec.asyrkett.synchronize.objects;
 
+import itec.asyrkett.synchronize.framework.BufferedImageLoader;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
+import itec.asyrkett.synchronize.framework.Texture;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
@@ -38,34 +41,31 @@ public class LevelSelect extends GameObject
 
 	public void render(Graphics g)
 	{
+		Graphics2D g2d = (Graphics2D) g;
 		g.setColor(Color.BLACK);
-		g.fillRect((int) x, (int) y, width, height);
+		g2d.fillRoundRect((int) x, (int) y, width, height, 50, 50);
 		if (locked)
 		{
-			g.setColor(Color.RED);
 			if (hovered)
 			{
-				g.drawString("Level " + level, (int) x + 5, (int) y + 40);
-				g.drawRect((int) x, (int) y, width, height);
+				g.setColor(Color.RED);
+				g.drawString("LEVEL " + level, (int) x + 5, (int) y + 40);
+				g2d.drawRoundRect((int) x, (int) y, width, height, 50, 50);
 			}
-			else
-			{
-				g.setColor(Color.WHITE);
-				g.drawString("Level " + level, (int) x + 5, (int) y + 40);
-			}
-			g.drawLine((int) x, (int) y, (int) x + width, (int) y + height);
-			g.drawLine((int) x + width, (int) y, (int) x, (int) y + height);
+			BufferedImageLoader.drawImage(g, Texture.getLockSymbol(locked), (int) x, (int) y);
 		}
 		else
 		{
+			g.setColor(Color.WHITE);
 			if (hovered)
 			{
-				g.setColor(Color.GREEN);
-				g.drawRect((int) x, (int) y, width, height);
+				g2d.drawRoundRect((int) x, (int) y, width, height, 50, 50);
+				g.drawString("LEVEL " + level, (int) x + 5, (int) y + 40);
 			}
 			else
-				g.setColor(Color.WHITE);
-			g.drawString("Level " + level, (int) x + 5, (int) y + 40);
+			{
+				BufferedImageLoader.drawImage(g, Texture.getLockSymbol(locked), (int) x, (int) y);
+			}
 		}
 	}
 

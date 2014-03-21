@@ -30,12 +30,15 @@ public final class Texture
 	public static final int BUTTON_BASE = 0; //row
 	public static final int BUTTON_TEXT_HOVERED = 1; //row
 	public static final int BUTTON_TEXT_BASE = 2; //row
+	public static final int BUTTON_LOCK = 3; //row
 	public static final int BUTTON_TEXT_HELP = 0; //column
 	public static final int BUTTON_TEXT_LEVEL = 1; //column
 	public static final int BUTTON_TEXT_MENU = 2; //column
 	public static final int BUTTON_TEXT_PLAY = 3; //column
 	public static final int BUTTON_TEXT_QUIT = 4; //column
 	public static final int BUTTON_TEXT_RESET = 5; //column
+	public static final int BUTTON_LOCK_LOCKED = 0; //column
+	public static final int BUTTON_LOCK_UNLOCKED = 1; //column
 	
 	/**
 	 * Returns the image of the button base texture
@@ -72,5 +75,18 @@ public final class Texture
 	public static BufferedImage getBlock(int type, int color)
 	{
 		return blockSpriteSheet.grabImage(type, color, blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());
+	}
+	
+	/**
+	 * Returns the image of the specified lock symbol for a level select button
+	 * @param type the type of lock symbol, Texture.BUTTON_LOCK_UNLOCKED or Texture.BUTTON_LOCK_LOCKED
+	 * @return the image of the lock symbol
+	 */
+	public static BufferedImage getLockSymbol(boolean locked)
+	{
+		if (locked)
+			return buttonSpriteSheet.grabImage(BUTTON_LOCK, BUTTON_LOCK_LOCKED, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
+		else
+			return buttonSpriteSheet.grabImage(BUTTON_LOCK, BUTTON_LOCK_UNLOCKED, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 	}
 }

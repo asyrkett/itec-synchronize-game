@@ -165,6 +165,10 @@ public class KeyInput extends KeyAdapter
 
 		if (grid.isEmpty())
 		{
+			int nextLevel = game.getLevel();
+			LevelSelectionScreen levelScreen = (LevelSelectionScreen) game.getScreen(GameMode.LEVEL_SELECTION);
+			if (nextLevel + 1 <= levelScreen.getNumLevels())
+				levelScreen.getLevelList().get(nextLevel).setLocked(false);
 			nextLevel();
 		}
 	}
@@ -203,11 +207,7 @@ public class KeyInput extends KeyAdapter
 		}
 		
 		if (n == JOptionPane.CANCEL_OPTION) //Selected "NEXT LEVEL" button
-		{
-			int nextLevel = game.nextLevel();
-			LevelSelectionScreen levelScreen = (LevelSelectionScreen) game.getScreen(GameMode.LEVEL_SELECTION);
-			levelScreen.getLevelList().get(nextLevel - 1).setLocked(false);
-		}
+			game.nextLevel();
 		else if (n == JOptionPane.YES_OPTION) //Selected "MENU" button
 			game.setGameMode(GameMode.MENU);
 		else if (n == JOptionPane.NO_OPTION) //Selected "LEVEL SELECTION" button

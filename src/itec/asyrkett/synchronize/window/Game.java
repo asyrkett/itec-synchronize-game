@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable
 	public static Font FONT; //the game's font
 	
 	public static final int DEFAULT_MARGIN = 32; //the default margin
-	public static final int TOTAL_LEVELS = 6; //the total number of levels in the game
+	public static final int TOTAL_LEVELS = 7; //the total number of levels in the game
 	
 	private boolean running = false; // whether or not the game is running
 	private Thread thread; // the game thread
@@ -231,7 +231,7 @@ public class Game extends Canvas implements Runnable
 		HEIGHT = getHeight();
 		try {
 			FONT = Font.createFont(Font.PLAIN, this.getClass().getResourceAsStream("/font/NEUROPOL.ttf"));
-			FONT = FONT.deriveFont(Font.BOLD, 25);
+			FONT = FONT.deriveFont(Font.BOLD, 20);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
