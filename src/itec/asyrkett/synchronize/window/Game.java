@@ -158,6 +158,14 @@ public class Game extends Canvas implements Runnable
 	{
 		this.gameMode = gameMode;
 		currentScreen = getScreen(gameMode);
+		for (Screen screen : screens)
+		{
+			if (screen.getGameMode() != gameMode)
+			{
+				screen.setButtonsUnhovered();
+				screen.setButtonsUnpressed();
+			}
+		}
 	}
 	
 	/**
