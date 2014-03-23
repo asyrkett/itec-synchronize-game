@@ -46,7 +46,7 @@ public final class Texture
 	 */
 	public static BufferedImage getButtonBase()
 	{
-		return buttonSpriteSheet.grabImage(BUTTON_BASE, BUTTON_BASE, 
+		return buttonSpriteSheet.grabImage(BUTTON_BASE, 1, 
 				buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 	}
 	
