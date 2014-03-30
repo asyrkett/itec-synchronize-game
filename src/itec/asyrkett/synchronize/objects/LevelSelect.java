@@ -29,10 +29,7 @@ public class LevelSelect extends GameObject
 		this.width = width;
 		this.height = height;
 		hovered = false;
-		if (level == 1)
-			locked = false;
-		else
-			locked = true;
+		locked = true;
 	}
 	
 	public void update(LinkedList<GameObject> objects)

@@ -16,8 +16,14 @@ import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * The main mechanism of the game
@@ -34,7 +40,8 @@ public class Game extends Canvas implements Runnable
 	private Thread thread; // the game thread
 	private BufferedImage levelImage;
 	private GameMode gameMode = GameMode.MENU; //the game starts on the menu screen
-	private int level = 1; //the default starting level of the game
+	private int currentLevel = 1; //the default starting level of the game
+	private int maxPassedLevel = 1;
 	private LinkedList<Screen> screens; //a list of the game's screens
 	private Screen currentScreen; //the current screen the game is rendering
 	private Handler handler; // handler of the game objects
@@ -183,7 +190,7 @@ public class Game extends Canvas implements Runnable
 	 */
 	public int getLevel()
 	{
-		return level;
+		return currentLevel;
 	}
 	
 	/**
@@ -200,7 +207,7 @@ public class Game extends Canvas implements Runnable
 	 */
 	public int nextLevel()
 	{
-		return setLevel(level + 1);
+		return setLevel(currentLevel + 1);
 	}
 	
 	/**
@@ -210,14 +217,14 @@ public class Game extends Canvas implements Runnable
 	public int setLevel(int level)
 	{
 		if (level > TOTAL_LEVELS)
-			this.level = TOTAL_LEVELS;
+			this.currentLevel = TOTAL_LEVELS;
 		else
-			this.level = level;
+			this.currentLevel = level;
 		handler.clearHandler();
 		handler.clearBlockColors();
-		levelImage = BufferedImageLoader.loadImage("/levels/level" + this.level + ".png");
+		levelImage = BufferedImageLoader.loadImage("/levels/level" + this.currentLevel + ".png");
 		loadImageLevel(levelImage);
-		return this.level;
+		return this.currentLevel;
 	}
 	
 	/**
@@ -228,6 +235,24 @@ public class Game extends Canvas implements Runnable
 	public int getBlockTextureType()
 	{
 		return blockTextureType;
+	}
+	
+	/**
+	 * Gets the maximum level that the player has completed
+	 * @return the maximum level the player has passed
+	 */
+	public int getMaxPassedLevel()
+	{
+		return maxPassedLevel;
+	}
+	
+	/**
+	 * Sets the maximum level that the player has completed
+	 * @param maxPassedLevel the maximum level that the player has completed
+	 */
+	public void setMaxPassedLevel(int maxPassedLevel)
+	{
+		this.maxPassedLevel = maxPassedLevel;
 	}
 	
 	/**
@@ -243,6 +268,8 @@ public class Game extends Canvas implements Runnable
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
+		
+		loadGame();
 	
 		//creating the game screens
 		screens = new LinkedList<Screen>();
@@ -255,7 +282,7 @@ public class Game extends Canvas implements Runnable
 		handler = new Handler(this);
 		
 		//loading the default starting level
-		levelImage = BufferedImageLoader.loadImage("/levels/level" + level + ".png");
+		levelImage = BufferedImageLoader.loadImage("/levels/level" + currentLevel + ".png");
 		loadImageLevel(levelImage);
 		
 		//adding key and mouse listeners
@@ -355,6 +382,43 @@ public class Game extends Canvas implements Runnable
 		int green = (pixel >> 8) & 0xff;
 		int blue = (pixel) & 0xff;
 		return new Color(red, green, blue);
+	}
+	
+	public void saveGame()
+	{
+		try
+		{
+			File save = new File("./res/save/synchronize.sav");
+			if (!save.exists())
+			{
+				save.createNewFile();
+			}
+			PrintWriter writer = new PrintWriter(save);
+			writer.print(maxPassedLevel);
+			writer.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private void loadGame()
+	{
+		try
+		{
+			File save = new File("./res/save/synchronize.sav");
+			if (!save.exists())
+				return;
+			Scanner scanner = new Scanner(save);
+			maxPassedLevel = scanner.nextInt();
+			currentLevel = maxPassedLevel;
+			scanner.close();
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	/**

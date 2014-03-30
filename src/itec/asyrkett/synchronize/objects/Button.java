@@ -7,7 +7,6 @@ import itec.asyrkett.synchronize.framework.Texture;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
@@ -41,9 +40,9 @@ public class Button extends GameObject
 
 	public void render(Graphics g)
 	{
-		Graphics2D g2d = (Graphics2D) g;
+		//Graphics2D g2d = (Graphics2D) g;
 		g.setColor(new Color(255, 120, 0));
-		g2d.fillRoundRect((int) x, (int) y, 128, 64, 50, 50);
+		//g2d.fillRoundRect((int) x, (int) y, 128, 64, 50, 50);
 		BufferedImageLoader.drawImage(g, Texture.getButtonBase(), (int) x, (int) y);
 		if (pressed)
 			BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, false), (int) x, (int) y);

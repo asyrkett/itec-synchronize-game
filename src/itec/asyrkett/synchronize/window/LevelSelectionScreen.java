@@ -114,6 +114,8 @@ public class LevelSelectionScreen extends Screen
 			for (int col = 1; col <= MAX_COLUMNS && levelNum <= numLevels; col++)
 			{
 				LevelSelect levelSelect = new LevelSelect(xCoor, yCoor, 128, 64, levelNum);
+				if (levelNum <= game.getMaxPassedLevel())
+					levelSelect.setLocked(false);
 				levelList.add(levelSelect);
 				levelNum++;
 				xCoor += (128 + PADDING_HORIZONTAL);

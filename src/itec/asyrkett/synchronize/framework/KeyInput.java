@@ -166,9 +166,13 @@ public class KeyInput extends KeyAdapter
 		if (grid.isEmpty())
 		{
 			int nextLevel = game.getLevel();
+			game.setMaxPassedLevel(nextLevel + 1);
+			game.saveGame();
 			LevelSelectionScreen levelScreen = (LevelSelectionScreen) game.getScreen(GameMode.LEVEL_SELECTION);
 			if (nextLevel + 1 <= levelScreen.getNumLevels())
+			{
 				levelScreen.getLevelList().get(nextLevel).setLocked(false);
+			}
 			nextLevel();
 		}
 	}
