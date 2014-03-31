@@ -1,19 +1,22 @@
 package itec.asyrkett.synchronize.window;
 
+import itec.asyrkett.synchronize.framework.GameMode;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
 import itec.asyrkett.synchronize.objects.CenterBlock;
 import itec.asyrkett.synchronize.objects.Grid;
 
 import java.awt.Graphics;
-import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * This class handles all of the game objects
  */
 public class Handler
 {
+	public static final Random RANDOM_GENERATOR = new Random();
+	
 	private LinkedList<GameObject> objects = new LinkedList<GameObject>(); //the objects the handler holds in the current level
 	private LinkedList<Integer> blockColors = new LinkedList<Integer>(); //the block colors in the current level
 	private Game game;
@@ -100,9 +103,15 @@ public class Handler
 	 */
 	public void addCenterBlock()
 	{
-		Grid grid = (Grid) getObject(ObjectId.Grid);	
-		Collections.shuffle(blockColors);
-		addObject(new CenterBlock(grid, game.getBlockTextureType(), blockColors.get(0)));
+		Grid grid = (Grid) getObject(ObjectId.Grid);
+		PlayScreen playScreen = (PlayScreen) game.getScreen(GameMode.PLAY);
+		addObject(new CenterBlock(grid, game.getBlockTextureType(), playScreen.getNextBlockColor()));
+		playScreen.setNextBlockColor(getRandomColor());
+	}
+	
+	public int getRandomColor()
+	{
+		return blockColors.get(RANDOM_GENERATOR.nextInt(blockColors.size()));
 	}
 
 	/**

@@ -20,8 +20,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -252,7 +250,7 @@ public class Game extends Canvas implements Runnable
 	 */
 	public void setMaxPassedLevel(int maxPassedLevel)
 	{
-		this.maxPassedLevel = maxPassedLevel;
+		this.maxPassedLevel = Math.max(this.maxPassedLevel, maxPassedLevel);
 	}
 	
 	/**
@@ -341,6 +339,8 @@ public class Game extends Canvas implements Runnable
 			}
 		}
 		
+		PlayScreen playScreen = (PlayScreen) getScreen(GameMode.PLAY);
+		playScreen.setNextBlockColor(handler.getRandomColor());
 		//add player-controlled block
 		handler.addCenterBlock();
 	}
