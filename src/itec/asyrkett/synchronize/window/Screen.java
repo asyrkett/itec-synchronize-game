@@ -151,6 +151,12 @@ public abstract class Screen
 				case Texture.BUTTON_TEXT_LEVEL:
 					game.setGameMode(GameMode.LEVEL_SELECTION);
 					break;
+				case Texture.BUTTON_TEXT_OPTIONS:
+					game.setGameMode(GameMode.OPTIONS);
+					break;
+				case Texture.BUTTON_TEXT_CANCEL:
+					game.setGameMode(game.getPreviousGameMode());
+					break;
 				case Texture.BUTTON_TEXT_QUIT:
 					System.exit(1);
 					break;

@@ -27,18 +27,22 @@ public final class Texture
 	public static final int BLOCK_BLUE = 6; //column
 	
 	//button sprite sheet
-	public static final int BUTTON_BASE = 0; //row
-	public static final int BUTTON_TEXT_HOVERED = 1; //row
-	public static final int BUTTON_TEXT_BASE = 2; //row
-	public static final int BUTTON_LOCK = 3; //row
-	public static final int BUTTON_TEXT_HELP = 0; //column
-	public static final int BUTTON_TEXT_LEVEL = 1; //column
-	public static final int BUTTON_TEXT_MENU = 2; //column
-	public static final int BUTTON_TEXT_PLAY = 3; //column
-	public static final int BUTTON_TEXT_QUIT = 4; //column
-	public static final int BUTTON_TEXT_RESET = 5; //column
-	public static final int BUTTON_LOCK_LOCKED = 0; //column
-	public static final int BUTTON_LOCK_UNLOCKED = 1; //column
+	public static final int BUTTON_BASE = 0; //column
+	public static final int BUTTON_LOCK = 1; //column
+	public static final int BUTTON_TEXT_HOVERED = 2; //column
+	public static final int BUTTON_TEXT_BASE = 3; //column
+	
+	public static final int BUTTON_TEXT_APPLY = 0; //row
+	public static final int BUTTON_TEXT_CANCEL = 1; //row
+	public static final int BUTTON_TEXT_HELP = 2; //row
+	public static final int BUTTON_TEXT_LEVEL = 3; //row
+	public static final int BUTTON_TEXT_MENU = 4; //row
+	public static final int BUTTON_TEXT_OPTIONS = 5; //row
+	public static final int BUTTON_TEXT_PLAY = 6; //row
+	public static final int BUTTON_TEXT_QUIT = 7; //row
+	public static final int BUTTON_TEXT_RESET = 8; //row
+	public static final int BUTTON_LOCK_LOCKED = 0; //row
+	public static final int BUTTON_LOCK_UNLOCKED = 1; //row
 	
 	/**
 	 * Returns the image of the button base texture
@@ -59,10 +63,10 @@ public final class Texture
 	public static BufferedImage getButtonText(int text, boolean hovered)
 	{
 		if (hovered)
-			return buttonSpriteSheet.grabImage(BUTTON_TEXT_HOVERED, text, 
+			return buttonSpriteSheet.grabImage(text, BUTTON_TEXT_HOVERED, 
 					buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 		else
-			return buttonSpriteSheet.grabImage(BUTTON_TEXT_BASE, text, 
+			return buttonSpriteSheet.grabImage(text, BUTTON_TEXT_BASE, 
 					buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 	}
 	
@@ -85,8 +89,8 @@ public final class Texture
 	public static BufferedImage getLockSymbol(boolean locked)
 	{
 		if (locked)
-			return buttonSpriteSheet.grabImage(BUTTON_LOCK, BUTTON_LOCK_LOCKED, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
+			return buttonSpriteSheet.grabImage(BUTTON_LOCK_LOCKED, BUTTON_LOCK, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 		else
-			return buttonSpriteSheet.grabImage(BUTTON_LOCK, BUTTON_LOCK_UNLOCKED, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
+			return buttonSpriteSheet.grabImage(BUTTON_LOCK_UNLOCKED, BUTTON_LOCK, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 	}
 }

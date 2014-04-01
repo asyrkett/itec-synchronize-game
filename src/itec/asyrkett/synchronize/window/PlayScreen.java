@@ -27,7 +27,7 @@ public class PlayScreen extends Screen
 		
 		final int padding = (266 - 64 * 2) / 3;
 		
-		addButton(new Button(10, 100, Texture.BUTTON_TEXT_QUIT));
+		addButton(new Button(10, 100, Texture.BUTTON_TEXT_OPTIONS));
 		addButton(new Button(10, 100 + 64 + padding, Texture.BUTTON_TEXT_HELP));
 		addButton(new Button(10, 100 + 64 * 2 + padding * 2, Texture.BUTTON_TEXT_LEVEL));
 		addButton(new Button(10, 430, Texture.BUTTON_TEXT_MENU));
@@ -37,6 +37,7 @@ public class PlayScreen extends Screen
 	public void render(Graphics g)
 	{
 		super.render(g);
+		game.getHandler().render(g);
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(660, (Game.HEIGHT - 128)/2, 128, 128);

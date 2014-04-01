@@ -40,13 +40,14 @@ public class Button extends GameObject
 
 	public void render(Graphics g)
 	{
-		//Graphics2D g2d = (Graphics2D) g;
-		g.setColor(new Color(255, 120, 0));
-		//g2d.fillRoundRect((int) x, (int) y, 128, 64, 50, 50);
 		BufferedImageLoader.drawImage(g, Texture.getButtonBase(), (int) x, (int) y);
 		if (pressed)
+		{
 			BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, false), (int) x, (int) y);
-		BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, hovered), (int) x, (int) y);
+			BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, true), (int) x, (int) y);
+		}
+		else
+			BufferedImageLoader.drawImage(g, Texture.getButtonText(textureText, hovered), (int) x, (int) y);
 	}
 
 	public Rectangle getBounds()

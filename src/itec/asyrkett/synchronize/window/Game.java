@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable
 	
 	public static final int DEFAULT_MARGIN = 32; //the default margin
 	public static final int TOTAL_LEVELS = 7; //the total number of levels in the game
+	public static final String TITLE = "Synchronize Game Prototype";
 	
 	private boolean running = false; // whether or not the game is running
 	private Thread thread; // the game thread
@@ -42,6 +43,7 @@ public class Game extends Canvas implements Runnable
 	private int maxPassedLevel = 1;
 	private LinkedList<Screen> screens; //a list of the game's screens
 	private Screen currentScreen; //the current screen the game is rendering
+	private GameMode previousGameMode; //the screen that was rendered before the current screen
 	private Handler handler; // handler of the game objects
 	private int blockTextureType = Texture.BLOCK_SQUARE;
 	
@@ -123,8 +125,8 @@ public class Game extends Canvas implements Runnable
 		//DRAW HERE
 		g.setFont(FONT);
 		currentScreen.render(g);
-		if (gameMode == GameMode.PLAY)
-			handler.render(g);
+		//if (gameMode == GameMode.PLAY)
+			//handler.render(g);
 		
 		//////////////////////////////////////////////////
 		g.dispose();
@@ -147,6 +149,15 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	/**
+	 * Gets the game mode that was rendering before the current game mode
+	 * @return the previous game mode
+	 */
+	public GameMode getPreviousGameMode()
+	{
+		return previousGameMode;
+	}
+	
+	/**
 	 * Returns the current mode of the game
 	 * @return the current game mode
 	 */
@@ -161,6 +172,7 @@ public class Game extends Canvas implements Runnable
 	 */
 	public void setGameMode(GameMode gameMode)
 	{
+		previousGameMode = this.gameMode;
 		this.gameMode = gameMode;
 		currentScreen = getScreen(gameMode);
 		for (Screen screen : screens)
@@ -275,7 +287,9 @@ public class Game extends Canvas implements Runnable
 		screens.add(new PlayScreen(this));
 		screens.add(new LevelSelectionScreen(this, TOTAL_LEVELS));
 		screens.add(new HelpScreen(this));
+		screens.add(new OptionScreen(this));
 		currentScreen = getScreen(GameMode.MENU);
+		previousGameMode = GameMode.MENU;
 		
 		handler = new Handler(this);
 		
@@ -427,6 +441,6 @@ public class Game extends Canvas implements Runnable
 	 */
 	public static void main(String[] args)
 	{
-		new Window(800, 600, "Synchronize Game Prototype", new Game());
+		new Window(800, 600, TITLE, new Game());
 	}
 }

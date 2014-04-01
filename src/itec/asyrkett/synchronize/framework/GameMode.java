@@ -9,5 +9,6 @@ public enum GameMode
 	PLAY,
 	MENU,
 	HELP,
-	LEVEL_SELECTION;
+	LEVEL_SELECTION,
+	OPTIONS;
 }
