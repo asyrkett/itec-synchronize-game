@@ -11,5 +11,6 @@ public enum ObjectId
 	CenterBlock(),
 	Grid(),
 	Button(),
+	SelectButton(),
 	LevelSelect();
 }

@@ -4,6 +4,7 @@ import itec.asyrkett.synchronize.framework.BufferedImageLoader;
 import itec.asyrkett.synchronize.framework.GameMode;
 import itec.asyrkett.synchronize.framework.KeyInput;
 import itec.asyrkett.synchronize.framework.MouseInput;
+import itec.asyrkett.synchronize.framework.ObjectId;
 import itec.asyrkett.synchronize.framework.Texture;
 import itec.asyrkett.synchronize.objects.Block;
 import itec.asyrkett.synchronize.objects.Cell;
@@ -46,6 +47,7 @@ public class Game extends Canvas implements Runnable
 	private GameMode previousGameMode; //the screen that was rendered before the current screen
 	private Handler handler; // handler of the game objects
 	private int blockTextureType = Texture.BLOCK_SQUARE;
+	private boolean gridTracksVisible = true;
 	
 	private static final long serialVersionUID = -2703393471231825194L;
 	
@@ -266,6 +268,16 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	/**
+	 * Sets the type of blocks rendered
+	 * @param blockTextureType
+	 */
+	public void setBlockTextureType(int blockTextureType)
+	{
+		this.blockTextureType = blockTextureType;
+		handler.resetBlockTextures();
+	}
+	
+	/**
 	 * Initializes game objects
 	 */
 	private void init()
@@ -329,6 +341,7 @@ public class Game extends Canvas implements Runnable
 		//create the grid
 		Grid grid = new Grid(0, Game.DEFAULT_MARGIN * 2, dimension);
 		grid.setX((Game.WIDTH - grid.getSize()) / 2);
+		grid.setTracksVisible(gridTracksVisible);
 		handler.addObject(grid);
 		int step = grid.getStep();
 		float gridX = grid.getX();
@@ -398,6 +411,22 @@ public class Game extends Canvas implements Runnable
 		return new Color(red, green, blue);
 	}
 	
+	public boolean areGridTracksVisible()
+	{
+		return gridTracksVisible;
+	}
+	
+	public void setGridTracksVisible(boolean visible)
+	{
+		this.gridTracksVisible = visible;
+		Grid grid = (Grid) handler.getObject(ObjectId.Grid);
+		if (grid != null)
+			grid.setTracksVisible(gridTracksVisible);
+	}
+	
+	/**
+	 * Saves the current state of the game
+	 */
 	public void saveGame()
 	{
 		try
@@ -408,7 +437,9 @@ public class Game extends Canvas implements Runnable
 				save.createNewFile();
 			}
 			PrintWriter writer = new PrintWriter(save);
-			writer.print(maxPassedLevel);
+			writer.println(maxPassedLevel);
+			writer.println(blockTextureType);
+			writer.println(gridTracksVisible);
 			writer.close();
 		}
 		catch (IOException e)
@@ -417,16 +448,26 @@ public class Game extends Canvas implements Runnable
 		}
 	}
 	
+	/**
+	 * Loads a previously saved state of the game
+	 */
 	private void loadGame()
 	{
 		try
 		{
-			File save = new File("./res/save/synchronize.sav");
-			if (!save.exists())
+			File saveFile = new File("./res/save/synchronize.sav");
+			if (!saveFile.exists())
 				return;
-			Scanner scanner = new Scanner(save);
-			maxPassedLevel = scanner.nextInt();
-			currentLevel = maxPassedLevel;
+			Scanner scanner = new Scanner(saveFile);
+			if (scanner.hasNext())
+			{
+				maxPassedLevel = scanner.nextInt();
+				currentLevel = maxPassedLevel;
+				if (scanner.hasNext())
+					blockTextureType = scanner.nextInt();
+				if (scanner.hasNext())
+					gridTracksVisible = scanner.nextBoolean();
+			}
 			scanner.close();
 		}
 		catch(FileNotFoundException e)

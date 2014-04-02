@@ -3,6 +3,7 @@ package itec.asyrkett.synchronize.window;
 import itec.asyrkett.synchronize.framework.GameMode;
 import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
+import itec.asyrkett.synchronize.objects.Block;
 import itec.asyrkett.synchronize.objects.CenterBlock;
 import itec.asyrkett.synchronize.objects.Grid;
 
@@ -155,5 +156,18 @@ public class Handler
 	public Game getGame()
 	{
 		return game;
+	}
+	
+	public void resetBlockTextures()
+	{
+		for (int i = 0; i < objects.size(); i++)
+		{
+			GameObject object = objects.get(i);
+			if (object.getId() == ObjectId.Block || object.getId() == ObjectId.CenterBlock)
+			{
+				Block block = (Block) object;
+				block.setTextureType(game.getBlockTextureType());
+			}
+		}
 	}
 }

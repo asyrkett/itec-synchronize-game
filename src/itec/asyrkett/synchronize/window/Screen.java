@@ -158,6 +158,7 @@ public abstract class Screen
 					game.setGameMode(game.getPreviousGameMode());
 					break;
 				case Texture.BUTTON_TEXT_QUIT:
+					game.saveGame();
 					System.exit(1);
 					break;
 				case Texture.BUTTON_TEXT_RESET:
@@ -187,6 +188,10 @@ public abstract class Screen
 			buttons.get(i).setHovered(false);
 	}
 	
+	/**
+	 * Draws all of the screens buttons to the graphics
+	 * @param g the graphics to draw to
+	 */
 	protected void drawButtons(Graphics g)
 	{
 		for (int i = 0; i < buttons.size(); i++)

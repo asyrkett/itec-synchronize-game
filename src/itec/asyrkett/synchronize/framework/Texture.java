@@ -18,6 +18,7 @@ public final class Texture
 	//block sprite sheet
 	public static final int BLOCK_SQUARE = 0; //row
 	public static final int BLOCK_CIRCLE = 1; //row
+	public static final int RADIO_BUTTON = 2; //row
 	public static final int BLOCK_RED = 0; //column
 	public static final int BLOCK_MAGENTA = 1; //column
 	public static final int BLOCK_ORANGE = 2; //column
@@ -25,6 +26,8 @@ public final class Texture
 	public static final int BLOCK_GREEN = 4; //column
 	public static final int BLOCK_CYAN = 5; //column
 	public static final int BLOCK_BLUE = 6; //column
+	public static final int RADIO_BUTTON_UNSELECTED = 0; //column
+	public static final int RADIO_BUTTON_SELECTED = 1; //column
 	
 	//button sprite sheet
 	public static final int BUTTON_BASE = 0; //column
@@ -92,5 +95,19 @@ public final class Texture
 			return buttonSpriteSheet.grabImage(BUTTON_LOCK_LOCKED, BUTTON_LOCK, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 		else
 			return buttonSpriteSheet.grabImage(BUTTON_LOCK_UNLOCKED, BUTTON_LOCK, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
+	}
+	
+	/**
+	 * Returns the image of the specified radio button
+	 * @param selected whether or not the radio button is selected
+	 * @return the image of the radio button
+	 */
+	public static BufferedImage getRadioButton(boolean selected)
+	{
+		if (selected)
+			return blockSpriteSheet.grabImage(RADIO_BUTTON, RADIO_BUTTON_SELECTED, blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());
+		else
+			return blockSpriteSheet.grabImage(RADIO_BUTTON, RADIO_BUTTON_UNSELECTED, blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());
+					
 	}
 }

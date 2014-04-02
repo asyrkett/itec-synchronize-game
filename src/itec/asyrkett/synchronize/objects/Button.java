@@ -5,10 +5,8 @@ import itec.asyrkett.synchronize.framework.GameObject;
 import itec.asyrkett.synchronize.framework.ObjectId;
 import itec.asyrkett.synchronize.framework.Texture;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class Button extends GameObject
@@ -16,9 +14,9 @@ public class Button extends GameObject
 	public static final int DEFAULT_WIDTH = 128;
 	public static final int DEFAULT_HEIGHT = 64;
 	
-	private int textureText;
-	private boolean pressed;
-	private boolean hovered;
+	protected int textureText;
+	protected boolean pressed;
+	protected boolean hovered;
 
 	/**
 	 * Constructs a button object with the specified text
@@ -52,8 +50,7 @@ public class Button extends GameObject
 
 	public Rectangle getBounds()
 	{
-		BufferedImage text = Texture.getButtonText(textureText, pressed);
-		return new Rectangle((int) x, (int)y, text.getWidth(), text.getHeight());
+		return new Rectangle((int) x, (int)y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 
 	/**
@@ -102,7 +99,7 @@ public class Button extends GameObject
 
 	/**
 	 * Sets if the button is hovered over by a mouse
-	 * @param hovered the hoevered state to set
+	 * @param hovered the hovered state to set
 	 */
 	public void setHovered(boolean hovered) {
 		this.hovered = hovered;
