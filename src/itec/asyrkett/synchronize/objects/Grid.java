@@ -25,6 +25,7 @@ public class Grid extends GameObject
 	private int size; //the side length of the grid
 	private int step; //the length between each cell of the grid
 	private boolean tracksVisible; //whether or not the horizontal and vertical tracks are visible
+	private boolean cellsVisible; //whether or not the cells of the grid are visible
 	private Cell[][] cells; //the cells of the grid
 
 	/**
@@ -42,6 +43,7 @@ public class Grid extends GameObject
 		this.size = size - ((size % dimension != 0) ? (size % dimension) : 0);;
 		this.step = size / dimension;
 		this.tracksVisible = true;
+		this.cellsVisible = true;
 		initCells();
 	}
 
@@ -59,11 +61,14 @@ public class Grid extends GameObject
 		g.setColor(Color.WHITE);
 		g.drawRect((int) x, (int) y, size, size);
 
-		for (int xx = 0; xx < cells.length; xx++)
+		if (cellsVisible)
 		{
-			for (int yy = 0; yy < cells[xx].length; yy++)
+			for (int xx = 0; xx < cells.length; xx++)
 			{
-				cells[xx][yy].render(g);
+				for (int yy = 0; yy < cells[xx].length; yy++)
+				{
+					cells[xx][yy].render(g);
+				}
 			}
 		}
 
@@ -150,6 +155,24 @@ public class Grid extends GameObject
 	public void setTracksVisible(boolean tracksVisible)
 	{
 		this.tracksVisible = tracksVisible;
+	}
+
+	/**
+	 * Returns the visibility of the cells
+	 * @return true if the cells are visible, false otherwise
+	 */
+	public boolean getCellsVisible()
+	{
+		return cellsVisible;
+	}
+
+	/**
+	 * Sets whether or not the grid cells are visible
+	 * @param visible sets the visibility of the grid cells
+	 */
+	public void setCellsVisible(boolean visible)
+	{
+		this.cellsVisible = visible;
 	}
 
 	/**

@@ -48,6 +48,7 @@ public class Game extends Canvas implements Runnable
 	private Handler handler; // handler of the game objects
 	private int blockTextureType = Texture.BLOCK_SQUARE;
 	private boolean gridTracksVisible = true;
+	private boolean gridCellsVisible = true;
 	
 	private static final long serialVersionUID = -2703393471231825194L;
 	
@@ -278,6 +279,73 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	/**
+	 * Returns whether or not the grid's horizontal and vertical tracks are visible
+	 * @return true if grid tracks are visible, false otherwise
+	 */
+	public boolean getGridTracksVisible()
+	{
+		return gridTracksVisible;
+	}
+	
+	/**
+	 * Sets the visibility of the grid's horizontal and vertical tracks
+	 * @param visible the visible state of the tracks to set
+	 */
+	public void setGridTracksVisible(boolean visible)
+	{
+		this.gridTracksVisible = visible;
+		Grid grid = (Grid) handler.getObject(ObjectId.Grid);
+		if (grid != null)
+			grid.setTracksVisible(gridTracksVisible);
+	}
+	
+	/**
+	 * Returns whether or not the grid's cells are visible
+	 * @return true if the grid's cells are visible, false otherwise
+	 */
+	public boolean getGridCellsVisible()
+	{
+		return gridCellsVisible;
+	}
+
+	/**
+	 * Sets the visibility of the grid's cells
+	 * @param visible the visibility of the grid's cells to set
+	 */
+	public void setGridCellsVisible(boolean visible)
+	{
+		this.gridCellsVisible = visible;
+		Grid grid = (Grid) handler.getObject(ObjectId.Grid);
+		if (grid != null)
+			grid.setCellsVisible(gridCellsVisible);
+	}
+
+	/**
+	 * Saves the current state of the game
+	 */
+	public void saveGame()
+	{
+		try
+		{
+			File save = new File("./res/save/synchronize.sav");
+			if (!save.exists())
+			{
+				save.createNewFile();
+			}
+			PrintWriter writer = new PrintWriter(save);
+			writer.println(maxPassedLevel);
+			writer.println(blockTextureType);
+			writer.println(gridTracksVisible);
+			writer.println(gridCellsVisible);
+			writer.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Initializes game objects
 	 */
 	private void init()
@@ -404,48 +472,11 @@ public class Game extends Canvas implements Runnable
 	 */
 	private Color getPixelColor(BufferedImage image, int x, int y)
 	{
-		int pixel = image.getRGB(x, y);
-		int red = (pixel >> 16) & 0xff;
-		int green = (pixel >> 8) & 0xff;
-		int blue = (pixel) & 0xff;
+		final int pixel = image.getRGB(x, y);
+		final int red = (pixel >> 16) & 0xff;
+		final int green = (pixel >> 8) & 0xff;
+		final int blue = (pixel) & 0xff;
 		return new Color(red, green, blue);
-	}
-	
-	public boolean areGridTracksVisible()
-	{
-		return gridTracksVisible;
-	}
-	
-	public void setGridTracksVisible(boolean visible)
-	{
-		this.gridTracksVisible = visible;
-		Grid grid = (Grid) handler.getObject(ObjectId.Grid);
-		if (grid != null)
-			grid.setTracksVisible(gridTracksVisible);
-	}
-	
-	/**
-	 * Saves the current state of the game
-	 */
-	public void saveGame()
-	{
-		try
-		{
-			File save = new File("./res/save/synchronize.sav");
-			if (!save.exists())
-			{
-				save.createNewFile();
-			}
-			PrintWriter writer = new PrintWriter(save);
-			writer.println(maxPassedLevel);
-			writer.println(blockTextureType);
-			writer.println(gridTracksVisible);
-			writer.close();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
 	}
 	
 	/**
@@ -467,6 +498,8 @@ public class Game extends Canvas implements Runnable
 					blockTextureType = scanner.nextInt();
 				if (scanner.hasNext())
 					gridTracksVisible = scanner.nextBoolean();
+				if (scanner.hasNext())
+					gridCellsVisible = scanner.nextBoolean();
 			}
 			scanner.close();
 		}
