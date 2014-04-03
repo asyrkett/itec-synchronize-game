@@ -113,8 +113,10 @@ public class OptionScreen extends Screen
 						squareBlocks.setSelected(game.getBlockTextureType() == Texture.BLOCK_SQUARE);
 						circleBlocks.setSelected(!squareBlocks.isSelected());
 						showTracks.setSelected(game.getGridTracksVisible());
+						showCells.setSelected(game.getGridCellsVisible());
 						game.setGameMode(game.getPreviousGameMode());
 						break;
+						
 					case Texture.BUTTON_TEXT_APPLY:
 						if (squareBlocks.isSelected())
 							game.setBlockTextureType(Texture.BLOCK_SQUARE);
