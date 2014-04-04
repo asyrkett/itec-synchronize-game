@@ -410,6 +410,7 @@ public class Game extends Canvas implements Runnable
 		Grid grid = new Grid(0, Game.DEFAULT_MARGIN * 2, dimension);
 		grid.setX((Game.WIDTH - grid.getSize()) / 2);
 		grid.setTracksVisible(gridTracksVisible);
+		grid.setCellsVisible(gridCellsVisible);
 		handler.addObject(grid);
 		int step = grid.getStep();
 		float gridX = grid.getX();
@@ -436,6 +437,7 @@ public class Game extends Canvas implements Runnable
 		
 		PlayScreen playScreen = (PlayScreen) getScreen(GameMode.PLAY);
 		playScreen.setNextBlockColor(handler.getRandomColor());
+		
 		//add player-controlled block
 		handler.addCenterBlock();
 	}
@@ -490,15 +492,15 @@ public class Game extends Canvas implements Runnable
 			if (!saveFile.exists())
 				return;
 			Scanner scanner = new Scanner(saveFile);
-			if (scanner.hasNext())
+			if (scanner.hasNextInt())
 			{
 				maxPassedLevel = scanner.nextInt();
 				currentLevel = maxPassedLevel;
-				if (scanner.hasNext())
+				if (scanner.hasNextInt())
 					blockTextureType = scanner.nextInt();
-				if (scanner.hasNext())
+				if (scanner.hasNextBoolean())
 					gridTracksVisible = scanner.nextBoolean();
-				if (scanner.hasNext())
+				if (scanner.hasNextBoolean())
 					gridCellsVisible = scanner.nextBoolean();
 			}
 			scanner.close();

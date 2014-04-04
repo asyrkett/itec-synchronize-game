@@ -11,9 +11,9 @@ import java.awt.image.BufferedImage;
 public final class Texture 
 {
 	public static final SpriteSheet blockSpriteSheet = 
-			new SpriteSheet(BufferedImageLoader.loadImage("/block_sprite_sheet.png"), Block.DEFAULT_IMAGE_SIZE, Block.DEFAULT_IMAGE_SIZE);
+			new SpriteSheet(BufferedImageLoader.loadImage("/spritesheet/block_sprite_sheet.png"), Block.DEFAULT_IMAGE_SIZE, Block.DEFAULT_IMAGE_SIZE);
 	public static final SpriteSheet buttonSpriteSheet = 
-			new SpriteSheet(BufferedImageLoader.loadImage("/button_sprite_sheet.png"), Button.DEFAULT_HEIGHT, Button.DEFAULT_WIDTH);
+			new SpriteSheet(BufferedImageLoader.loadImage("/spritesheet/button_sprite_sheet.png"), Button.DEFAULT_HEIGHT, Button.DEFAULT_WIDTH);
 	
 	//block sprite sheet
 	public static final int BLOCK_SQUARE = 0; //row
@@ -81,7 +81,8 @@ public final class Texture
 	 */
 	public static BufferedImage getBlock(int type, int color)
 	{
-		return blockSpriteSheet.grabImage(type, color, blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());
+		return blockSpriteSheet.grabImage(type, color,
+				blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());
 	}
 	
 	/**
@@ -92,9 +93,11 @@ public final class Texture
 	public static BufferedImage getLockSymbol(boolean locked)
 	{
 		if (locked)
-			return buttonSpriteSheet.grabImage(BUTTON_LOCK_LOCKED, BUTTON_LOCK, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
+			return buttonSpriteSheet.grabImage(BUTTON_LOCK_LOCKED, BUTTON_LOCK,
+					buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 		else
-			return buttonSpriteSheet.grabImage(BUTTON_LOCK_UNLOCKED, BUTTON_LOCK, buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
+			return buttonSpriteSheet.grabImage(BUTTON_LOCK_UNLOCKED, BUTTON_LOCK,
+					buttonSpriteSheet.getColWidth(), buttonSpriteSheet.getRowHeight());
 	}
 	
 	/**
@@ -105,9 +108,10 @@ public final class Texture
 	public static BufferedImage getRadioButton(boolean selected)
 	{
 		if (selected)
-			return blockSpriteSheet.grabImage(RADIO_BUTTON, RADIO_BUTTON_SELECTED, blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());
+			return blockSpriteSheet.grabImage(RADIO_BUTTON, RADIO_BUTTON_SELECTED,
+					blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());
 		else
-			return blockSpriteSheet.grabImage(RADIO_BUTTON, RADIO_BUTTON_UNSELECTED, blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());
-					
+			return blockSpriteSheet.grabImage(RADIO_BUTTON, RADIO_BUTTON_UNSELECTED,
+					blockSpriteSheet.getColWidth(), blockSpriteSheet.getRowHeight());					
 	}
 }

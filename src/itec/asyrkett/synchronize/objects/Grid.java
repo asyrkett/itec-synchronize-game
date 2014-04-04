@@ -63,6 +63,7 @@ public class Grid extends GameObject
 
 		if (cellsVisible)
 		{
+			g.setColor(Color.RED);
 			for (int xx = 0; xx < cells.length; xx++)
 			{
 				for (int yy = 0; yy < cells[xx].length; yy++)

@@ -32,6 +32,7 @@ public class PlayScreen extends Screen
 		addButton(new Button(10, 100 + 64 * 2 + padding * 2, Texture.BUTTON_TEXT_LEVEL));
 		addButton(new Button(10, 430, Texture.BUTTON_TEXT_MENU));
 		addButton(new Button(660, 430, Texture.BUTTON_TEXT_RESET));
+		addButton(new Button(660, 100, Texture.BUTTON_TEXT_QUIT));
 	}
 	
 	public void render(Graphics g)
@@ -46,6 +47,9 @@ public class PlayScreen extends Screen
 		
 		BufferedImageLoader.drawImage(g, Texture.getBlock(game.getBlockTextureType(), nextBlockColor), 
 				660 + (Block.DEFAULT_IMAGE_SIZE / 2), (Game.HEIGHT - Block.DEFAULT_IMAGE_SIZE) / 2);
+		
+		g.setFont(Game.FONT.deriveFont((float) 50));
+		g.drawString("LEVEL " + game.getLevel(), (Game.WIDTH - 300) / 2, 580);
 	}
 
 	/**
