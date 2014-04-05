@@ -22,7 +22,7 @@ public class MenuScreen extends Screen
 	public MenuScreen(Game game)
 	{
 		super(game, GameMode.MENU);
-		title = BufferedImageLoader.loadImage("/title.png");
+		title = BufferedImageLoader.loadImage("/img/title.png");
 		final int padding = (Game.WIDTH - Button.DEFAULT_WIDTH * 4) / 5;
 		addButton(new Button(padding, 430, Texture.BUTTON_TEXT_HELP));
 		addButton(new Button(Button.DEFAULT_WIDTH + padding * 2, 430, Texture.BUTTON_TEXT_OPTIONS));

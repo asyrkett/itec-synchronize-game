@@ -17,7 +17,7 @@ public class HelpScreen extends Screen
 	public HelpScreen(Game game)
 	{
 		super(game, GameMode.HELP);
-		background = BufferedImageLoader.loadImage("/transparent_black_background.png");
+		background = BufferedImageLoader.loadImage("/img/transparent_black_background.png");
 		addButton(new Button((Game.WIDTH - Button.DEFAULT_WIDTH) / 2, 430, Texture.BUTTON_TEXT_CANCEL));
 	}
 	

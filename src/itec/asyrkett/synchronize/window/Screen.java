@@ -30,7 +30,7 @@ public abstract class Screen
 	{
 		this.game = game;
 		this.gameMode = gameMode;
-		background = BufferedImageLoader.loadImage("/background.png");
+		background = BufferedImageLoader.loadImage("/img/background.png");
 		buttons = new LinkedList<Button>();
 	}
 

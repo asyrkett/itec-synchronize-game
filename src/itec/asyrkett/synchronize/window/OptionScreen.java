@@ -19,7 +19,7 @@ public class OptionScreen extends Screen
 	public OptionScreen(Game game)
 	{
 		super(game, GameMode.OPTIONS);
-		background = BufferedImageLoader.loadImage("/transparent_black_background.png");
+		background = BufferedImageLoader.loadImage("/img/transparent_black_background.png");
 		addButton(new Button(250, 430, Texture.BUTTON_TEXT_CANCEL));
 		addButton(new Button(422, 430, Texture.BUTTON_TEXT_APPLY));
 		
