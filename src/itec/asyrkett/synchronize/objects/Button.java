@@ -93,7 +93,8 @@ public class Button extends GameObject
 	 * Returns if the button is hovered over by a mouse
 	 * @return true if hovered over by a mouse, false otherwise
 	 */
-	public boolean isHovered() {
+	public boolean isHovered()
+	{
 		return hovered;
 	}
 
@@ -101,7 +102,8 @@ public class Button extends GameObject
 	 * Sets if the button is hovered over by a mouse
 	 * @param hovered the hovered state to set
 	 */
-	public void setHovered(boolean hovered) {
+	public void setHovered(boolean hovered)
+	{
 		this.hovered = hovered;
 	}
 }

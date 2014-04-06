@@ -18,7 +18,7 @@ public class HelpScreen extends Screen
 	{
 		super(game, GameMode.HELP);
 		background = BufferedImageLoader.loadImage("/img/transparent_black_background.png");
-		addButton(new Button((Game.WIDTH - Button.DEFAULT_WIDTH) / 2, 430, Texture.BUTTON_TEXT_CANCEL));
+		addButton(new Button((Game.WIDTH - Button.DEFAULT_WIDTH) / 2, 430, Texture.BUTTON_TEXT_BACK));
 	}
 	
 	public void render(Graphics g)

@@ -44,6 +44,7 @@ public final class Texture
 	public static final int BUTTON_TEXT_PLAY = 6; //row
 	public static final int BUTTON_TEXT_QUIT = 7; //row
 	public static final int BUTTON_TEXT_RESET = 8; //row
+	public static final int BUTTON_TEXT_BACK = 9; //row
 	public static final int BUTTON_LOCK_LOCKED = 0; //row
 	public static final int BUTTON_LOCK_UNLOCKED = 1; //row
 	

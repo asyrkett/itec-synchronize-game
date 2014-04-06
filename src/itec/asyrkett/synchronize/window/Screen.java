@@ -164,6 +164,9 @@ public abstract class Screen
 				case Texture.BUTTON_TEXT_RESET:
 					game.resetLevel();
 					break;
+				case Texture.BUTTON_TEXT_BACK:
+					game.setGameMode(game.getPreviousGameMode());
+					break;
 				}
 				break;
 			}
