@@ -19,6 +19,7 @@ public class PlayScreen extends Screen
 	
 	/**
 	 * Constructs a play screen
+	 * @param game the game in which to render the screen
 	 */
 	public PlayScreen(Game game)
 	{

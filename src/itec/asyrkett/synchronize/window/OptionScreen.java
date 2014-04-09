@@ -11,11 +11,19 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
+/**
+ * This class represents the screen to render when
+ * the game is in option mode and displays various game options
+ */
 public class OptionScreen extends Screen
 {
 	private SelectButton squareBlocks, circleBlocks;
 	private SelectButton showTracks, showCells;
 	
+	/**
+	 * Constructs an option screen
+	 * @param game the game in which to render the screen
+	 */
 	public OptionScreen(Game game)
 	{
 		super(game, GameMode.OPTIONS);
