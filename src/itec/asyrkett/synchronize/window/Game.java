@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable
 	public static Font FONT; //the game's font
 	
 	public static final int DEFAULT_MARGIN = 32; //the default margin
-	public static final int TOTAL_LEVELS = 7; //the total number of levels in the game
+	public static final int TOTAL_LEVELS = 8; //the total number of levels in the game
 	public static final String TITLE = "Synchronize Game Prototype";
 	
 	private boolean running = false; // whether or not the game is running
