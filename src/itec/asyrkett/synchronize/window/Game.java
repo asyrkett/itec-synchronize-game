@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable
 	public static Font FONT; //the game's font
 	
 	public static final int DEFAULT_MARGIN = 32; //the default margin
-	public static final int TOTAL_LEVELS = 8; //the total number of levels in the game
+	public static final int TOTAL_LEVELS = 16; //the total number of levels in the game
 	public static final String TITLE = "Synchronize Game Prototype";
 	
 	private boolean running = false; // whether or not the game is running
@@ -95,7 +95,7 @@ public class Game extends Canvas implements Runnable
 			if (System.currentTimeMillis() - timer > 1000)
 			{
 				timer += 1000;
-				System.out.println("FPS: " + frames + " TICKS: " + updates);
+				//System.out.println("FPS: " + frames + " TICKS: " + updates);
 				frames = 0;
 				updates = 0;
 			}
@@ -373,6 +373,8 @@ public class Game extends Canvas implements Runnable
 		
 		handler = new Handler(this);
 		
+		if (currentLevel > TOTAL_LEVELS)
+			currentLevel = 1;
 		//loading the default starting level
 		levelImage = BufferedImageLoader.loadImage("/levels/level" + currentLevel + ".png");
 		loadImageLevel(levelImage);
