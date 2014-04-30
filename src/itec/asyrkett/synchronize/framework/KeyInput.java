@@ -193,7 +193,7 @@ public class KeyInput extends KeyAdapter
 					"LEVEL COMPLETED",
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE,
-					null,
+					Game.DEFAULT_ICON,
 					options,
 					options[0]);
 		}
@@ -205,7 +205,7 @@ public class KeyInput extends KeyAdapter
 				"LEVEL COMPLETED",
 				JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE,
-				null,
+				Game.DEFAULT_ICON,
 				options,
 				options[2]);
 		}

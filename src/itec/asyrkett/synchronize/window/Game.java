@@ -24,6 +24,9 @@ import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 /**
  * The main mechanism of the game
  */
@@ -35,6 +38,8 @@ public class Game extends Canvas implements Runnable
 	public static final int DEFAULT_MARGIN = 32; //the default margin
 	public static final int TOTAL_LEVELS = 16; //the total number of levels in the game
 	public static final String TITLE = "Synchronize Game Prototype";
+	public static final String SAVE_FILE_PATH = "./synchronize.sav";
+	public static final Icon DEFAULT_ICON = new ImageIcon(BufferedImageLoader.loadImage("/img/icon64.png"));
 	
 	private boolean running = false; // whether or not the game is running
 	private Thread thread; // the game thread
@@ -76,8 +81,8 @@ public class Game extends Canvas implements Runnable
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
-		int updates = 0;
-		int frames = 0;
+		//int updates = 0;
+		//int frames = 0;
 		while (running)
 		{
 			long now = System.nanoTime();
@@ -86,18 +91,18 @@ public class Game extends Canvas implements Runnable
 			while (delta >= 1)
 			{
 				update();
-				updates++;
+				//updates++;
 				delta--;
 			}
 			render();
-			frames++;
+			//frames++;
 			
 			if (System.currentTimeMillis() - timer > 1000)
 			{
 				timer += 1000;
 				//System.out.println("FPS: " + frames + " TICKS: " + updates);
-				frames = 0;
-				updates = 0;
+				//frames = 0;
+				//updates = 0;
 			}
 		}
 	}
@@ -327,7 +332,7 @@ public class Game extends Canvas implements Runnable
 	{
 		try
 		{
-			File save = new File("./res/save/synchronize.sav");
+			File save = new File(SAVE_FILE_PATH);
 			if (!save.exists())
 			{
 				save.createNewFile();
@@ -490,7 +495,7 @@ public class Game extends Canvas implements Runnable
 	{
 		try
 		{
-			File saveFile = new File("./res/save/synchronize.sav");
+			File saveFile = new File(SAVE_FILE_PATH);
 			if (!saveFile.exists())
 				return;
 			Scanner scanner = new Scanner(saveFile);

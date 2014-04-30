@@ -1,5 +1,7 @@
 package itec.asyrkett.synchronize.window;
 
+import itec.asyrkett.synchronize.framework.BufferedImageLoader;
+
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -30,6 +32,7 @@ public class Window implements WindowListener
 		game.setMinimumSize(d);
 		
 		JFrame frame = new JFrame(title);
+		frame.setIconImage(BufferedImageLoader.loadImage("/img/icon64.png"));
 		frame.addWindowListener(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
